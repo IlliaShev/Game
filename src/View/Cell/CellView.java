@@ -8,17 +8,23 @@ import javafx.scene.shape.Rectangle;
  * A single cell on world map
  * Used to draw a single sell in {@link MapView}
  *
- * @author Liubciek
+ * @author Liubcheck
  * @version 1.1.0
  * @see MapView
  */
 public abstract class CellView extends Rectangle {
 
-    public CellView(int length) {
+    private double x;
+    private double y;
+
+    public CellView(int length, double x, double y) {
+        this.x = x;
+        this.y = y;
         this.setWidth(length);
         this.setHeight(length);
         highlight();
         setCellImage();
+        setCellCoordinates(x,y);
         this.setStroke(Paint.valueOf("BLACK"));
     }
 
@@ -47,5 +53,13 @@ public abstract class CellView extends Rectangle {
      * @since 1.1.0
      */
     protected abstract void setCellImage();
+
+    /**
+     * Sets x and y coordinates of particular cell
+     *
+     * @see MountainCellView
+     * @since 1.1.0
+     */
+    protected abstract void setCellCoordinates(double x, double y);
 
 }
