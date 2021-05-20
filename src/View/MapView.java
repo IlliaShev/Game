@@ -6,34 +6,62 @@ import javafx.application.*;
 import javafx.scene.*;
 import javafx.stage.*;
 
-public class MapView extends Application {
+import java.awt.*;
 
-    private static final int LENGTH = 510;
-    private static final int CELL_WIDTH = LENGTH / 15;
+public class MapView{
+    private final int CELL_WIDTH;
+    private final int NUM_OF_ROWS = 50;
+    private final int NUM_OF_COLUMNS = 50;
+    private final CellView[][] map = new CellView[NUM_OF_ROWS][NUM_OF_COLUMNS];
+    private Point mapLU;
+    private Point mapRB;
+    private int length;
+    private Group group;
 
-    @Override
-    public void start(Stage stage) {
+    public MapView(int length, Group group){
+        this.length = length;
+        this.group = group;
+        CELL_WIDTH = length / 15;
+        initMap();
+        drawMap();
+    }
 
-        Group group = new Group();
-        Scene scene = new Scene(group, LENGTH, LENGTH);
+    private void initMap() {
+        mapLU = new Point(13,13);
+        mapRB = new Point(14,15);
+        for(int i = 0; i < NUM_OF_ROWS; i++){
+            for(int j = 0; j < NUM_OF_COLUMNS; j++){
+                map[i][j] = new MountainCellView(CELL_WIDTH);
+            }
+        }
+    }
 
-        for (int i = 0; i < LENGTH; i += CELL_WIDTH) {
-            for (int j = 0; j <= LENGTH; j += CELL_WIDTH) {
+    public void drawMap(){
+        for (int i = mapLU.x; i < mapRB.x; i++) {
+            for (int j = mapLU.y; j <mapRB.y ; j++) {
                 CellView cell = new MountainCellView(CELL_WIDTH);
-                cell.setX(i);
-                cell.setY(j);
+                cell.setX((i - mapLU.y)*CELL_WIDTH);
+                cell.setY((j - mapLU.x)*CELL_WIDTH);
                 group.getChildren().add(cell);
             }
         }
-
-        stage.setTitle("The Game");
-        stage.setScene(scene);
-        stage.setX(200);
-        stage.setY(100);
-        stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public Point getMapLU() {
+        return mapLU;
     }
+
+    public void setMapLU(Point mapLU) {
+        this.mapLU = mapLU;
+    }
+
+    public Point getMapRB() {
+        return mapRB;
+    }
+
+    public void setMapRB(Point mapRB) {
+        this.mapRB = mapRB;
+    }
+
+
 }
