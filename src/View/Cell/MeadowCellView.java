@@ -5,22 +5,17 @@ import javafx.scene.paint.ImagePattern;
 
 /**
  * This is one of three types of cells on the board
- * Mountain cell with it's own image ready to be painted
+ * Meadow cell with it's own image ready to be painted
  *
  * @author Vasia_Pupkin
  * @version 1.0.0
  * @see CellView
  */
-public class MountainCellView extends CellView {
+public class MeadowCellView extends CellView {
 
-    private static final String imageURL = "file:resources\\images\\cells\\Mountain.png";//path to image of mountain
+    private static final String imageURL = "file:resources\\images\\cells\\Meadow.png";//path to image of meadow
 
-    public MountainCellView(int length, double x, double y) {
-        super(length,x,y);
-        setCellImage();
-    }
-
-    public MountainCellView(int length) {
+    public MeadowCellView(int length) {
         super(length);
         setCellImage();
     }
@@ -30,5 +25,4 @@ public class MountainCellView extends CellView {
         Image mountain = new Image(imageURL);
         this.setFill(new ImagePattern(mountain, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
-
 }

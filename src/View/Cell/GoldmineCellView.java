@@ -13,7 +13,7 @@ import javafx.scene.paint.*;
  */
 public class GoldmineCellView extends CellView{
 
-    private static final String imageURL = "file:src\\View\\Cell\\Goldmine.png";//path to image of goldmine
+    private static final String imageURL = "file:resources\\images\\city\\buildings\\Goldmine.png";//path to image of goldmine
 
     public GoldmineCellView(int length, double x, double y) {
         super(length,x,y);
@@ -26,11 +26,4 @@ public class GoldmineCellView extends CellView{
         this.setFill(new ImagePattern(goldmine, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
 
-    @Override
-    protected void setCellCoordinates(double x, double y) {
-        if (true){
-            this.setX(x);
-            this.setY(y);
-        }
-    }
 }

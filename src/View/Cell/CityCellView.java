@@ -13,7 +13,7 @@ import javafx.scene.paint.*;
  */
 public class CityCellView extends CellView{
 
-    private static final String imageURL = "file:src\\View\\Cell\\City.png";//path to image of city
+    private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
 
     public CityCellView(int length, double x, double y) {
         super(length,x,y);
@@ -24,11 +24,5 @@ public class CityCellView extends CellView{
     protected void setCellImage() {
         Image city = new Image(imageURL);
         this.setFill(new ImagePattern(city, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
-    }
-
-    @Override
-    protected void setCellCoordinates(double x, double y) {
-        this.setX(x);
-        this.setY(y);
     }
 }

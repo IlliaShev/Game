@@ -62,6 +62,4 @@ public class MapView{
     public void setMapRB(Point mapRB) {
         this.mapRB = mapRB;
     }
-
-
 }

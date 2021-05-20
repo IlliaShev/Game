@@ -13,8 +13,6 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Group group = new Group();
         mapView = new MapView(LENGTH, group);
-
-
         Scene scene = new Scene(group, LENGTH, LENGTH);
         stage.setTitle("The The Game");
         stage.setScene(scene);

@@ -13,7 +13,7 @@ import javafx.scene.paint.*;
  */
 public class MineralCellView extends CellView{
 
-    private static final String imageURL = "file:src\\View\\Cell\\Mineral.png";//path to image of mineral
+    private static final String imageURL = "file:resources\\images\\city\\buildings\\Mineral.png";//path to image of mineral
 
     public MineralCellView(int length, double x, double y) {
         super(length,x,y);
@@ -26,9 +26,4 @@ public class MineralCellView extends CellView{
         this.setFill(new ImagePattern(mineral, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
 
-    @Override
-    protected void setCellCoordinates(double x, double y) {
-        this.setX(x);
-        this.setY(y);
-    }
 }

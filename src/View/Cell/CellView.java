@@ -28,6 +28,16 @@ public abstract class CellView extends Rectangle {
         this.setStroke(Paint.valueOf("BLACK"));
     }
 
+    public CellView(int length) {
+        this.x = 0;
+        this.y = 0;
+        this.setWidth(length);
+        this.setHeight(length);
+        highlight();
+        setCellImage();
+        this.setStroke(Paint.valueOf("BLACK"));
+    }
+
     /**
      * Method highlights the cell when mouse is pointed on it
      *
@@ -60,6 +70,11 @@ public abstract class CellView extends Rectangle {
      * @see MountainCellView
      * @since 1.1.0
      */
-    protected abstract void setCellCoordinates(double x, double y);
+    public void setCellCoordinates(double x, double y)  {
+        this.setX(x);
+        this.setY(y);
+        this.x = x;
+        this.y = y;
+    }
 
 }
