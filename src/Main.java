@@ -16,7 +16,7 @@ public class Main extends Application {
 
 
         Scene scene = new Scene(group, LENGTH, LENGTH);
-        stage.setTitle("The Game");
+        stage.setTitle("The The Game");
         stage.setScene(scene);
         stage.setX(200);
         stage.setY(100);
