@@ -1,7 +1,11 @@
 package View.Cell;
 
+import View.*;
+import com.sun.tools.javac.*;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
+
+import java.util.*;
 
 /**
  * This is one of three types of cells on the board
@@ -15,9 +19,23 @@ public class CityCellView extends CellView{
 
     private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
 
-    public CityCellView(int length, double x, double y) {
-        super(length,x,y);
+    public CityCellView(int length, int x, int y) {
+        super(length,x,y,false);
         setCellImage();
+        this.setOnMouseClicked(mouseEvent -> {
+
+            CellView[][] cell = MapArrView.getMapArrView().getMap();
+            int indX = this.takeX();
+            int indY = this.takeY();
+
+            for(int i=indX-2; i<=indX+2; i++){
+                for(int j=indY-2; j<=indY+2; j++){
+                    if(cell[i][j].isEmpty()){
+                        cell[i][j].setFill(Paint.valueOf("ORANGE"));
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -25,4 +43,5 @@ public class CityCellView extends CellView{
         Image city = new Image(imageURL);
         this.setFill(new ImagePattern(city, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
+
 }

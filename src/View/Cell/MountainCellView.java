@@ -15,8 +15,8 @@ public class MountainCellView extends CellView {
 
     private static final String imageURL = "file:resources\\images\\cells\\Mountain.png";//path to image of mountain
 
-    public MountainCellView(int length, double x, double y) {
-        super(length,x,y);
+    public MountainCellView(int length, int x, int y) {
+        super(length,x,y,false);
         setCellImage();
     }
 

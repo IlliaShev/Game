@@ -15,8 +15,8 @@ public class GoldmineCellView extends CellView{
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Goldmine.png";//path to image of goldmine
 
-    public GoldmineCellView(int length, double x, double y) {
-        super(length,x,y);
+    public GoldmineCellView(int length, int x, int y) {
+        super(length,x,y,false);
         setCellImage();
     }
 

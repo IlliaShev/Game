@@ -25,4 +25,5 @@ public class MeadowCellView extends CellView {
         Image mountain = new Image(imageURL);
         this.setFill(new ImagePattern(mountain, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
+
 }

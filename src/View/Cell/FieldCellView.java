@@ -15,8 +15,8 @@ public class FieldCellView extends CellView{
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Field.png";//path to image of field
 
-    public FieldCellView(int length, double x, double y) {
-        super(length,x,y);
+    public FieldCellView(int length, int x, int y) {
+        super(length,x,y,false);
         setCellImage();
     }
 
@@ -30,4 +30,5 @@ public class FieldCellView extends CellView{
         Image field = new Image(imageURL);
         this.setFill(new ImagePattern(field, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
+
 }

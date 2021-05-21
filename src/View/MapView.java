@@ -1,9 +1,6 @@
 package View;
 
-import View.Cell.CellView;
-import View.Cell.FieldCellView;
-import View.Cell.ForestCellView;
-import View.Cell.MountainCellView;
+import View.Cell.*;
 import javafx.application.*;
 import javafx.geometry.Insets;
 import javafx.scene.*;

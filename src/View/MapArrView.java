@@ -1,8 +1,6 @@
 package View;
 
-import View.Cell.CellView;
-import View.Cell.FieldCellView;
-import View.Cell.MountainCellView;
+import View.Cell.*;
 
 import java.awt.*;
 
@@ -32,9 +30,11 @@ public class MapArrView {
         for(int i = 0; i < NUM_OF_ROWS; i++){
             for(int j = 0; j < NUM_OF_COLUMNS; j++){
                 if((i+j)%2==0)
-                    map[i][j] = new MountainCellView(CELL_WIDTH);
+                    map[i][j] = new MountainCellView(CELL_WIDTH,i,j);
+                else if(i==13 && j==14)
+                    map[i][j] = new CityCellView(CELL_WIDTH,i,j);
                 else
-                    map[i][j] = new FieldCellView(CELL_WIDTH);
+                    map[i][j] = new GrassCellView(CELL_WIDTH,i,j);
             }
         }
     }

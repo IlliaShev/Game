@@ -14,17 +14,19 @@ import javafx.scene.shape.Rectangle;
  */
 public abstract class CellView extends Rectangle {
 
-    private double x;
-    private double y;
+    private int length;
+    private int x;
+    private int y;
+    private boolean isEmpty;
 
-    public CellView(int length, double x, double y) {
+    public CellView(int length, int x, int y, boolean isEmpty) {
         this.x = x;
         this.y = y;
+        this.isEmpty = isEmpty;
         this.setWidth(length);
         this.setHeight(length);
         highlight();
         setCellImage();
-        setCellCoordinates(x,y);
         this.setStroke(Paint.valueOf("BLACK"));
     }
 
@@ -64,17 +66,27 @@ public abstract class CellView extends Rectangle {
      */
     protected abstract void setCellImage();
 
-    /**
-     * Sets x and y coordinates of particular cell
-     *
-     * @see MountainCellView
-     * @since 1.1.0
-     */
-    public void setCellCoordinates(double x, double y)  {
-        this.setX(x);
-        this.setY(y);
-        this.x = x;
-        this.y = y;
+    public int getLength(){
+        return length;
     }
 
+    public boolean isEmpty() {
+        return isEmpty;
+    }
+
+    public int takeX(){
+        return x;
+    }
+
+    public int takeY(){
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

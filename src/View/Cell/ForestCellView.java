@@ -15,8 +15,8 @@ public class ForestCellView extends CellView {
 
     private static final String imageURL = "file:resources\\images\\cells\\Forest.jpg";//path to image of meadow
 
-    public ForestCellView(int length, double x, double y) {
-        super(length,x,y);
+    public ForestCellView(int length, int x, int y) {
+        super(length,x,y,true);
         setCellImage();
     }
 
@@ -30,4 +30,5 @@ public class ForestCellView extends CellView {
         Image mountain = new Image(imageURL);
         this.setFill(new ImagePattern(mountain, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
+
 }

@@ -15,8 +15,8 @@ public class MineralCellView extends CellView{
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Mineral.png";//path to image of mineral
 
-    public MineralCellView(int length, double x, double y) {
-        super(length,x,y);
+    public MineralCellView(int length, int x, int y) {
+        super(length,x,y,false);
         setCellImage();
     }
 
