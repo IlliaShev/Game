@@ -9,6 +9,7 @@ public class GrassCellView extends CellView{
 
     public GrassCellView(int length, int x, int y) {
         super(length, x, y,true);
+        setCellImage();
     }
 
 

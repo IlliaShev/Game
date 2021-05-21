@@ -2,8 +2,10 @@ package View;
 
 import View.Cell.*;
 import javafx.application.*;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.*;
@@ -37,8 +39,8 @@ public class MapView{
 
 
     public void drawMap(){
+        gridPane.getChildren().clear();
         for (int i = mapLU.x; i < mapRB.x; i++) {
-            gridPane.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
             for (int j = mapLU.y; j <mapRB.y ; j++) {
                 CellView cell = map[i][j];
                 gridPane.add(cell, (i - mapLU.x),(j - mapLU.y));
