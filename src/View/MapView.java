@@ -1,48 +1,50 @@
 package View;
 
 import View.Cell.CellView;
+import View.Cell.FieldCellView;
+import View.Cell.ForestCellView;
 import View.Cell.MountainCellView;
 import javafx.application.*;
+import javafx.geometry.Insets;
 import javafx.scene.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.stage.*;
 
 import java.awt.*;
 
 public class MapView{
     private final int CELL_WIDTH;
-    private final int NUM_OF_ROWS = 50;
-    private final int NUM_OF_COLUMNS = 50;
-    private final CellView[][] map = new CellView[NUM_OF_ROWS][NUM_OF_COLUMNS];
-    private Point mapLU;
-    private Point mapRB;
+    private Point mapLU = new Point(10,10);
+    private Point mapRB = new Point(25,25);
+    private MapArrView mapArrView;
+    private CellView[][] map;
     private int length;
-    private Group group;
+    private GridPane gridPane;
 
-    public MapView(int length, Group group){
+    public MapView(int length, GridPane gridPane){
         this.length = length;
-        this.group = group;
+        this.gridPane = gridPane;
         CELL_WIDTH = length / 15;
-        initMap();
+        initGridPane();
+        mapArrView = MapArrView.getMapArr(CELL_WIDTH);
+        map = mapArrView.getMap();
         drawMap();
     }
 
-    private void initMap() {
-        mapLU = new Point(13,13);
-        mapRB = new Point(14,15);
-        for(int i = 0; i < NUM_OF_ROWS; i++){
-            for(int j = 0; j < NUM_OF_COLUMNS; j++){
-                map[i][j] = new MountainCellView(CELL_WIDTH);
-            }
-        }
+    private void initGridPane() {
+        gridPane.setMinWidth(length);
+        gridPane.setMinHeight(length);
+        gridPane.setPadding(new Insets(0,0,0,0));
     }
+
 
     public void drawMap(){
         for (int i = mapLU.x; i < mapRB.x; i++) {
+            gridPane.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
             for (int j = mapLU.y; j <mapRB.y ; j++) {
-                CellView cell = new MountainCellView(CELL_WIDTH);
-                cell.setX((i - mapLU.y)*CELL_WIDTH);
-                cell.setY((j - mapLU.x)*CELL_WIDTH);
-                group.getChildren().add(cell);
+                CellView cell = map[i][j];
+                gridPane.add(cell, (i - mapLU.x),(j - mapLU.y));
             }
         }
     }

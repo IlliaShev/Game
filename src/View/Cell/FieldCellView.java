@@ -20,6 +20,11 @@ public class FieldCellView extends CellView{
         setCellImage();
     }
 
+    public FieldCellView(int length){
+        super(length);
+        setCellImage();
+    }
+
     @Override
     protected void setCellImage() {
         Image field = new Image(imageURL);
