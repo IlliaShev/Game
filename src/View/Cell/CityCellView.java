@@ -15,23 +15,39 @@ import java.util.*;
  * @version 1.0.0
  * @see CellView
  */
-public class CityCellView extends CellView{
+public class CityCellView extends CellView {
 
     private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
+    private boolean isChosen = false;
 
     public CityCellView(int length, int x, int y) {
-        super(length,x,y,false);
+        super(length, x, y, false);
         setCellImage();
-        this.setOnMouseClicked(mouseEvent -> {
+        initCityClick();
+    }
 
+    // private methods
+
+    private void initCityClick() {
+        this.setOnMouseClicked(mouseEvent -> {
+            this.isChosen = !isChosen;
             CellView[][] cell = MapArrView.getMapArrView().getMap();
             int indX = this.takeX();
             int indY = this.takeY();
-
-            for(int i=indX-2; i<=indX+2; i++){
-                for(int j=indY-2; j<=indY+2; j++){
-                    if(cell[i][j].isEmpty()){
-                        cell[i][j].setFill(Paint.valueOf("ORANGE"));
+            if (this.isChosen) {
+                for (int i = indX - 2; i <= indX + 2; i++) {
+                    for (int j = indY - 2; j <= indY + 2; j++) {
+                        if (cell[i][j].isEmpty()) {
+                            cell[i][j].setFill(Paint.valueOf("ORANGE"));
+                        }
+                    }
+                }
+            } else {
+                for (int i = indX - 2; i <= indX + 2; i++) {
+                    for (int j = indY - 2; j <= indY + 2; j++) {
+                        if (cell[i][j].isEmpty()) {
+                            cell[i][j].setDefaultFill();
+                        }
                     }
                 }
             }

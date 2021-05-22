@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
  * Used to draw a single sell in {@link MapView}
  *
  * @author Liubcheck
- * @version 1.1.0
+ * @version 1.1.1
  * @see MapView
  */
 public abstract class CellView extends Rectangle {
@@ -17,7 +17,7 @@ public abstract class CellView extends Rectangle {
     private int length;
     private int x;
     private int y;
-    private boolean isEmpty;
+    private boolean isEmpty;//cell don't have any structures
 
     public CellView(int length, int x, int y, boolean isEmpty) {
         this.x = x;
@@ -40,6 +40,8 @@ public abstract class CellView extends Rectangle {
         this.setStroke(Paint.valueOf("BLACK"));
     }
 
+    // private methods
+
     /**
      * Method highlights the cell when mouse is pointed on it
      *
@@ -58,15 +60,9 @@ public abstract class CellView extends Rectangle {
         });
     }
 
-    /**
-     * Sets image of particular cell
-     *
-     * @see MountainCellView
-     * @since 1.1.0
-     */
-    protected abstract void setCellImage();
+    // public methods
 
-    public int getLength(){
+    public int getLength() {
         return length;
     }
 
@@ -74,11 +70,11 @@ public abstract class CellView extends Rectangle {
         return isEmpty;
     }
 
-    public int takeX(){
+    public int takeX() {
         return x;
     }
 
-    public int takeY(){
+    public int takeY() {
         return y;
     }
 
@@ -89,4 +85,24 @@ public abstract class CellView extends Rectangle {
     public void setY(int y) {
         this.y = y;
     }
+
+    /**
+     * Restores default fill of empty
+     *
+     * @since 1.1.1
+     */
+    public void setDefaultFill() {
+        if (this.isEmpty)
+            setCellImage();
+    }
+
+    //abstract methods
+
+    /**
+     * Sets image of particular cell
+     *
+     * @see MountainCellView
+     * @since 1.1.0
+     */
+    protected abstract void setCellImage();
 }

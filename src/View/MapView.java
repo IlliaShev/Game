@@ -1,15 +1,8 @@
 package View;
 
 import View.Cell.*;
-import javafx.application.*;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.*;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.stage.*;
-
 import java.awt.*;
 
 public class MapView{

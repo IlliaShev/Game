@@ -11,7 +11,7 @@ import javafx.scene.paint.*;
  * @version 1.0.0
  * @see CellView
  */
-public class GoldmineCellView extends CellView{
+public class GoldmineCellView extends CellView {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Goldmine.png";//path to image of goldmine
 
