@@ -13,8 +13,9 @@ public class MapView{
     private CellView[][] map;
     private int length;
     private GridPane gridPane;
+    private static MapView mapView;
 
-    public MapView(int length, GridPane gridPane){
+    private MapView(int length, GridPane gridPane){
         this.length = length;
         this.gridPane = gridPane;
         CELL_WIDTH = length / 15;
@@ -22,6 +23,16 @@ public class MapView{
         mapArrView = MapArrView.getMapArr(CELL_WIDTH);
         map = mapArrView.getMap();
         drawMap();
+    }
+
+    public static MapView getMapView(int length, GridPane gridPane){
+        if(mapView == null)
+            mapView = new MapView(length, gridPane);
+        return mapView;
+    }
+
+    public static MapView getMapView(){
+        return mapView;
     }
 
     private void initGridPane() {
@@ -55,5 +66,10 @@ public class MapView{
 
     public void setMapRB(Point mapRB) {
         this.mapRB = mapRB;
+    }
+
+    public void changeCell(int i, int j, int type){
+        mapArrView.changeCell(i,j,type);
+        drawMap();
     }
 }

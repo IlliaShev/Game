@@ -35,16 +35,17 @@ public class CityCellView extends CellView {
             int indX = this.takeX();
             int indY = this.takeY();
             if (this.isChosen) {
-                for (int i = indX - 2; i <= indX + 2; i++) {
-                    for (int j = indY - 2; j <= indY + 2; j++) {
+                for (int i = Math.max(indX - 2,0); i <= Math.min(indX + 2,49); i++) {
+                    for (int j = Math.max(indY - 2,0); j <= Math.min(indY + 2,49); j++) {
                         if (cell[i][j].isEmpty()) {
                             cell[i][j].setFill(Paint.valueOf("ORANGE"));
+                            cell[i][j].setReadyToBuild(true);
                         }
                     }
                 }
             } else {
-                for (int i = indX - 2; i <= indX + 2; i++) {
-                    for (int j = indY - 2; j <= indY + 2; j++) {
+                for (int i = Math.max(indX - 2,0); i <= Math.min(indX + 2,49); i++) {
+                    for (int j = Math.max(indY - 2,0); j <= Math.min(indY + 2,49); j++) {
                         if (cell[i][j].isEmpty()) {
                             cell[i][j].setDefaultFill();
                         }

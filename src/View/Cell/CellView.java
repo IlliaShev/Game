@@ -1,5 +1,6 @@
 package View.Cell;
 
+import View.MapArrView;
 import View.MapView;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -18,6 +19,7 @@ public abstract class CellView extends Rectangle {
     private int x;
     private int y;
     private boolean isEmpty;//cell don't have any structures
+    private boolean readyToBuild;
 
     public CellView(int length, int x, int y, boolean isEmpty) {
         this.x = x;
@@ -86,6 +88,14 @@ public abstract class CellView extends Rectangle {
         this.y = y;
     }
 
+    public boolean isReadyToBuild() {
+        return readyToBuild;
+    }
+
+    public void setReadyToBuild(boolean readyToBuild) {
+        this.readyToBuild = readyToBuild;
+    }
+
     /**
      * Restores default fill of empty
      *
@@ -95,6 +105,7 @@ public abstract class CellView extends Rectangle {
         if (this.isEmpty)
             setCellImage();
     }
+
 
     //abstract methods
 

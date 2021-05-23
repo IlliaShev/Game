@@ -1,5 +1,6 @@
 package View.Cell;
 
+import View.MapView;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -18,11 +19,17 @@ public class ForestCellView extends CellView {
     public ForestCellView(int length, int x, int y) {
         super(length,x,y,true);
         setCellImage();
+        listener();
     }
 
-    public ForestCellView(int length) {
-        super(length);
-        setCellImage();
+
+    private void listener(){
+        this.setOnMouseClicked(mouseEvent -> {
+            if(isReadyToBuild()) {
+                MapView.getMapView().changeCell(takeX(), takeY(), 1);
+                setReadyToBuild(false);
+            }
+        });
     }
 
     @Override

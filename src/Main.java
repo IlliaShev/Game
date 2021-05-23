@@ -25,40 +25,37 @@ public class Main extends Application {
 
         Group group = new Group();
         group.getChildren().add(borderPane);
-        mapView = new MapView(MAP_LENGTH, gridPane);
+        mapView = MapView.getMapView(MAP_LENGTH, gridPane);
         Scene scene = new Scene(group, MAP_LENGTH+6, FRAME_LENGTH);
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()){
-                    case UP ->{
-                        if(mapView.getMapLU().y > 0) {
-                            mapView.getMapLU().y--;
-                            mapView.getMapRB().y--;
-                        }
-                    }
-                    case DOWN -> {
-                        if(mapView.getMapRB().y < 50) {
-                            mapView.getMapLU().y++;
-                            mapView.getMapRB().y++;
-                        }
-                    }
-                    case LEFT -> {
-                        if(mapView.getMapLU().x > 0) {
-                            mapView.getMapLU().x--;
-                            mapView.getMapRB().x--;
-                        }
-                    }
-                    case RIGHT -> {
-                        if(mapView.getMapRB().x < 50) {
-                            mapView.getMapLU().x++;
-                            mapView.getMapRB().x++;
-                        }
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()){
+                case UP ->{
+                    if(mapView.getMapLU().y > 0) {
+                        mapView.getMapLU().y--;
+                        mapView.getMapRB().y--;
                     }
                 }
-                mapView.drawMap();
+                case DOWN -> {
+                    if(mapView.getMapRB().y < 50) {
+                        mapView.getMapLU().y++;
+                        mapView.getMapRB().y++;
+                    }
+                }
+                case LEFT -> {
+                    if(mapView.getMapLU().x > 0) {
+                        mapView.getMapLU().x--;
+                        mapView.getMapRB().x--;
+                    }
+                }
+                case RIGHT -> {
+                    if(mapView.getMapRB().x < 50) {
+                        mapView.getMapLU().x++;
+                        mapView.getMapRB().x++;
+                    }
+                }
             }
+            mapView.drawMap();
         });
 
         stage.setTitle("The The Game");
