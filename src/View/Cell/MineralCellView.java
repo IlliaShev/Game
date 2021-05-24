@@ -11,7 +11,7 @@ import javafx.scene.paint.*;
  * @version 1.0.0
  * @see CellView
  */
-public class MineralCellView extends CellView{
+public class MineralCellView extends CellView implements BuildingCell{
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Mineral.png";//path to image of mineral
 

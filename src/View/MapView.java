@@ -68,8 +68,8 @@ public class MapView{
         this.mapRB = mapRB;
     }
 
-    public void changeCell(int i, int j, int type){
-        mapArrView.changeCell(i,j,type);
+    public void changeCell(int i, int j, int type, City cityWhereBuild){
+        mapArrView.changeCell(i,j,type, cityWhereBuild);
         drawMap();
     }
 }

@@ -11,7 +11,7 @@ import javafx.scene.paint.*;
  * @version 1.0.0
  * @see CellView
  */
-public class FieldCellView extends CellView{
+public class FieldCellView extends CellView implements BuildingCell{
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Field.png";//path to image of field
 

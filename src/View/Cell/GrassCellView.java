@@ -20,8 +20,10 @@ public class GrassCellView extends CellView{
     private void listener(){
         this.setOnMouseClicked(mouseEvent -> {
             if(isReadyToBuild()) {
-                MapView.getMapView().changeCell(takeX(), takeY(), 1);
-                setReadyToBuild(false);
+                if(getCityWhereBuild().getBuildings().size() < 8) {
+                    MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
+                    setReadyToBuild(false);
+                }
             }
         });
     }

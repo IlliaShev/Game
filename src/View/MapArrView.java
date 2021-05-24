@@ -10,9 +10,11 @@ public class MapArrView {
     private final int NUM_OF_COLUMNS = 50;
     private final CellView[][] map = new CellView[NUM_OF_ROWS][NUM_OF_COLUMNS];
     private final int CELL_WIDTH;
+    private CityHandler cityHandler;
 
     private MapArrView(int CELL_WIDTH){
         this.CELL_WIDTH = CELL_WIDTH;
+        cityHandler = CityHandler.getCityHandler();
         initMap();
     }
 
@@ -36,8 +38,13 @@ public class MapArrView {
 
     private CellView generateCellFill(int i, int j) {
         Random random = new Random();
-        if(random.nextInt(10)>8){
-            return new CityCellView(CELL_WIDTH, i, j);
+        if(random.nextInt(100)>98){
+            City city = new City("SMT"+i+""+j);
+            CityCellView cityCellView = new CityCellView(CELL_WIDTH, i, j);
+            cityCellView.setCity(city);
+            city.setCityCell(cityCellView);
+            cityHandler.addCity(city);
+            return cityCellView;
         }
         return switch (random.nextInt(3)) {
             case 0 -> new MountainCellView(CELL_WIDTH, i, j);
@@ -47,7 +54,7 @@ public class MapArrView {
         };
     }
 
-    public void changeCell(int i, int j, int type){
+    public void changeCell(int i, int j, int type, City cityWhereBuild){
         Random random = new Random();
         type = random.nextInt(3);
         switch (type) {
@@ -55,6 +62,7 @@ public class MapArrView {
             case 1 -> map[i][j] = new FieldCellView(CELL_WIDTH, i ,j);
             case 2 -> map[i][j] = new GoldmineCellView(CELL_WIDTH, i, j);
         }
+        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
     }
 
     public CellView[][] getMap() {

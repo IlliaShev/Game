@@ -1,5 +1,6 @@
 package View.Cell;
 
+import View.City;
 import View.MapArrView;
 import View.MapView;
 import javafx.scene.paint.Paint;
@@ -20,6 +21,7 @@ public abstract class CellView extends Rectangle {
     private int y;
     private boolean isEmpty;//cell don't have any structures
     private boolean readyToBuild;
+    private City cityWhereBuild;
 
     public CellView(int length, int x, int y, boolean isEmpty) {
         this.x = x;
@@ -94,6 +96,14 @@ public abstract class CellView extends Rectangle {
 
     public void setReadyToBuild(boolean readyToBuild) {
         this.readyToBuild = readyToBuild;
+    }
+
+    public void setCityWhereBuild(City cityWhereBuild) {
+        this.cityWhereBuild = cityWhereBuild;
+    }
+
+    public City getCityWhereBuild() {
+        return cityWhereBuild;
     }
 
     /**
