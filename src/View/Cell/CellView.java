@@ -1,8 +1,6 @@
 package View.Cell;
 
-import View.City;
-import View.MapArrView;
-import View.MapView;
+import View.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
@@ -19,9 +17,12 @@ public abstract class CellView extends Rectangle {
     private int length;
     private int x;
     private int y;
-    private boolean isEmpty;//cell don't have any structures
+    private boolean isEmpty; //cell don't have any structures
     private boolean readyToBuild;
+    private boolean readyToMove;
+    private boolean isChosen;
     private City cityWhereBuild;
+    private Army army;
 
     public CellView(int length, int x, int y, boolean isEmpty) {
         this.x = x;
@@ -98,12 +99,48 @@ public abstract class CellView extends Rectangle {
         this.readyToBuild = readyToBuild;
     }
 
+    public boolean isReadyToMove() {
+        return readyToMove;
+    }
+
+    public void setReadyToMove(boolean readyToMove) {
+        this.readyToMove = readyToMove;
+    }
+
     public void setCityWhereBuild(City cityWhereBuild) {
         this.cityWhereBuild = cityWhereBuild;
     }
 
     public City getCityWhereBuild() {
         return cityWhereBuild;
+    }
+
+    public boolean isChosen() {
+        return isChosen;
+    }
+
+    public void setChosen(boolean chosen) {
+        isChosen = chosen;
+    }
+
+    protected boolean cellIsChosen() {
+        CellView[][] cell = MapArrView.getMapArrView().getMap();
+        for(int i=0; i<50; i++){
+            for(int j=0; j<50; j++){
+                if(cell[i][j].isChosen()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Army getArmy() {
+        return army;
+    }
+
+    public void setArmy(Army army) {
+        this.army = army;
     }
 
     /**

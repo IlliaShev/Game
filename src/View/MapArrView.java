@@ -40,6 +40,9 @@ public class MapArrView {
         Random random = new Random();
         if(random.nextInt(100)>98){
             City city = new City("SMT"+i+""+j);
+            //Army army = new Army();
+            //city.setArmy(army);
+            //army.setCity(city);
             CityCellView cityCellView = new CityCellView(CELL_WIDTH, i, j);
             cityCellView.setCity(city);
             city.setCityCell(cityCellView);
@@ -54,6 +57,7 @@ public class MapArrView {
         };
     }
 
+    /*
     public void changeCell(int i, int j, int type, City cityWhereBuild){
         Random random = new Random();
         type = random.nextInt(3);
@@ -62,6 +66,11 @@ public class MapArrView {
             case 1 -> map[i][j] = new FieldCellView(CELL_WIDTH, i ,j);
             case 2 -> map[i][j] = new GoldmineCellView(CELL_WIDTH, i, j);
         }
+        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
+    }*/
+
+    public void changeCell(int i, int j, int type, City cityWhereBuild){
+        map[i][j] = new ArmyCellView(CELL_WIDTH, i,j);
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
     }
 

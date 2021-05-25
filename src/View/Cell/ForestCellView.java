@@ -1,6 +1,6 @@
 package View.Cell;
 
-import View.MapView;
+import View.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -14,7 +14,7 @@ import javafx.scene.paint.ImagePattern;
  */
 public class ForestCellView extends CellView {
 
-    private static final String imageURL = "file:resources\\images\\cells\\Forest.jpg";//path to image of meadow
+    private static final String imageURL = "file:resources\\images\\cells\\Forest.jpg";//path to image of forest
 
     public ForestCellView(int length, int x, int y) {
         super(length,x,y,true);

@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 import java.awt.*;
 
 public class MapView{
-    private final int CELL_WIDTH;
+    public static int CELL_WIDTH;
     private Point mapLU = new Point(10,10);
     private Point mapRB = new Point(25,25);
     private MapArrView mapArrView;
@@ -72,4 +72,5 @@ public class MapView{
         mapArrView.changeCell(i,j,type, cityWhereBuild);
         drawMap();
     }
+
 }

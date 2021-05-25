@@ -1,9 +1,7 @@
 package View.Cell;
 
-import View.MapView;
-import javafx.event.EventHandler;
+import View.*;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.*;
 
 public class GrassCellView extends CellView{
@@ -20,10 +18,13 @@ public class GrassCellView extends CellView{
     private void listener(){
         this.setOnMouseClicked(mouseEvent -> {
             if(isReadyToBuild()) {
-                if(getCityWhereBuild().getBuildings().size() < 8) {
+                if(getCityWhereBuild().getBuildings().size() < City.maxNumberOfBuildings) {
                     MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
                     setReadyToBuild(false);
                 }
+            }
+            else if(isReadyToMove()){
+
             }
         });
     }

@@ -1,7 +1,6 @@
 package View;
 
-import View.Cell.BuildingCell;
-import View.Cell.CityCellView;
+import View.Cell.*;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -12,8 +11,9 @@ public class City {
     private int resMineral;
     private int resGold;
     private int resField;
-    private static final int maxNumberOfBuildings = 8;
+    public static final int maxNumberOfBuildings = 8;
     private CityCellView cityCell;
+    private Army army;
 
     private ArrayList<BuildingCell> buildings;
 
@@ -57,13 +57,21 @@ public class City {
 
     public void collectResources(){
         for(BuildingCell buildingCell: buildings){
-            if(buildingCell.getClass().getName().equals("View.Cell.FieldCellView"))
+            if(buildingCell.getClass().equals(FieldCellView.class))
                 resField++;
-            else if(buildingCell.getClass().getName().equals("View.Cell.MineralCellView"))
+            else if(buildingCell.getClass().equals(MineralCellView.class))
                 resMineral++;
-            else
+            else if(buildingCell.getClass().equals(GoldmineCellView.class))
                 resGold++;
         }
+    }
+
+    public Army getArmy() {
+        return army;
+    }
+
+    public void setArmy(Army army) {
+        this.army = army;
     }
 
     @Override
