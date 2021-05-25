@@ -1,6 +1,7 @@
 import View.CityHandler;
 import View.MapView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -9,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.awt.*;
 
@@ -59,6 +61,13 @@ public class Main extends Application {
             mapView.drawMap();
         });
 
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         stage.setTitle("The The Game");
         stage.setScene(scene);
         stage.setX(200);

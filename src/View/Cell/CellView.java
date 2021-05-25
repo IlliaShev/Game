@@ -22,7 +22,7 @@ public abstract class CellView extends Rectangle {
     private boolean readyToMove;
     private boolean isChosen;
     private City cityWhereBuild;
-    private Army army;
+    private ArmyCellView army;
 
     public CellView(int length, int x, int y, boolean isEmpty) {
         this.x = x;
@@ -135,11 +135,11 @@ public abstract class CellView extends Rectangle {
         return false;
     }
 
-    public Army getArmy() {
+    public ArmyCellView getArmy() {
         return army;
     }
 
-    public void setArmy(Army army) {
+    public void setArmy(ArmyCellView army) {
         this.army = army;
     }
 

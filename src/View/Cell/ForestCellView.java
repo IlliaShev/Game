@@ -31,6 +31,12 @@ public class ForestCellView extends CellView {
                     setReadyToBuild(false);
                 }
             }
+            else if(isReadyToMove()){
+                ArmyCellView army = getArmy();
+                getArmy().fillFields();
+                this.setArmy(army);
+                MapView.getMapView().moveArmy(takeX(), takeY(), getArmy());
+            }
         });
     }
 

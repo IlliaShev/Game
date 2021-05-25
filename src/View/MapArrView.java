@@ -2,6 +2,7 @@ package View;
 
 import View.Cell.*;
 
+import java.awt.*;
 import java.util.Random;
 
 public class MapArrView {
@@ -72,6 +73,14 @@ public class MapArrView {
     public void changeCell(int i, int j, int type, City cityWhereBuild){
         map[i][j] = new ArmyCellView(CELL_WIDTH, i,j);
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
+    }
+
+    public void moveArmy(int i, int j, ArmyCellView armyCellView){
+        Point armyCell = new Point(armyCellView.takeX(), armyCellView.takeY());
+        map[i][j] = armyCellView;
+        armyCellView.setX(i);
+        armyCellView.setY(j);
+        map[armyCell.x][armyCell.y] = new GrassCellView(CELL_WIDTH, armyCell.x, armyCell.y);
     }
 
     public CellView[][] getMap() {

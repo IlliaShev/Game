@@ -73,4 +73,9 @@ public class MapView{
         drawMap();
     }
 
+    public void moveArmy(int i, int j, ArmyCellView armyCellView){
+        mapArrView.moveArmy(i,j,armyCellView);
+        drawMap();
+    }
+
 }
