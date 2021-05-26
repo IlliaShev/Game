@@ -9,13 +9,13 @@ import javafx.scene.paint.*;
  *
  * @author Liubcheck
  * @version 1.0.0
- * @see CellView
+ * @see Cell
  */
-public class MineralCellView extends CellView implements BuildingCell{
+public class MineralCell extends Cell implements BuildingCell{
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Mineral.png";//path to image of mineral
 
-    public MineralCellView(int length, int x, int y) {
+    public MineralCell(int length, int x, int y) {
         super(length,x,y,false);
         setCellImage();
     }

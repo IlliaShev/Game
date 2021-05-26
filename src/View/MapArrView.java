@@ -9,7 +9,7 @@ public class MapArrView {
     private static MapArrView mapArrView;
     private final int NUM_OF_ROWS = 50;
     private final int NUM_OF_COLUMNS = 50;
-    private final CellView[][] map = new CellView[NUM_OF_ROWS][NUM_OF_COLUMNS];
+    private final Cell[][] map = new Cell[NUM_OF_ROWS][NUM_OF_COLUMNS];
     private final int CELL_WIDTH;
     private CityHandler cityHandler;
 
@@ -37,23 +37,23 @@ public class MapArrView {
         }
     }
 
-    private CellView generateCellFill(int i, int j) {
+    private Cell generateCellFill(int i, int j) {
         Random random = new Random();
         if(random.nextInt(100)>98){
             City city = new City("SMT"+i+""+j);
             //Army army = new Army();
             //city.setArmy(army);
             //army.setCity(city);
-            CityCellView cityCellView = new CityCellView(CELL_WIDTH, i, j);
+            CityCell cityCellView = new CityCell(CELL_WIDTH, i, j);
             cityCellView.setCity(city);
             city.setCityCell(cityCellView);
             cityHandler.addCity(city);
             return cityCellView;
         }
         return switch (random.nextInt(3)) {
-            case 0 -> new MountainCellView(CELL_WIDTH, i, j);
-            case 1 -> new ForestCellView(CELL_WIDTH, i, j);
-            case 2 -> new GrassCellView(CELL_WIDTH, i, j);
+            case 0 -> new MountainCell(CELL_WIDTH, i, j);
+            case 1 -> new ForestCell(CELL_WIDTH, i, j);
+            case 2 -> new GrassCell(CELL_WIDTH, i, j);
             default -> throw new IllegalStateException("Unexpected value: " + random.nextInt(4));
         };
     }
@@ -63,12 +63,12 @@ public class MapArrView {
         Random random = new Random();
         type = random.nextInt(4);
         switch (type) {
-            case 0 -> map[i][j] = new MineralCellView(CELL_WIDTH, i,j);
-            case 1 -> map[i][j] = new FieldCellView(CELL_WIDTH, i ,j);
-            case 2 -> map[i][j] = new GoldmineCellView(CELL_WIDTH, i, j);
+            case 0 -> map[i][j] = new MineralCell(CELL_WIDTH, i,j);
+            case 1 -> map[i][j] = new FieldCell(CELL_WIDTH, i ,j);
+            case 2 -> map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
             case 3 -> {
                 if(cityWhereBuild.getNumberOfArmy() < 3)
-                    map[i][j] = new ArmyCellView(CELL_WIDTH, i, j);
+                    map[i][j] = new ArmyCell(CELL_WIDTH, i, j);
                 else
                     return;
             }
@@ -77,19 +77,19 @@ public class MapArrView {
     }
 
 //    public void changeCell(int i, int j, int type, City cityWhereBuild){
-//        map[i][j] = new ArmyCellView(CELL_WIDTH, i,j);
+//        map[i][j] = new ArmyCell(CELL_WIDTH, i,j);
 //        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
 //    }
 
-    public void moveArmy(int i, int j, ArmyCellView armyCellView){
+    public void moveArmy(int i, int j, ArmyCell armyCellView){
         Point armyCell = new Point(armyCellView.takeX(), armyCellView.takeY());
         map[i][j] = armyCellView;
         armyCellView.setX(i);
         armyCellView.setY(j);
-        map[armyCell.x][armyCell.y] = new GrassCellView(CELL_WIDTH, armyCell.x, armyCell.y);
+        map[armyCell.x][armyCell.y] = new GrassCell(CELL_WIDTH, armyCell.x, armyCell.y);
     }
 
-    public CellView[][] getMap() {
+    public Cell[][] getMap() {
         return map;
     }
 }

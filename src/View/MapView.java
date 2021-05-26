@@ -10,7 +10,7 @@ public class MapView{
     private Point mapLU = new Point(10,10);
     private Point mapRB = new Point(25,25);
     private MapArrView mapArrView;
-    private CellView[][] map;
+    private Cell[][] map;
     private int length;
     private GridPane gridPane;
     private static MapView mapView;
@@ -46,7 +46,7 @@ public class MapView{
         gridPane.getChildren().clear();
         for (int i = mapLU.x; i < mapRB.x; i++) {
             for (int j = mapLU.y; j <mapRB.y ; j++) {
-                CellView cell = map[i][j];
+                Cell cell = map[i][j];
                 gridPane.add(cell, (i - mapLU.x),(j - mapLU.y));
             }
         }
@@ -73,7 +73,7 @@ public class MapView{
         drawMap();
     }
 
-    public void moveArmy(int i, int j, ArmyCellView armyCellView){
+    public void moveArmy(int i, int j, ArmyCell armyCellView){
         mapArrView.moveArmy(i,j,armyCellView);
         drawMap();
     }

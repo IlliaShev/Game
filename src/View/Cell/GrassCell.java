@@ -4,11 +4,11 @@ import View.*;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
-public class GrassCellView extends CellView{
+public class GrassCell extends Cell {
 
     private static final String imageURL = "file:resources\\images\\cells\\Grass.png";//path to image of grass
 
-    public GrassCellView(int length, int x, int y) {
+    public GrassCell(int length, int x, int y) {
         super(length, x, y,true);
         setCellImage();
         listener();
@@ -24,7 +24,7 @@ public class GrassCellView extends CellView{
                 }
             }
             else if(isReadyToMove()){
-                ArmyCellView army = getArmyCellView();
+                ArmyCell army = getArmyCellView();
                 getArmyCellView().fillFields();
                 this.setArmyCellView(army);
                 MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());

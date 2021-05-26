@@ -1,11 +1,8 @@
 package View.Cell;
 
 import View.*;
-import com.sun.tools.javac.*;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
-
-import java.util.*;
 
 /**
  * This is one of three types of cells on the board
@@ -13,15 +10,15 @@ import java.util.*;
  *
  * @author Liubcheck
  * @version 1.0.0
- * @see CellView
+ * @see Cell
  */
-public class CityCellView extends CellView {
+public class CityCell extends Cell {
 
     private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
     private City city;
     private CityHandler cityHandler;
 
-    public CityCellView(int length, int x, int y) {
+    public CityCell(int length, int x, int y) {
         super(length, x, y, false);
         cityHandler = CityHandler.getCityHandler();
         setCellImage();
@@ -34,7 +31,7 @@ public class CityCellView extends CellView {
         this.setOnMouseClicked(mouseEvent -> {
             if(!cellIsChosen() || isChosen()) {
                 this.setChosen(!this.isChosen());
-                CellView[][] cell = MapArrView.getMapArrView().getMap();
+                Cell[][] cell = MapArrView.getMapArrView().getMap();
                 int indX = this.takeX();
                 int indY = this.takeY();
                 if(isChosen()) {
@@ -66,7 +63,7 @@ public class CityCellView extends CellView {
     }
     /**
     private boolean cellIsChosen() {
-        CellView[][] cell = MapArrView.getMapArrView().getMap();
+        Cell[][] cell = MapArrView.getMapArrView().getMap();
         for(int i=0; i<50; i++){
             for(int j=0; j<50; j++){
                 if(cell[i][j].isChosen()){

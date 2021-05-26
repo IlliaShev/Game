@@ -3,8 +3,6 @@ package View;
 import View.Cell.*;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class City {
     private String name;
@@ -12,7 +10,7 @@ public class City {
     private int resGold;
     private int resField;
     public static final int maxNumberOfBuildings = 8;
-    private CityCellView cityCell;
+    private CityCell cityCell;
     private int numberOfArmy;
 
     private ArrayList<BuildingCell> buildings;
@@ -37,10 +35,10 @@ public class City {
 
     public void addBuilding(BuildingCell buildingCell){
         buildings.add(buildingCell);
-        if(buildingCell.getClass().equals(ArmyCellView.class)){
+        if(buildingCell.getClass().equals(ArmyCell.class)){
             Army army = new Army();
-            ((ArmyCellView) buildingCell).setArmy(army);
-            army.setArmyCell((ArmyCellView) buildingCell);
+            ((ArmyCell) buildingCell).setArmy(army);
+            army.setArmyCell((ArmyCell) buildingCell);
             army.setCity(this);
             numberOfArmy++;
         }
@@ -55,11 +53,11 @@ public class City {
         return name;
     }
 
-    public CityCellView getCityCell() {
+    public CityCell getCityCell() {
         return cityCell;
     }
 
-    public void setCityCell(CityCellView cityCell) {
+    public void setCityCell(CityCell cityCell) {
         this.cityCell = cityCell;
     }
 
@@ -69,11 +67,11 @@ public class City {
 
     public void collectResources(){
         for(BuildingCell buildingCell: buildings){
-            if(buildingCell.getClass().equals(FieldCellView.class))
+            if(buildingCell.getClass().equals(FieldCell.class))
                 resField++;
-            else if(buildingCell.getClass().equals(MineralCellView.class))
+            else if(buildingCell.getClass().equals(MineralCell.class))
                 resMineral++;
-            else if(buildingCell.getClass().equals(GoldmineCellView.class))
+            else if(buildingCell.getClass().equals(GoldmineCell.class))
                 resGold++;
         }
     }

@@ -10,13 +10,13 @@ import javafx.scene.paint.ImagePattern;
  *
  * @author Vasia_Pupkin
  * @version 1.0.0
- * @see CellView
+ * @see Cell
  */
-public class ForestCellView extends CellView {
+public class ForestCell extends Cell {
 
     private static final String imageURL = "file:resources\\images\\cells\\Forest.jpg";//path to image of forest
 
-    public ForestCellView(int length, int x, int y) {
+    public ForestCell(int length, int x, int y) {
         super(length,x,y,true);
         setCellImage();
         listener();
@@ -32,7 +32,7 @@ public class ForestCellView extends CellView {
                 }
             }
             else if(isReadyToMove()){
-                ArmyCellView army = getArmyCellView();
+                ArmyCell army = getArmyCellView();
                 getArmyCellView().fillFields();
                 this.setArmyCellView(army);
                 MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());

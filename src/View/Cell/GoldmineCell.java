@@ -1,6 +1,5 @@
 package View.Cell;
 
-import Menus.*;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
@@ -10,13 +9,13 @@ import javafx.scene.paint.*;
  *
  * @author Liubcheck
  * @version 1.0.0
- * @see CellView
+ * @see Cell
  */
-public class GoldmineCellView extends CellView implements BuildingCell {
+public class GoldmineCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Goldmine.png";//path to image of goldmine
 
-    public GoldmineCellView(int length, int x, int y) {
+    public GoldmineCell(int length, int x, int y) {
         super(length,x,y,false);
         setCellImage();
     }

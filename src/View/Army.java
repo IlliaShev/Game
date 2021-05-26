@@ -5,18 +5,18 @@ import View.Cell.*;
 public class Army {
 
     private int health;
-    private ArmyCellView armyCell;
+    private ArmyCell armyCell;
     private City city;
 
     public Army(){
         health = 100;
     }
 
-    public ArmyCellView getArmyCell(){
+    public ArmyCell getArmyCell(){
         return armyCell;
     }
 
-    public void setArmyCell(ArmyCellView armyCell) {
+    public void setArmyCell(ArmyCell armyCell) {
         this.armyCell = armyCell;
     }
 

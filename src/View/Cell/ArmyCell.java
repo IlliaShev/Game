@@ -4,13 +4,13 @@ import View.*;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
-public class ArmyCellView extends CellView implements BuildingCell{
+public class ArmyCell extends Cell implements BuildingCell{
 
     private static final String imageURL = "file:resources\\images\\city\\Knight.png";//path to image of city
     private Army army;
     private CityHandler cityHandler;
 
-    public ArmyCellView(int length, int x, int y) {
+    public ArmyCell(int length, int x, int y) {
         super(length, x, y, false);
         cityHandler = CityHandler.getCityHandler();
         setCellImage();
@@ -27,7 +27,7 @@ public class ArmyCellView extends CellView implements BuildingCell{
 
     public void fillFields() {
         this.setChosen(!this.isChosen());
-        CellView[][] cell = MapArrView.getMapArrView().getMap();
+        Cell[][] cell = MapArrView.getMapArrView().getMap();
         int indX = this.takeX();
         int indY = this.takeY();
         if (isChosen()) {

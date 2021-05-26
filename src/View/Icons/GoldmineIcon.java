@@ -19,7 +19,7 @@ public class GoldmineIcon extends Icon {
     /**
     @Override
     protected void click() {
-        CellView[][] cell = MapArrView.getMapArrView().getMap();
+        Cell[][] cell = MapArrView.getMapArrView().getMap();
         int indX = this.takeX();
         int indY = this.takeY();
     }**/

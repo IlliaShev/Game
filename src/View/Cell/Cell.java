@@ -12,7 +12,7 @@ import javafx.scene.shape.Rectangle;
  * @version 1.1.1
  * @see MapView
  */
-public abstract class CellView extends Rectangle {
+public abstract class Cell extends Rectangle {
 
     private int length;
     private int x;
@@ -22,9 +22,9 @@ public abstract class CellView extends Rectangle {
     private boolean readyToMove;
     private boolean isChosen;
     private City cityWhereBuild;
-    private ArmyCellView armyCellView;
+    private ArmyCell armyCellView;
 
-    public CellView(int length, int x, int y, boolean isEmpty) {
+    public Cell(int length, int x, int y, boolean isEmpty) {
         this.x = x;
         this.y = y;
         this.isEmpty = isEmpty;
@@ -35,7 +35,7 @@ public abstract class CellView extends Rectangle {
         this.setStroke(Paint.valueOf("BLACK"));
     }
 
-    public CellView(int length) {
+    public Cell(int length) {
         this.x = 0;
         this.y = 0;
         this.setWidth(length);
@@ -124,7 +124,7 @@ public abstract class CellView extends Rectangle {
     }
 
     protected boolean cellIsChosen() {
-        CellView[][] cell = MapArrView.getMapArrView().getMap();
+        Cell[][] cell = MapArrView.getMapArrView().getMap();
         for(int i=0; i<50; i++){
             for(int j=0; j<50; j++){
                 if(cell[i][j].isChosen()){
@@ -135,11 +135,11 @@ public abstract class CellView extends Rectangle {
         return false;
     }
 
-    public ArmyCellView getArmyCellView() {
+    public ArmyCell getArmyCellView() {
         return armyCellView;
     }
 
-    public void setArmyCellView(ArmyCellView armyCellView) {
+    public void setArmyCellView(ArmyCell armyCellView) {
         this.armyCellView = armyCellView;
     }
 
@@ -159,7 +159,7 @@ public abstract class CellView extends Rectangle {
     /**
      * Sets image of particular cell
      *
-     * @see MountainCellView
+     * @see MountainCell
      * @since 1.1.0
      */
     protected abstract void setCellImage();

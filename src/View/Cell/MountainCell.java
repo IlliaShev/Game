@@ -9,18 +9,18 @@ import javafx.scene.paint.ImagePattern;
  *
  * @author Vasia_Pupkin
  * @version 1.0.0
- * @see CellView
+ * @see Cell
  */
-public class MountainCellView extends CellView {
+public class MountainCell extends Cell {
 
     private static final String imageURL = "file:resources\\images\\cells\\Mountain.png";//path to image of mountain
 
-    public MountainCellView(int length, int x, int y) {
+    public MountainCell(int length, int x, int y) {
         super(length,x,y,false);
         setCellImage();
     }
 
-    public MountainCellView(int length) {
+    public MountainCell(int length) {
         super(length);
         setCellImage();
     }
