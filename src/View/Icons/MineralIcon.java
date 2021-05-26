@@ -10,16 +10,11 @@ public class MineralIcon extends Icon {
 
     public MineralIcon(int length, int x, int y) {
         super(length,x,y);
-        highlight();
-        click();
-        setCellImage();
     }
 
     @Override
-    protected void click(){
-        this.setOnMouseClicked(mouseEvent -> {
+    protected void clickResponse() {
 
-        });
     }
 
     @Override

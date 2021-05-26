@@ -12,12 +12,14 @@ public class City {
     public static final int maxNumberOfBuildings = 8;
     private CityCell cityCell;
     private int numberOfArmy;
+    private ArrayList<Army> armies;
 
     private ArrayList<BuildingCell> buildings;
 
     public City(String name) {
         this.name = name;
         buildings = new ArrayList<>();
+        armies = new ArrayList<>();
         Thread collectorRes = new Thread(() -> {
             Thread currentThread = Thread.currentThread();
             while (!currentThread.isInterrupted()) {
@@ -40,10 +42,15 @@ public class City {
             ((ArmyCell) buildingCell).setArmy(army);
             army.setArmyCell((ArmyCell) buildingCell);
             army.setCity(this);
-            numberOfArmy++;
+            if(armies.size()<3){
+                numberOfArmy++;
+            }
         }
     }
 
+    public ArrayList<Army> getArmies() {
+        return armies;
+    }
 
     public int getNumberOfArmy() {
         return numberOfArmy;
@@ -75,6 +82,8 @@ public class City {
                 resGold++;
         }
     }
+
+
 
     @Override
     public String toString() {

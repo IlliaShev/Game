@@ -12,16 +12,11 @@ public class FieldIcon extends Icon {
 
     public FieldIcon(int length, int x, int y) {
         super(length,x,y);
-        highlight();
-        click();
-        setCellImage();
     }
 
     @Override
-    protected void click(){
-        this.setOnMouseClicked(mouseEvent -> {
+    public void clickResponse() {
 
-        });
     }
 
     @Override

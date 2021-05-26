@@ -11,27 +11,18 @@ public class GoldmineIcon extends Icon {
 
     public GoldmineIcon(int length, int x, int y){
         super(length,x,y);
-        highlight();
-        click();
-        setCellImage();
     }
 
-    /**
     @Override
-    protected void click() {
-        Cell[][] cell = MapArrView.getMapArrView().getMap();
-        int indX = this.takeX();
-        int indY = this.takeY();
-    }**/
+    public void clickResponse() {
+
+    }
+
+
 
     @Override
     protected void setCellImage() {
         Image goldmine = new Image(imageURL);
         this.setFill(new ImagePattern(goldmine, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
-    }
-
-    @Override
-    protected void click() {
-
     }
 }

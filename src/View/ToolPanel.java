@@ -2,6 +2,7 @@ package View;
 
 import View.Cell.Cell;
 import View.Cell.CityCell;
+import View.Icons.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -48,7 +49,13 @@ public final class ToolPanel extends GridPane {
     }
 
     private void cityCellRefresh() {
+        MineralIcon mineralIcon = new MineralIcon(5,5,5);
+        mineralIcon.setClickResponse(this::MineralIcon);
         System.out.println("City refresh");
+    }
+
+    private void MineralIcon() {
+        System.out.println("xyi");
     }
 
     private void notCityCellRefresh() {

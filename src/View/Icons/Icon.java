@@ -5,27 +5,45 @@ import javafx.scene.shape.*;
 
 public abstract class Icon extends Rectangle {
 
-    private int x;
-    private int y;
-
     public Icon(int length, int x, int y){
         this.setWidth(length);
         this.setHeight(length);
-        this.x = x;
-        this.y = y;
+        this.setX(x);
+        this.setY(y);
+        highlight();
+        initClick();
+        setCellImage();
+
     }
 
-    public void highlight(){
+    private void highlight(){
         this.setOnMouseEntered(mouseEvent -> {
-            this.setStroke(Paint.valueOf("ORANGE"));
+            mouseEnteredResponse();
         });
 
         this.setOnMouseExited(mouseEvent -> {
-            this.setStroke(null);
+            mouseExitedResponse();
         });
     };
 
+    public void setClickResponse(Runnable runnable){
+        this.setOnMouseClicked(e -> runnable.run());
+    }
+
+    private void initClick() {
+        this.setOnMouseClicked(mouseEvent -> clickResponse());
+    }
+
+    protected void mouseEnteredResponse(){
+        this.setStroke(Paint.valueOf("ORANGE"));
+    }
+
+    protected void mouseExitedResponse(){
+        this.setStroke(null);
+    }
+
+    protected abstract void clickResponse();
+
     protected abstract void setCellImage();
 
-    protected abstract void click();
 }
