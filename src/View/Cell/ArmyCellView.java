@@ -37,7 +37,7 @@ public class ArmyCellView extends CellView implements BuildingCell{
                         cell[i][j].setFill(Paint.valueOf("RED"));
                         cell[i][j].setReadyToBuild(false);
                         cell[i][j].setReadyToMove(true);
-                        cell[i][j].setArmy(this);
+                        cell[i][j].setArmyCellView(this);
                     }
                 }
             }
@@ -48,11 +48,19 @@ public class ArmyCellView extends CellView implements BuildingCell{
                         cell[i][j].setDefaultFill();
                         cell[i][j].setReadyToBuild(false);
                         cell[i][j].setReadyToMove(false);
-                        cell[i][j].setArmy(null);
+                        cell[i][j].setArmyCellView(null);
                     }
                 }
             }
         }
+    }
+
+    public Army getArmy() {
+        return army;
+    }
+
+    public void setArmy(Army army) {
+        this.army = army;
     }
 
     @Override

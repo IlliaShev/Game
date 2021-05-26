@@ -24,10 +24,10 @@ public class GrassCellView extends CellView{
                 }
             }
             else if(isReadyToMove()){
-                ArmyCellView army = getArmy();
-                getArmy().fillFields();
-                this.setArmy(army);
-                MapView.getMapView().moveArmy(takeX(), takeY(), getArmy());
+                ArmyCellView army = getArmyCellView();
+                getArmyCellView().fillFields();
+                this.setArmyCellView(army);
+                MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());
             }
         });
     }

@@ -13,7 +13,7 @@ public class City {
     private int resField;
     public static final int maxNumberOfBuildings = 8;
     private CityCellView cityCell;
-    private Army army;
+    private int numberOfArmy;
 
     private ArrayList<BuildingCell> buildings;
 
@@ -37,6 +37,18 @@ public class City {
 
     public void addBuilding(BuildingCell buildingCell){
         buildings.add(buildingCell);
+        if(buildingCell.getClass().equals(ArmyCellView.class)){
+            Army army = new Army();
+            ((ArmyCellView) buildingCell).setArmy(army);
+            army.setArmyCell((ArmyCellView) buildingCell);
+            army.setCity(this);
+            numberOfArmy++;
+        }
+    }
+
+
+    public int getNumberOfArmy() {
+        return numberOfArmy;
     }
 
     public String getName() {
@@ -64,14 +76,6 @@ public class City {
             else if(buildingCell.getClass().equals(GoldmineCellView.class))
                 resGold++;
         }
-    }
-
-    public Army getArmy() {
-        return army;
-    }
-
-    public void setArmy(Army army) {
-        this.army = army;
     }
 
     @Override

@@ -58,22 +58,28 @@ public class MapArrView {
         };
     }
 
-    /*
+
     public void changeCell(int i, int j, int type, City cityWhereBuild){
         Random random = new Random();
-        type = random.nextInt(3);
+        type = random.nextInt(4);
         switch (type) {
             case 0 -> map[i][j] = new MineralCellView(CELL_WIDTH, i,j);
             case 1 -> map[i][j] = new FieldCellView(CELL_WIDTH, i ,j);
             case 2 -> map[i][j] = new GoldmineCellView(CELL_WIDTH, i, j);
+            case 3 -> {
+                if(cityWhereBuild.getNumberOfArmy() < 3)
+                    map[i][j] = new ArmyCellView(CELL_WIDTH, i, j);
+                else
+                    return;
+            }
         }
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
-    }*/
-
-    public void changeCell(int i, int j, int type, City cityWhereBuild){
-        map[i][j] = new ArmyCellView(CELL_WIDTH, i,j);
-        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
     }
+
+//    public void changeCell(int i, int j, int type, City cityWhereBuild){
+//        map[i][j] = new ArmyCellView(CELL_WIDTH, i,j);
+//        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
+//    }
 
     public void moveArmy(int i, int j, ArmyCellView armyCellView){
         Point armyCell = new Point(armyCellView.takeX(), armyCellView.takeY());
