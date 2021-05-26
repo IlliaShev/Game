@@ -30,7 +30,8 @@ public abstract class Cell extends Rectangle {
         this.isEmpty = isEmpty;
         this.setWidth(length);
         this.setHeight(length);
-        highlight();
+        setMousePointed();
+        setClick();
         setCellImage();
         this.setStroke(Paint.valueOf("BLACK"));
     }
@@ -40,7 +41,8 @@ public abstract class Cell extends Rectangle {
         this.y = 0;
         this.setWidth(length);
         this.setHeight(length);
-        highlight();
+        setMousePointed();
+        setClick();
         setCellImage();
         this.setStroke(Paint.valueOf("BLACK"));
     }
@@ -52,20 +54,22 @@ public abstract class Cell extends Rectangle {
      *
      * @since 1.1.0
      */
-    private void highlight() {
+    private void setMousePointed() {
 
         this.setOnMouseEntered(mouseEvent -> {
-            this.setStroke(Paint.valueOf("ORANGE"));
-            toFront();
+            mouseEnteredResponse();
         });
 
         this.setOnMouseExited(mouseEvent -> {
-            this.setStroke(Paint.valueOf("BLACK"));
-            toBack();
+            mouseExitedResponse();
         });
     }
 
-    // public methods
+    private void setClick() {
+        this.setOnMouseClicked(mouseEvent -> clickResponse());
+    }
+
+    // getters & setters
 
     public int getLength() {
         return length;
@@ -123,24 +127,26 @@ public abstract class Cell extends Rectangle {
         isChosen = chosen;
     }
 
-    protected boolean cellIsChosen() {
-        Cell[][] cell = MapArrView.getMapArrView().getMap();
-        for(int i=0; i<50; i++){
-            for(int j=0; j<50; j++){
-                if(cell[i][j].isChosen()){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public ArmyCell getArmyCellView() {
         return armyCellView;
     }
 
     public void setArmyCellView(ArmyCell armyCellView) {
         this.armyCellView = armyCellView;
+    }
+
+    // methods
+
+    protected boolean cellIsChosen() {
+        Cell[][] cell = MapArrView.getMapArrView().getMap();
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 50; j++) {
+                if (cell[i][j].isChosen()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -153,6 +159,21 @@ public abstract class Cell extends Rectangle {
             setCellImage();
     }
 
+    protected void mouseEnteredResponse() {
+        this.setStroke(Paint.valueOf("ORANGE"));
+        toFront();
+    }
+
+    protected void mouseExitedResponse() {
+        this.setStroke(Paint.valueOf("BLACK"));
+        toBack();
+    }
+
+    //TODO write jabadoc
+    /***/
+    protected void clickResponse() {
+        ToolPanel.getInstance().refresh(this);
+    }
 
     //abstract methods
 

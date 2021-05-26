@@ -60,27 +60,9 @@ public final class ToolPanel extends GridPane {
         this.getChildren().clear();
         this.setPrefSize(75, 75);
         Rectangle background = new Rectangle();
-        //background.setWidth(50);
-        //background.setHeight(50);
-        background.setFill(new ImagePattern(new Image(imageURL)));
-        Element element = new Element(background);
-        this.add(element, 0,0);
+        this.add(background, 0,0);
     }
 
-    private class Element extends HBox {
-        private Node element;
-
-        Element(Node element){
-            this.element = element;
-            VBox vBox = new VBox(element);
-            VBox.setVgrow(element, Priority.valueOf("ALWAYS"));
-            this.setHgrow(vBox, Priority.valueOf("ALWAYS"));
-        }
-
-        public Node getElement() {
-            return this.element;
-        }
-    }
 
 
 }

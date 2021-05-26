@@ -17,7 +17,6 @@ public class GoldmineCell extends Cell implements BuildingCell {
 
     public GoldmineCell(int length, int x, int y) {
         super(length,x,y,false);
-        setCellImage();
     }
 
     @Override

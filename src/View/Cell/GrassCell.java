@@ -10,26 +10,24 @@ public class GrassCell extends Cell {
 
     public GrassCell(int length, int x, int y) {
         super(length, x, y,true);
-        setCellImage();
-        listener();
     }
 
 
-    private void listener(){
-        this.setOnMouseClicked(mouseEvent -> {
-            if(isReadyToBuild()) {
-                if(getCityWhereBuild().getBuildings().size() < City.maxNumberOfBuildings) {
-                    MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
-                    setReadyToBuild(false);
-                }
+    @Override
+    protected void clickResponse() {
+        super.clickResponse();
+        if(isReadyToBuild()) {
+            if(getCityWhereBuild().getBuildings().size() < 8) {
+                MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
+                setReadyToBuild(false);
             }
-            else if(isReadyToMove()){
-                ArmyCell army = getArmyCellView();
-                getArmyCellView().fillFields();
-                this.setArmyCellView(army);
-                MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());
-            }
-        });
+        }
+        else if(isReadyToMove()){
+            ArmyCell army = getArmyCellView();
+            getArmyCellView().fillFields();
+            this.setArmyCellView(army);
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());
+        }
     }
 
 

@@ -11,18 +11,16 @@ import javafx.scene.paint.*;
  * @version 1.0.0
  * @see Cell
  */
-public class FieldCell extends Cell implements BuildingCell{
+public class FieldCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Field.png";//path to image of field
 
     public FieldCell(int length, int x, int y) {
         super(length,x,y,false);
-        setCellImage();
     }
 
     public FieldCell(int length){
         super(length);
-        setCellImage();
     }
 
     @Override

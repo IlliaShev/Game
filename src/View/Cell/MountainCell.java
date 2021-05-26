@@ -1,5 +1,6 @@
 package View.Cell;
 
+import View.MapView;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -17,12 +18,28 @@ public class MountainCell extends Cell {
 
     public MountainCell(int length, int x, int y) {
         super(length,x,y,false);
-        setCellImage();
     }
 
     public MountainCell(int length) {
         super(length);
-        setCellImage();
+    }
+
+    @Override
+    protected void clickResponse() {
+        super.clickResponse();
+        System.out.println("xyi mountain debug");
+        /*if(isReadyToBuild()) {
+            if(getCityWhereBuild().getBuildings().size() < 8) {
+                MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
+                setReadyToBuild(false);
+            }
+        }
+        else if(isReadyToMove()){
+            ArmyCell army = getArmyCellView();
+            getArmyCellView().fillFields();
+            this.setArmyCellView(army);
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());
+        }*/
     }
 
     @Override

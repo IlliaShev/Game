@@ -17,7 +17,6 @@ public class MineralCell extends Cell implements BuildingCell{
 
     public MineralCell(int length, int x, int y) {
         super(length,x,y,false);
-        setCellImage();
     }
 
     @Override

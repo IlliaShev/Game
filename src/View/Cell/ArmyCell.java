@@ -8,21 +8,17 @@ public class ArmyCell extends Cell implements BuildingCell{
 
     private static final String imageURL = "file:resources\\images\\city\\Knight.png";//path to image of city
     private Army army;
-    private CityHandler cityHandler;
 
     public ArmyCell(int length, int x, int y) {
         super(length, x, y, false);
-        cityHandler = CityHandler.getCityHandler();
-        setCellImage();
-        initArmyClick();
     }
 
-    private void initArmyClick(){
-        this.setOnMouseClicked(mouseEvent -> {
-            if(!cellIsChosen() || isChosen()){
-                fillFields();
-            }
-        });
+    @Override
+    protected void clickResponse() {
+        super.clickResponse();
+        if(!cellIsChosen() || isChosen()){
+            fillFields();
+        }
     }
 
     public void fillFields() {
