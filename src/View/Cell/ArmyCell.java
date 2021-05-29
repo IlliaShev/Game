@@ -2,15 +2,22 @@ package View.Cell;
 
 import View.*;
 import javafx.scene.image.*;
+import javafx.scene.media.*;
 import javafx.scene.paint.*;
+
+import javax.sound.sampled.*;
+import java.io.*;
 
 public class ArmyCell extends Cell implements BuildingCell{
 
     private static final String imageURL = "file:resources\\images\\city\\Knight.png";//path to image of city
     private Army army;
+    private Clip clip;
+    private String sound = "C:\\Users\\lyubo\\Desktop\\JAVA - Останнє\\Game\\resources\\music\\Army.wav";
 
     public ArmyCell(int length, int x, int y) {
         super(length, x, y, false);
+        playSound();
     }
 
     @Override
@@ -63,5 +70,23 @@ public class ArmyCell extends Cell implements BuildingCell{
     protected void setCellImage() {
         Image knight = new Image(imageURL);
         this.setFill(new ImagePattern(knight, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
+    }
+
+    private void playSound(){
+        try {
+            File soundFile = new File(sound);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
+
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.start();
+
+        } catch (IOException  exc) {
+            exc.printStackTrace();
+        } catch (UnsupportedAudioFileException exc) {
+            exc.printStackTrace();
+        } catch (LineUnavailableException exc) {
+            exc.printStackTrace();
+        }
     }
 }

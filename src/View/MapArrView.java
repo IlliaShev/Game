@@ -1,7 +1,6 @@
 package View;
 
 import View.Cell.*;
-
 import java.awt.*;
 import java.util.Random;
 
