@@ -1,5 +1,6 @@
 package View.Cell;
 
+import View.MapView;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
@@ -18,15 +19,24 @@ public class FieldCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Field.png";//path to image of field
     private Clip clip;
-    private String sound = "C:\\Users\\lyubo\\Desktop\\JAVA - Останнє\\Game\\resources\\music\\Field.wav";
+    private String sound = "resources\\music\\Field.wav";
 
     public FieldCell(int length, int x, int y) {
-        super(length,x,y,false);
+        super(length,x,y,false, true);
         playSound();
     }
 
-    public FieldCell(int length){
-        super(length);
+    @Override
+    protected void clickResponse() {
+        super.clickResponse();
+        if(isReadyToMove()){
+            getCityWhereBuild().deleteBuilding(this);
+            ArmyCell army = getArmyCell();
+            getArmyCell().fillFields();
+            this.setArmyCellView(army);
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
+            getArmyCell().setPrevCell(this);
+        }
     }
 
     @Override

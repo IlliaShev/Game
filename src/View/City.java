@@ -18,6 +18,9 @@ public class City {
 
     public City(String name) {
         this.name = name;
+        resMineral = 4;
+        resGold = 4;
+        resField = 4;
         buildings = new ArrayList<>();
         armies = new ArrayList<>();
         Thread collectorRes = new Thread(() -> {
@@ -29,6 +32,7 @@ public class City {
                     e.printStackTrace();
                 }
                 collectResources();
+                spendResources();
             }
         });
         collectorRes.start();
@@ -45,7 +49,16 @@ public class City {
             if(armies.size()<3){
                 numberOfArmy++;
             }
+            armies.add(army);
         }
+    }
+
+    public void deleteBuilding(BuildingCell buildingCell){
+        buildings.remove(buildingCell);
+    }
+
+    public boolean hasBuilding(BuildingCell buildingCell){
+        return buildings.contains(buildingCell);
     }
 
     public ArrayList<Army> getArmies() {
@@ -81,6 +94,15 @@ public class City {
             else if(buildingCell.getClass().equals(GoldmineCell.class))
                 resGold++;
         }
+    }
+
+    public void spendResources(){
+        if(resField > 0)
+            resField--;
+        if(resGold > 0)
+            resGold--;
+        if(resMineral > 0)
+            resMineral--;
     }
 
 

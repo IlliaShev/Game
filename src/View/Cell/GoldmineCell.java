@@ -1,5 +1,6 @@
 package View.Cell;
 
+import View.MapView;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
@@ -18,10 +19,23 @@ public class GoldmineCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Goldmine.png";//path to image of goldmine
     private Clip clip;
-    private String sound = "C:\\Users\\lyubo\\Desktop\\JAVA - Останнє\\Game\\resources\\music\\Goldmine.wav";
+    private String sound = "resources\\music\\Goldmine.wav";
 
     public GoldmineCell(int length, int x, int y) {
-        super(length,x,y,false);
+        super(length,x,y,false, true);
+    }
+
+    @Override
+    protected void clickResponse() {
+        super.clickResponse();
+        if(isReadyToMove()){
+            getCityWhereBuild().deleteBuilding(this);
+            ArmyCell army = getArmyCell();
+            getArmyCell().fillFields();
+            this.setArmyCellView(army);
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
+            getArmyCell().setPrevCell(this);
+        }
         playSound();
     }
 

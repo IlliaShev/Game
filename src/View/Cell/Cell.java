@@ -21,13 +21,15 @@ public abstract class Cell extends Rectangle {
     private boolean readyToBuild;
     private boolean readyToMove;
     private boolean isChosen;
+    private boolean armyCanMove;
     private City cityWhereBuild;
     private ArmyCell armyCellView;
 
-    public Cell(int length, int x, int y, boolean isEmpty) {
+    public Cell(int length, int x, int y, boolean isEmpty, boolean armyCanMove) {
         this.x = x;
         this.y = y;
         this.isEmpty = isEmpty;
+        this.armyCanMove = armyCanMove;
         this.setWidth(length);
         this.setHeight(length);
         setMousePointed();
@@ -127,12 +129,20 @@ public abstract class Cell extends Rectangle {
         isChosen = chosen;
     }
 
-    public ArmyCell getArmyCellView() {
+    public ArmyCell getArmyCell() {
         return armyCellView;
     }
 
     public void setArmyCellView(ArmyCell armyCellView) {
         this.armyCellView = armyCellView;
+    }
+
+    public boolean isArmyCanMove() {
+        return armyCanMove;
+    }
+
+    public void setArmyCanMove(boolean armyCanMove) {
+        this.armyCanMove = armyCanMove;
     }
 
     // methods
@@ -155,7 +165,6 @@ public abstract class Cell extends Rectangle {
      * @since 1.1.1
      */
     public void setDefaultFill() {
-        if (this.isEmpty)
             setCellImage();
     }
 

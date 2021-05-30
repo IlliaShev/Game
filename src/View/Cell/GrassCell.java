@@ -9,7 +9,7 @@ public class GrassCell extends Cell {
     private static final String imageURL = "file:resources\\images\\cells\\Grass.png";//path to image of grass
 
     public GrassCell(int length, int x, int y) {
-        super(length, x, y,true);
+        super(length, x, y,true, true);
     }
 
 
@@ -18,15 +18,16 @@ public class GrassCell extends Cell {
         super.clickResponse();
         if(isReadyToBuild()) {
             if(getCityWhereBuild().getBuildings().size() < 8) {
-                MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
+                MapView.getMapView().changeCell(takeX(), takeY(), getCityWhereBuild(), this);
                 setReadyToBuild(false);
             }
         }
         else if(isReadyToMove()){
-            ArmyCell army = getArmyCellView();
-            getArmyCellView().fillFields();
+            ArmyCell army = getArmyCell();
+            getArmyCell().fillFields();
             this.setArmyCellView(army);
-            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
+            getArmyCell().setPrevCell(this);
         }
     }
 

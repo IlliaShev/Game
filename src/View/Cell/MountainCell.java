@@ -17,7 +17,7 @@ public class MountainCell extends Cell {
     private static final String imageURL = "file:resources\\images\\cells\\Mountain.png";//path to image of mountain
 
     public MountainCell(int length, int x, int y) {
-        super(length,x,y,false);
+        super(length,x,y,false, false);
     }
 
     public MountainCell(int length) {

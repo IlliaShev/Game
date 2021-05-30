@@ -61,7 +61,7 @@ public class GameScene extends Scene {
 
     private void playBackMusic(){
         try {
-            File soundFile = new File("C:/Users/lyubo/Desktop/JAVA - Останнє/Game/resources/music/Game.wav");;
+            File soundFile = new File("resources/music/Game.wav");;
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
 
             clip = AudioSystem.getClip();

@@ -17,7 +17,7 @@ public class ForestCell extends Cell implements EmptyCell {
     private static final String imageURL = "file:resources\\images\\cells\\Forest.jpg";//path to image of forest
 
     public ForestCell(int length, int x, int y) {
-        super(length,x,y,true);
+        super(length,x,y,true, true);
     }
 
 
@@ -26,15 +26,16 @@ public class ForestCell extends Cell implements EmptyCell {
         super.clickResponse();
         if(isReadyToBuild()) {
             if(getCityWhereBuild().getBuildings().size() < 8) {
-                MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
+                MapView.getMapView().changeCell(takeX(), takeY(), getCityWhereBuild(), this);
                 setReadyToBuild(false);
             }
         }
         else if(isReadyToMove()){
-            ArmyCell army = getArmyCellView();
-            getArmyCellView().fillFields();
+            ArmyCell army = getArmyCell();
+            getArmyCell().fillFields();
             this.setArmyCellView(army);
-            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
+            getArmyCell().setPrevCell(this);
         }
     }
 

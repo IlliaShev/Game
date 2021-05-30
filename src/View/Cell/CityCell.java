@@ -18,7 +18,7 @@ public class CityCell extends Cell {
     private City city;
 
     public CityCell(int length, int x, int y) {
-        super(length, x, y, false);
+        super(length, x, y, false, false);
     }
 
     // private methods
@@ -26,7 +26,7 @@ public class CityCell extends Cell {
     @Override
     protected void clickResponse() {
         super.clickResponse();
-        if(!cellIsChosen() || isChosen()) {
+        if((!cellIsChosen() || isChosen()) &&Player.getPlayer().hasCity(city)) {
             this.setChosen(!this.isChosen());
             Cell[][] cell = MapArrView.getMapArrView().getMap();
             int indX = this.takeX();

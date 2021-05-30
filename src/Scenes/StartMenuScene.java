@@ -27,7 +27,7 @@ public class StartMenuScene extends Scene {
         firstLabel.setFont(Font.font("Candara", FontWeight.BOLD,40));
         firstLabel.setTextFill(Paint.valueOf("ORANGE"));
 
-        InputStream stream = new FileInputStream("C:\\Users\\lyubo\\Desktop\\JAVA - Останнє\\Game\\resources\\images\\Logo.png");
+        InputStream stream = new FileInputStream("resources\\images\\Logo.png");
         Image image = new Image(stream);
         ImageView imageView = new ImageView();
         imageView.setImage(image);
@@ -55,7 +55,7 @@ public class StartMenuScene extends Scene {
         Group startGroup = new Group();
         startGroup.getChildren().add(startMenu);
 
-        InputStream backStream = new FileInputStream("C:\\Users\\lyubo\\Desktop\\JAVA - Останнє\\Game\\resources\\images\\Back.gif");
+        InputStream backStream = new FileInputStream("resources\\images\\Back.gif");
 
         startMenuPane.setPrefWidth(MAP_LENGTH);
         startMenuPane.setPrefHeight(FRAME_LENGTH);
@@ -67,7 +67,7 @@ public class StartMenuScene extends Scene {
 
     private void playBackMusic(){
         try {
-            File soundFile = new File("C:/Users/lyubo/Desktop/JAVA - Останнє/Game/resources/music/StartMenu.wav");;
+            File soundFile = new File("resources/music/StartMenu.wav");;
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
 
             clip = AudioSystem.getClip();
