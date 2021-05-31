@@ -1,7 +1,6 @@
 package View;
 
 import View.Cell.*;
-import javafx.scene.paint.Paint;
 
 import java.awt.*;
 import java.util.Random;
@@ -44,7 +43,8 @@ public class MapArrView {
             CityCell cityCell = new CityCell(CELL_WIDTH, i, j);
             if(PlayersHandler.getPlayersHandler().getPlayer(0).getCities().size() < 2) {
                 System.out.println(i + " " + j);
-                PlayersHandler.getPlayersHandler().getPlayer(0).addCity(cityCell);
+                PlayersHandler.getPlayersHandler().getPlayer(0).addCityCell(cityCell);
+
             } else{
                 City city = new City("Enemy");
                 cityCell.setCity(city);

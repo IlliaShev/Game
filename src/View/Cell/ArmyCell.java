@@ -34,6 +34,7 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
             if(army.getArmy().getHealth() > 0) {
                 System.out.println("We won");
                 this.setArmyCellView(army);
+                getArmy().getCity().deleteBuilding(this);
                 MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
                 getArmyCell().setPrevCell(null);
             } else if(getArmy().getHealth() > 0){
@@ -42,6 +43,8 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
                 army.getCityWhereBuild().deleteBuilding(army);
             } else{
                 System.out.println("All lose");
+                getArmy().getCity().deleteBuilding(this);
+                army.getArmy().getCity().deleteBuilding(army);
                 MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
                 MapView.getMapView().changeOnGrass(takeX(), takeY());
             }

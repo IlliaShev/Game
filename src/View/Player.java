@@ -24,32 +24,21 @@ public class Player {
         this.cities = cities;
     }
 
-    public void addCity(CityCell cityCell){
+    public void addCityCell(CityCell cityCell){
         City city = new City("SMT");
-        cityCell.setCity(city);
-        city.setCityCell(cityCell);
-        CityHandler.getCityHandler().addCity(city);
+        cityCell.setCity(city); // set city to cell
+        city.setCityCell(cityCell); // set cell to city
+        CityHandler.getCityHandler().addCity(city); // add city to all cities handler
+        cities.add(city); // add city to player`s cities
+        city.setPlayer(this); // set player to city
+    }
+
+    public void addCity(City city){
         cities.add(city);
     }
 
     public boolean hasCity(City city){
         return cities.contains(city);
-    }
-
-    public boolean canAttack(Army firstArmy, Army secondArmy){
-
-        boolean firstArmyValid = false;
-        boolean secondArmyValid = true;
-
-        for(City city : cities){
-            if(city.getArmies().contains(firstArmy)){
-                firstArmyValid = true;
-            }
-            if (city.getArmies().contains(secondArmy)){
-                secondArmyValid = false;
-            }
-        }
-        return firstArmyValid && secondArmyValid;
     }
 
     public void attack(Army firstArmy, Army secondArmy){
@@ -59,6 +48,16 @@ public class Player {
             int secondArmyDamage = rand.nextInt(secondArmy.getDefenceDamage()*2);
             firstArmy.receiveDamage(secondArmyDamage);
             secondArmy.receiveDamage(firstArmyDamage);
+        }
+    }
+
+    public void attackCity(Army army, City city){
+        while(army.getHealth()>0 && city.getHealth()>0){
+            Random rand = new Random();
+            int armyDamage = rand.nextInt(army.getAttackDamage()*2);
+            int cityDamage = rand.nextInt(city.getDefenceDamage()*2);
+            army.receiveDamage(cityDamage);
+            city.receiveDamage(armyDamage);
         }
     }
 

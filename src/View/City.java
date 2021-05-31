@@ -13,15 +13,19 @@ public class City {
     private CityCell cityCell;
     private int numberOfArmy;
     private Player player;
+    private int health;
+    private int defenceDamage;
     private ArrayList<Army> armies;
 
     private ArrayList<BuildingCell> buildings;
 
     public City(String name) {
         this.name = name;
-        resMineral = 4;
-        resGold = 4;
-        resField = 4;
+        resMineral = 5;
+        resGold = 5;
+        resField = 5;
+        health = 100;
+        defenceDamage = 20;
         buildings = new ArrayList<>();
         armies = new ArrayList<>();
         Thread collectorRes = new Thread(() -> {
@@ -86,6 +90,30 @@ public class City {
         return buildings;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getDefenceDamage() {
+        return defenceDamage;
+    }
+
+    public void setDefenceDamage(int defenceDamage) {
+        this.defenceDamage = defenceDamage;
+    }
+
     public void collectResources(){
         for(BuildingCell buildingCell: buildings){
             if(buildingCell.getClass().equals(FieldCell.class))
@@ -107,6 +135,12 @@ public class City {
     }
 
 
+    public void receiveDamage(int damage){
+        this.health -= damage;
+        if(this.health<=0){
+            this.health = 0;
+        }
+    }
 
     @Override
     public String toString() {
