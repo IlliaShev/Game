@@ -20,16 +20,19 @@ public abstract class Cell extends Rectangle {
     private boolean isEmpty; //cell don't have any structures
     private boolean readyToBuild;
     private boolean readyToMove;
+    private boolean readyToGotAttack;
     private boolean isChosen;
     private boolean armyCanMove;
+    private boolean armyCanAttack;
     private City cityWhereBuild;
     private ArmyCell armyCellView;
 
-    public Cell(int length, int x, int y, boolean isEmpty, boolean armyCanMove) {
+    public Cell(int length, int x, int y, boolean isEmpty, boolean armyCanMove, boolean armyCanAttack) {
         this.x = x;
         this.y = y;
         this.isEmpty = isEmpty;
         this.armyCanMove = armyCanMove;
+        this.armyCanAttack = armyCanAttack;
         this.setWidth(length);
         this.setHeight(length);
         setMousePointed();
@@ -143,6 +146,22 @@ public abstract class Cell extends Rectangle {
 
     public void setArmyCanMove(boolean armyCanMove) {
         this.armyCanMove = armyCanMove;
+    }
+
+    public boolean isArmyCanAttack() {
+        return armyCanAttack;
+    }
+
+    public void setArmyCanAttack(boolean armyCanAttack) {
+        this.armyCanAttack = armyCanAttack;
+    }
+
+    public boolean isReadyToGotAttack() {
+        return readyToGotAttack;
+    }
+
+    public void setReadyToGotAttack(boolean readyToGotAttack) {
+        this.readyToGotAttack = readyToGotAttack;
     }
 
     // methods

@@ -22,7 +22,7 @@ public class GoldmineCell extends Cell implements BuildingCell {
     private String sound = "resources\\music\\Goldmine.wav";
 
     public GoldmineCell(int length, int x, int y) {
-        super(length,x,y,false, true);
+        super(length,x,y,false, true, false);
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.awt.*;
 public class MapView {
     public static int CELL_WIDTH;
     private Point mapLU = new Point(0, 0);
-    private Point mapRB = new Point(29, 15);//TODO figure out what happens here
+    private Point mapRB = new Point(29, 15);
     private MapArrView mapArrView;
     private Cell[][] map;
     private int width;
@@ -17,23 +17,31 @@ public class MapView {
     private GridPane gridPane;
     private static MapView mapView;
 
-    // get instance
-
-    public static MapView getMapView(int width, int height, GridPane gridPane) {
-        if (mapView == null)
-            mapView = new MapView(width, height, gridPane);
-        return mapView;
-    }
-
     private MapView(int width, int height, GridPane gridPane) {
-        this.height = height;
         this.width = width;
+        this.height = height;
         this.gridPane = gridPane;
-        CELL_WIDTH = Math.min(this.width / (mapRB.x - mapLU.x), this.height / (mapRB.y - mapLU.y));
+        CELL_WIDTH = Math.min(width / (mapRB.x - mapLU.x), height / (mapRB.y - mapLU.y));
         initGridPane();
         mapArrView = MapArrView.getMapArr(CELL_WIDTH);
         map = mapArrView.getMap();
         drawMap();
+    }
+
+    public static MapView getMapView(int length, GridPane gridPane) {
+        if (mapView == null)
+            mapView = new MapView(length, length, gridPane);
+        return mapView;
+    }
+
+    public static MapView getMapView() {
+        return mapView;
+    }
+
+    public static MapView getMapView(int frame_width, int frame_height, GridPane gridPane) {
+        if (mapView == null)
+            mapView = new MapView(frame_width, frame_height, gridPane);
+        return mapView;
     }
 
     private void initGridPane() {
@@ -42,33 +50,6 @@ public class MapView {
         gridPane.setPadding(new Insets(0, 0, 0, 0));
     }
 
-    // getters & setters
-
-    public Point getMapLU() {
-        return mapLU;
-    }
-
-    public void setMapLU(Point mapLU) {
-        if (mapLU.getX() > mapRB.getX() || mapLU.getY() > mapRB.getY())
-            throw new IllegalArgumentException("");
-        this.mapLU = mapLU;
-        drawMap();
-    }
-
-    public Point getMapRB() {
-        return mapRB;
-    }
-
-    public void setMapRB(Point mapRB) {
-        this.mapRB = mapRB;
-        drawMap();
-    }
-
-    public static MapView getMapView() {
-        return mapView;
-    }
-
-    // methods
 
     public void drawMap() {
         gridPane.getChildren().clear();
@@ -80,8 +61,29 @@ public class MapView {
         }
     }
 
-    public void changeCell(int i, int j,City cityWhereBuild, Cell prevCell){
-        mapArrView.changeCell(i,j,cityWhereBuild, prevCell);
+    public Point getMapLU() {
+        return mapLU;
+    }
+
+    public void setMapLU(Point mapLU) {
+        this.mapLU = mapLU;
+    }
+
+    public Point getMapRB() {
+        return mapRB;
+    }
+
+    public void setMapRB(Point mapRB) {
+        this.mapRB = mapRB;
+    }
+
+    public void changeCell(int i, int j, City cityWhereBuild, Cell prevCell) {
+        mapArrView.changeCell(i, j, cityWhereBuild, prevCell);
+        drawMap();
+    }
+
+    public void changeOnGrass(int i, int j) {
+        mapArrView.changeCellOnGrass(i, j);
         drawMap();
     }
 
