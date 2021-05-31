@@ -6,18 +6,10 @@ import java.util.*;
 
 public class Player {
 
-    private static Player player;
-
     private ArrayList<City> cities;
 
-    private Player(){
+    public Player(){
         cities = new ArrayList<>();
-    }
-
-    public static Player getPlayer(){
-        if(player == null)
-            player = new Player();
-        return player;
     }
 
     public Player(ArrayList<City> cities){
@@ -61,7 +53,7 @@ public class Player {
     }
 
     public void attack(Army firstArmy, Army secondArmy){
-        while(firstArmy.getHealth()>0 || secondArmy.getHealth()>0){
+        while(firstArmy.getHealth()>0 && secondArmy.getHealth()>0){
             Random rand = new Random();
             int firstArmyDamage = rand.nextInt(firstArmy.getAttackDamage()*2);
             int secondArmyDamage = rand.nextInt(secondArmy.getDefenceDamage()*2);

@@ -12,13 +12,13 @@ import javafx.scene.paint.*;
  * @version 1.0.0
  * @see Cell
  */
-public class CityCell extends Cell {
+public class CityCell extends Cell implements Attackable{
 
     private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
     private City city;
 
     public CityCell(int length, int x, int y) {
-        super(length, x, y, false, false);
+        super(length, x, y, false, false, true);
     }
 
     // private methods
@@ -26,7 +26,7 @@ public class CityCell extends Cell {
     @Override
     protected void clickResponse() {
         super.clickResponse();
-        if((!cellIsChosen() || isChosen()) &&Player.getPlayer().hasCity(city)) {
+        if((!cellIsChosen() || isChosen()) &&PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(city)) {
             this.setChosen(!this.isChosen());
             Cell[][] cell = MapArrView.getMapArrView().getMap();
             int indX = this.takeX();

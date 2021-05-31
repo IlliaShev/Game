@@ -17,7 +17,7 @@ public class MountainCell extends Cell {
     private static final String imageURL = "file:resources\\images\\cells\\Mountain.png";//path to image of mountain
 
     public MountainCell(int length, int x, int y) {
-        super(length,x,y,false, false);
+        super(length,x,y,false, true, false);
     }
 
     public MountainCell(int length) {
@@ -33,13 +33,14 @@ public class MountainCell extends Cell {
                 MapView.getMapView().changeCell(takeX(), takeY(), 1, getCityWhereBuild());
                 setReadyToBuild(false);
             }
-        }
-        else if(isReadyToMove()){
-            ArmyCell army = getArmyCellView();
-            getArmyCellView().fillFields();
-            this.setArmyCellView(army);
-            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCellView());
         }*/
+        if(isReadyToMove()){
+            ArmyCell army = getArmyCell();
+            getArmyCell().fillFields();
+            this.setArmyCellView(army);
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
+            getArmyCell().setPrevCell(this);
+        }
     }
 
     @Override

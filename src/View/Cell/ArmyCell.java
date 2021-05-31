@@ -7,7 +7,7 @@ import javafx.scene.paint.*;
 import javax.sound.sampled.*;
 import java.io.*;
 
-public class ArmyCell extends Cell implements BuildingCell{
+public class ArmyCell extends Cell implements BuildingCell, Attackable{
 
     private static final String imageURL = "file:resources\\images\\city\\Knight.png";//path to image of city
     private Army army;
@@ -16,16 +16,37 @@ public class ArmyCell extends Cell implements BuildingCell{
     private String sound = "resources\\music\\Army.wav";
 
     public ArmyCell(int length, int x, int y) {
-        super(length, x, y, false, false);
-        playSound();
+        super(length, x, y, false, false,true);
     }
 
     @Override
     protected void clickResponse() {
         super.clickResponse();
-        if((!cellIsChosen() || isChosen()) && Player.getPlayer().hasArmy(army)){
+        if((!cellIsChosen() || isChosen()) && PlayersHandler.getPlayersHandler().getPlayer(0).hasArmy(army)){
             fillFields();
         }
+        if(isReadyToGotAttack()){
+            ArmyCell army = getArmyCell();
+            getArmyCell().fillFields();
+            System.out.println(army.getArmy().getHealth() + " " + getArmy().getHealth());
+            PlayersHandler.getPlayersHandler().getPlayer(0).attack(army.getArmy(), this.getArmy());
+            System.out.println(army.getArmy().getHealth() + " " + getArmy().getHealth());
+            if(army.getArmy().getHealth() > 0) {
+                System.out.println("We won");
+                this.setArmyCellView(army);
+                MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
+                getArmyCell().setPrevCell(null);
+            } else if(getArmy().getHealth() > 0){
+                System.out.println("We lose");
+                MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
+                army.getCityWhereBuild().deleteBuilding(army);
+            } else{
+                System.out.println("All lose");
+                MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
+                MapView.getMapView().changeOnGrass(takeX(), takeY());
+            }
+        }
+        playSound();
     }
 
     public void fillFields() {
@@ -36,10 +57,19 @@ public class ArmyCell extends Cell implements BuildingCell{
         if (isChosen()) {
             for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, 49); i++) {
                 for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, 49); j++) {
-                    if (cell[i][j].isArmyCanMove() && isProperCell(cell[i][j])) {
+                    if(!isProperCell(cell[i][j]))
+                        continue;
+                    if (cell[i][j].isArmyCanMove()) {
                         cell[i][j].setFill(Paint.valueOf("RED"));
                         cell[i][j].setReadyToBuild(false);
                         cell[i][j].setReadyToMove(true);
+                        cell[i][j].setArmyCellView(this);
+                    }
+                    if(cell[i][j].isArmyCanAttack()){
+                        cell[i][j].setFill(Paint.valueOf("BLUE"));
+                        cell[i][j].setReadyToBuild(false);
+                        cell[i][j].setReadyToMove(false);
+                        cell[i][j].setReadyToGotAttack(true);
                         cell[i][j].setArmyCellView(this);
                     }
                 }
@@ -47,10 +77,11 @@ public class ArmyCell extends Cell implements BuildingCell{
         } else {
             for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, 49); i++) {
                 for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, 49); j++) {
-                    if (cell[i][j].isArmyCanMove()) {
+                    if (cell[i][j].isArmyCanMove() || cell[i][j].isReadyToGotAttack()) {
                         cell[i][j].setDefaultFill();
                         cell[i][j].setReadyToBuild(false);
                         cell[i][j].setReadyToMove(false);
+                        cell[i][j].setReadyToGotAttack(false);
                         cell[i][j].setArmyCellView(null);
                     }
                 }
@@ -59,10 +90,12 @@ public class ArmyCell extends Cell implements BuildingCell{
     }
 
     private boolean isProperCell(Cell cell) {
-        if(!(cell instanceof BuildingCell))
-            return true;
-        for(City city: Player.getPlayer().getCities()){
-            if(city.hasBuilding((BuildingCell) cell))
+        for(City city: PlayersHandler.getPlayersHandler().getPlayer(0).getCities()){
+            if(cell instanceof BuildingCell) {
+                if (city.hasBuilding((BuildingCell) cell))
+                    return false;
+            }
+            if(city.getCityCell() == cell)
                 return false;
         }
         return true;

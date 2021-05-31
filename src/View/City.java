@@ -12,6 +12,7 @@ public class City {
     public static final int maxNumberOfBuildings = 8;
     private CityCell cityCell;
     private int numberOfArmy;
+    private Player player;
     private ArrayList<Army> armies;
 
     private ArrayList<BuildingCell> buildings;

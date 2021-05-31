@@ -22,7 +22,7 @@ public class MineralCell extends Cell implements BuildingCell{
     private String sound = "resources\\music\\Mineral.wav";
 
     public MineralCell(int length, int x, int y) {
-        super(length,x,y,false, true);
+        super(length,x,y,false, true, false);
     }
 
     @Override

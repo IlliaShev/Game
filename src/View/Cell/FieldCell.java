@@ -22,8 +22,7 @@ public class FieldCell extends Cell implements BuildingCell {
     private String sound = "resources\\music\\Field.wav";
 
     public FieldCell(int length, int x, int y) {
-        super(length,x,y,false, true);
-        playSound();
+        super(length,x,y,false, true, false);
     }
 
     @Override
@@ -37,6 +36,7 @@ public class FieldCell extends Cell implements BuildingCell {
             MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
             getArmyCell().setPrevCell(this);
         }
+        playSound();
     }
 
     @Override

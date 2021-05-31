@@ -9,7 +9,7 @@ public class GrassCell extends Cell {
     private static final String imageURL = "file:resources\\images\\cells\\Grass.png";//path to image of grass
 
     public GrassCell(int length, int x, int y) {
-        super(length, x, y,true, true);
+        super(length, x, y,true, true, false);
     }
 
 

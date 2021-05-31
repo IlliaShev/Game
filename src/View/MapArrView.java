@@ -42,9 +42,9 @@ public class MapArrView {
         Random random = new Random();
         if(random.nextInt(100)>98){
             CityCell cityCell = new CityCell(CELL_WIDTH, i, j);
-            if(Player.getPlayer().getCities().size() < 2) {
+            if(PlayersHandler.getPlayersHandler().getPlayer(0).getCities().size() < 2) {
                 System.out.println(i + " " + j);
-                Player.getPlayer().addCity(cityCell);
+                PlayersHandler.getPlayersHandler().getPlayer(0).addCity(cityCell);
             } else{
                 City city = new City("Enemy");
                 cityCell.setCity(city);
@@ -95,6 +95,18 @@ public class MapArrView {
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
     }
 
+    public void changeCellOnGrass(int i, int j){
+        map[i][j] = new GrassCell(CELL_WIDTH, i, j);
+    }
+
+    public void changeCellOnForest(int i, int j) {
+        map[i][j] = new ForestCell(CELL_WIDTH,i,j);
+    }
+
+    public void changeCellOnMountain(int i, int j){
+        map[i][j] = new MountainCell(CELL_WIDTH,i,j);
+    }
+
 //    public void changeCell(int i, int j, int type, City cityWhereBuild){
 //        map[i][j] = new ArmyCell(CELL_WIDTH, i,j);
 //        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
@@ -105,10 +117,16 @@ public class MapArrView {
         map[i][j] = armyCell;
         armyCell.setX(i);
         armyCell.setY(j);
-        if(armyCell.getPrevCell().getClass().equals(ForestCell.class))
-            map[armyCellP.x][armyCellP.y] = new ForestCell(CELL_WIDTH, armyCellP.x, armyCellP.y);
-        else{
-            map[armyCellP.x][armyCellP.y] = new GrassCell(CELL_WIDTH, armyCellP.x, armyCellP.y);
+        if(armyCell.getPrevCell() == null){
+            changeCellOnGrass(armyCellP.x, armyCellP.y);
+            return;
+        }
+        if(armyCell.getPrevCell().getClass().equals(ForestCell.class)) {
+            changeCellOnForest(armyCellP.x, armyCellP.y);
+        } else if(armyCell.getPrevCell().getClass().equals(MountainCell.class)){
+            changeCellOnMountain(armyCellP.x, armyCellP.y);
+        } else{
+            changeCellOnGrass(armyCellP.x, armyCellP.y);
         }
     }
 

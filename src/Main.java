@@ -1,4 +1,6 @@
 import Scenes.*;
+import View.Player;
+import View.PlayersHandler;
 import javafx.application.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -33,6 +35,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        PlayersHandler.getPlayersHandler().addPlayer(new Player());
         launch(args);
     }
 

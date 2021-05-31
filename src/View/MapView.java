@@ -8,7 +8,7 @@ import java.awt.*;
 public class MapView {
     public static int CELL_WIDTH;
     private Point mapLU = new Point(10,10);
-    private Point mapRB = new Point(25,25);
+    private Point mapRB = new Point(25,21);
     private MapArrView mapArrView;
     private Cell[][] map;
     private int length;
@@ -70,6 +70,11 @@ public class MapView {
 
     public void changeCell(int i, int j,City cityWhereBuild, Cell prevCell){
         mapArrView.changeCell(i,j,cityWhereBuild, prevCell);
+        drawMap();
+    }
+
+    public void changeOnGrass(int i, int j){
+        mapArrView.changeCellOnGrass(i, j);
         drawMap();
     }
 
