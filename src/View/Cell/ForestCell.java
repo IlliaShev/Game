@@ -14,7 +14,7 @@ import javafx.scene.paint.ImagePattern;
  */
 public class ForestCell extends Cell implements EmptyCell {
 
-    private static final String imageURL = "file:resources\\images\\cells\\Forest.jpg";//path to image of forest
+    private static final String imageURL = "file:resources\\images\\cells\\Forest.png";//path to image of forest
 
     public ForestCell(int length, int x, int y) {
         super(length,x,y,true, true, false);
