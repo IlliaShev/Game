@@ -15,6 +15,7 @@ import javafx.scene.paint.*;
 public class CityCell extends Cell implements Attackable{
 
     private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
+    private static final String imageEnemyURL = "file:resources\\images\\city\\EnemyCity.png";//path to image of city
     private City city;
 
     public CityCell(int length, int x, int y) {
@@ -39,6 +40,10 @@ public class CityCell extends Cell implements Attackable{
             if(army.getArmy().getHealth() > 0) {
                 System.out.println("We won");
                 player.addCity(city);
+                for(BuildingCell buildingCell: city.getBuildings()){
+                    ((Cell)buildingCell).setDefaultFill();
+                }
+                setDefaultFill();
             } else {
                 System.out.println("We lose");
                 MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
@@ -93,8 +98,11 @@ public class CityCell extends Cell implements Attackable{
 
     @Override
     protected void setCellImage() {
-        Image city = new Image(imageURL);
-        this.setFill(new ImagePattern(city, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
+        if(PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(getCity())) {
+            fillCell(imageURL);
+        } else{
+            fillCell(imageEnemyURL);
+        }
     }
 
     public City getCity() {

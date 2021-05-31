@@ -44,6 +44,7 @@ public class MapArrView {
             if(PlayersHandler.getPlayersHandler().getPlayer(0).getCities().size() < 2) {
                 System.out.println(i + " " + j);
                 PlayersHandler.getPlayersHandler().getPlayer(0).addCityCell(cityCell);
+                cityCell.setDefaultFill();
 
             } else{
                 City city = new City("Enemy");
@@ -93,6 +94,22 @@ public class MapArrView {
         }
         map[i][j].setCityWhereBuild(cityWhereBuild);
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
+        map[i][j].setDefaultFill();
+    }
+
+    public void buildResources(int i, int j, City cityWhereBuild, Class<BuildingCell> type){
+        if(type.equals(MineralCell.class)){
+            map[i][j] = new MineralCell(CELL_WIDTH, i, j);
+        } else if(type.equals(FieldCell.class)){
+            map[i][j] = new FieldCell(CELL_WIDTH, i, j);
+        } else if(type.equals(GoldmineCell.class)){
+            map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
+        } else{
+            map[i][j] = new ArmyCell(CELL_WIDTH, i, j);
+        }
+        map[i][j].setCityWhereBuild(cityWhereBuild);
+        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
+        map[i][j].setDefaultFill();
     }
 
     public void changeCellOnGrass(int i, int j){

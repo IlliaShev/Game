@@ -10,6 +10,7 @@ import java.io.*;
 public class ArmyCell extends Cell implements BuildingCell, Attackable{
 
     private static final String imageURL = "file:resources\\images\\city\\Knight.png";//path to image of city
+    private static final String imageEnemyURL = "file:resources\\images\\city\\EnemyKnight.png";
     private Army army;
     private Cell prevCell;
     private Clip clip;
@@ -122,8 +123,11 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
 
     @Override
     protected void setCellImage() {
-        Image knight = new Image(imageURL);
-        this.setFill(new ImagePattern(knight, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
+       if(PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(getCityWhereBuild())){
+           fillCell(imageURL);
+       } else{
+           fillCell(imageEnemyURL);
+       }
     }
 
 

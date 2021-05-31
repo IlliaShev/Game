@@ -1,6 +1,8 @@
 package View.Cell;
 
 import View.*;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
@@ -176,6 +178,11 @@ public abstract class Cell extends Rectangle {
             }
         }
         return false;
+    }
+
+    protected void fillCell(String url){
+        Image city = new Image(url);
+        this.setFill(new ImagePattern(city, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
 
     /**

@@ -1,6 +1,7 @@
 package View.Cell;
 
 import View.MapView;
+import View.PlayersHandler;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
@@ -18,6 +19,7 @@ import java.io.*;
 public class FieldCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Field.png";//path to image of field
+    private static final String imageEnemyURL = "file:resources\\images\\city\\buildings\\EnemyField.png";
     private Clip clip;
     private String sound = "resources\\music\\Field.wav";
 
@@ -41,8 +43,11 @@ public class FieldCell extends Cell implements BuildingCell {
 
     @Override
     protected void setCellImage() {
-        Image field = new Image(imageURL);
-        this.setFill(new ImagePattern(field, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
+        if(PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(getCityWhereBuild())){
+            fillCell(imageURL);
+        } else{
+            fillCell(imageEnemyURL);
+        }
     }
 
     private void playSound(){

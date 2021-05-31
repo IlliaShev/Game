@@ -82,6 +82,11 @@ public class MapView {
         drawMap();
     }
 
+    public void buildResources(int i, int j, City cityWhereBuild, Class<BuildingCell> type){
+        mapArrView.buildResources(i,j,cityWhereBuild,type);
+        drawMap();
+    }
+
     public void changeOnGrass(int i, int j) {
         mapArrView.changeCellOnGrass(i, j);
         drawMap();

@@ -1,6 +1,7 @@
 package View.Cell;
 
 import View.MapView;
+import View.PlayersHandler;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
@@ -18,6 +19,7 @@ import java.io.*;
 public class GoldmineCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Goldmine.png";//path to image of goldmine
+    private static final String imageEnemyURL = "file:resources\\images\\city\\buildings\\EnemyGoldmine.png";
     private Clip clip;
     private String sound = "resources\\music\\Goldmine.wav";
 
@@ -41,8 +43,11 @@ public class GoldmineCell extends Cell implements BuildingCell {
 
     @Override
     protected void setCellImage() {
-        Image goldmine = new Image(imageURL);
-        this.setFill(new ImagePattern(goldmine, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
+        if(PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(getCityWhereBuild())){
+            fillCell(imageURL);
+        } else{
+            fillCell(imageEnemyURL);
+        }
     }
 
     private void playSound(){
