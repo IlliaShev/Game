@@ -7,7 +7,7 @@ import javafx.scene.paint.*;
 import javax.sound.sampled.*;
 import java.io.*;
 
-public class ArmyCell extends Cell implements BuildingCell{
+public class ArmyCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\Knight.png";//path to image of city
     private Army army;
@@ -17,13 +17,13 @@ public class ArmyCell extends Cell implements BuildingCell{
 
     public ArmyCell(int length, int x, int y) {
         super(length, x, y, false, false);
-        playSound();
+        //playSound();
     }
 
     @Override
     protected void clickResponse() {
         super.clickResponse();
-        if((!cellIsChosen() || isChosen()) && Player.getPlayer().hasArmy(army)){
+        if ((!cellIsChosen() || isChosen()) && Player.getPlayer().hasArmy(army)) {
             fillFields();
         }
     }
@@ -59,10 +59,10 @@ public class ArmyCell extends Cell implements BuildingCell{
     }
 
     private boolean isProperCell(Cell cell) {
-        if(!(cell instanceof BuildingCell))
+        if (!(cell instanceof BuildingCell))
             return true;
-        for(City city: Player.getPlayer().getCities()){
-            if(city.hasBuilding((BuildingCell) cell))
+        for (City city : Player.getPlayer().getCities()) {
+            if (city.hasBuilding((BuildingCell) cell))
                 return false;
         }
         return true;
@@ -91,7 +91,7 @@ public class ArmyCell extends Cell implements BuildingCell{
     }
 
 
-    private void playSound(){
+    public void playSound() {
         try {
             File soundFile = new File(sound);
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
@@ -100,7 +100,7 @@ public class ArmyCell extends Cell implements BuildingCell{
             clip.open(ais);
             clip.start();
 
-        } catch (IOException  exc) {
+        } catch (IOException exc) {
             exc.printStackTrace();
         } catch (UnsupportedAudioFileException exc) {
             exc.printStackTrace();

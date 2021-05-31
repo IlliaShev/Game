@@ -12,42 +12,40 @@ public class GameScene extends Scene {
     private MapView mapView;
     private Clip clip;
 
-    public GameScene(Group group, int MAP_LENGTH, int FRAME_LENGTH) {
-
-        super(group,MAP_LENGTH,FRAME_LENGTH);
-
+    public GameScene(Group group, int FRAME_WIDTH, int FRAME_HEIGHT) {
+        super(group, FRAME_WIDTH, FRAME_HEIGHT);
         BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
         borderPane.setCenter(gridPane);
-
+        borderPane.setBottom(ToolPanel.getInstance());
         group = new Group();
         group.getChildren().add(borderPane);
-        mapView = MapView.getMapView(MAP_LENGTH, gridPane);
+        mapView = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 3 * 2, gridPane);
 
         this.setRoot(group);
 
         this.setOnKeyPressed(event -> {
-            switch (event.getCode()){
-                case UP ->{
-                    if(mapView.getMapLU().y > 0) {
+            switch (event.getCode()) {
+                case UP -> {
+                    if (mapView.getMapLU().y > 0) {
                         mapView.getMapLU().y--;
                         mapView.getMapRB().y--;
                     }
                 }
                 case DOWN -> {
-                    if(mapView.getMapRB().y < 50) {
+                    if (mapView.getMapRB().y < 50) {
                         mapView.getMapLU().y++;
                         mapView.getMapRB().y++;
                     }
                 }
                 case LEFT -> {
-                    if(mapView.getMapLU().x > 0) {
+                    if (mapView.getMapLU().x > 0) {
                         mapView.getMapLU().x--;
                         mapView.getMapRB().x--;
                     }
                 }
                 case RIGHT -> {
-                    if(mapView.getMapRB().x < 50) {
+                    if (mapView.getMapRB().x < 50) {
                         mapView.getMapLU().x++;
                         mapView.getMapRB().x++;
                     }
@@ -59,9 +57,10 @@ public class GameScene extends Scene {
         playBackMusic();
     }
 
-    private void playBackMusic(){
+    private void playBackMusic() {
         try {
-            File soundFile = new File("resources/music/Game.wav");;
+            File soundFile = new File("resources/music/Game.wav");
+            ;
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
 
             clip = AudioSystem.getClip();
@@ -72,7 +71,7 @@ public class GameScene extends Scene {
 
             clip.loop(Clip.LOOP_CONTINUOUSLY);
 
-        } catch (IOException  exc) {
+        } catch (IOException exc) {
             exc.printStackTrace();
         } catch (UnsupportedAudioFileException exc) {
             exc.printStackTrace();

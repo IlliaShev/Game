@@ -22,14 +22,14 @@ public class FieldCell extends Cell implements BuildingCell {
     private String sound = "resources\\music\\Field.wav";
 
     public FieldCell(int length, int x, int y) {
-        super(length,x,y,false, true);
+        super(length, x, y, false, true);
         playSound();
     }
 
     @Override
     protected void clickResponse() {
         super.clickResponse();
-        if(isReadyToMove()){
+        if (isReadyToMove()) {
             getCityWhereBuild().deleteBuilding(this);
             ArmyCell army = getArmyCell();
             getArmyCell().fillFields();
@@ -45,7 +45,7 @@ public class FieldCell extends Cell implements BuildingCell {
         this.setFill(new ImagePattern(field, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
 
-    private void playSound(){
+    private void playSound() {
         try {
             File soundFile = new File(sound);
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
@@ -54,7 +54,7 @@ public class FieldCell extends Cell implements BuildingCell {
             clip.open(ais);
             clip.start();
 
-        } catch (IOException  exc) {
+        } catch (IOException exc) {
             exc.printStackTrace();
         } catch (UnsupportedAudioFileException exc) {
             exc.printStackTrace();
