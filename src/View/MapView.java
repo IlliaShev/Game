@@ -9,28 +9,31 @@ import java.awt.*;
 public class MapView {
     public static int CELL_WIDTH;
     private Point mapLU = new Point(0, 0);
-    private Point mapRB = new Point(29, 15);
+    private Point mapRB;
     private MapArrView mapArrView;
     private Cell[][] map;
     private int width;
     private int height;
     private GridPane gridPane;
     private static MapView mapView;
+    private int levelNumber;
 
-    private MapView(int width, int height, GridPane gridPane) {
+    private MapView(int width, int height, GridPane gridPane, int x, int y, int levelNumber) {
         this.width = width;
         this.height = height;
         this.gridPane = gridPane;
+        mapRB = new Point(x,y);
+        this.levelNumber = levelNumber;
         CELL_WIDTH = Math.min(width / (mapRB.x - mapLU.x), height / (mapRB.y - mapLU.y));
         initGridPane();
-        mapArrView = MapArrView.getMapArr(CELL_WIDTH);
+        mapArrView = MapArrView.getMapArr(CELL_WIDTH,y,x,levelNumber);
         map = mapArrView.getMap();
         drawMap();
     }
 
-    public static MapView getMapView(int length, GridPane gridPane) {
+    public static MapView getMapView(int length, GridPane gridPane, int x, int y, int levelNumber) {
         if (mapView == null)
-            mapView = new MapView(length, length, gridPane);
+            mapView = new MapView(length, length, gridPane, x, y, levelNumber);
         return mapView;
     }
 
@@ -38,9 +41,9 @@ public class MapView {
         return mapView;
     }
 
-    public static MapView getMapView(int frame_width, int frame_height, GridPane gridPane) {
+    public static MapView getMapView(int frame_width, int frame_height, GridPane gridPane, int x, int y, int levelNumber) {
         if (mapView == null)
-            mapView = new MapView(frame_width, frame_height, gridPane);
+            mapView = new MapView(frame_width, frame_height, gridPane, x, y, levelNumber);
         return mapView;
     }
 

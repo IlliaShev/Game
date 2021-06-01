@@ -22,6 +22,7 @@ public class Main extends Application {
         });
         stage.setTitle("TCU");
         stage.setScene(startScene);
+        stage.setResizable(false);
         stage.show();
         stage.setMinWidth(FRAME_WIDTH);
         stage.setMinHeight(FRAME_HEIGHT);
@@ -29,7 +30,7 @@ public class Main extends Application {
 
         startScene.getStartButton().setOnMouseClicked(mouseEvent -> {
             startScene.getClip().stop();
-            GameScene gameScene = new GameScene(new Group(),FRAME_WIDTH, FRAME_HEIGHT);
+            FirstLevelScene gameScene = new FirstLevelScene(new Group(),FRAME_WIDTH, FRAME_HEIGHT);
             stage.setScene(gameScene);
         });
         startScene.getExitButton().setOnMouseClicked(mouseEvent -> stage.close());

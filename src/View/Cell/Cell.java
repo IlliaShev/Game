@@ -170,8 +170,8 @@ public abstract class Cell extends Rectangle {
 
     protected boolean cellIsChosen() {
         Cell[][] cell = MapArrView.getMapArrView().getMap();
-        for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < 50; j++) {
+        for (int i = 0; i < MapArrView.getMapArrView().getColumnsNumber(); i++) {
+            for (int j = 0; j < MapArrView.getMapArrView().getRowsNumber(); j++) {
                 if (cell[i][j].isChosen()) {
                     return true;
                 }

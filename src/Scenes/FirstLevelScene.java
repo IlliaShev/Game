@@ -7,51 +7,53 @@ import javafx.scene.layout.*;
 import javax.sound.sampled.*;
 import java.io.*;
 
-public class GameScene extends Scene {
+public class FirstLevelScene extends Scene {
 
-    private MapView mapView;
     private Clip clip;
+    private MapView firstLevel;
 
-    public GameScene(Group group, int FRAME_WIDTH, int FRAME_HEIGHT) {
+    public FirstLevelScene(Group group, int FRAME_WIDTH, int FRAME_HEIGHT) {
+
         super(group, FRAME_WIDTH, FRAME_HEIGHT);
+
         BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
         borderPane.setCenter(gridPane);
         borderPane.setBottom(ToolPanel.getInstance());
         group = new Group();
         group.getChildren().add(borderPane);
-        mapView = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 3 * 2, gridPane,29,15,0);
+        firstLevel = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 4 * 3, gridPane,21,12, 1);
 
         this.setRoot(group);
 
         this.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP -> {
-                    if (mapView.getMapLU().y > 0) {
-                        mapView.getMapLU().y--;
-                        mapView.getMapRB().y--;
+                    if (firstLevel.getMapLU().y > 0) {
+                        firstLevel.getMapLU().y--;
+                        firstLevel.getMapRB().y--;
                     }
                 }
                 case DOWN -> {
-                    if (mapView.getMapRB().y < 50) {
-                        mapView.getMapLU().y++;
-                        mapView.getMapRB().y++;
+                    if (firstLevel.getMapRB().y < MapArrView.getMapArrView().getRowsNumber()) {
+                        firstLevel.getMapLU().y++;
+                        firstLevel.getMapRB().y++;
                     }
                 }
                 case LEFT -> {
-                    if (mapView.getMapLU().x > 0) {
-                        mapView.getMapLU().x--;
-                        mapView.getMapRB().x--;
+                    if (firstLevel.getMapLU().x > 0) {
+                        firstLevel.getMapLU().x--;
+                        firstLevel.getMapRB().x--;
                     }
                 }
                 case RIGHT -> {
-                    if (mapView.getMapRB().x < 50) {
-                        mapView.getMapLU().x++;
-                        mapView.getMapRB().x++;
+                    if (firstLevel.getMapRB().x < MapArrView.getMapArrView().getColumnsNumber()) {
+                        firstLevel.getMapLU().x++;
+                        firstLevel.getMapRB().x++;
                     }
                 }
             }
-            mapView.drawMap();
+            firstLevel.drawMap();
         });
 
         playBackMusic();
@@ -79,5 +81,4 @@ public class GameScene extends Scene {
             exc.printStackTrace();
         }
     }
-
 }

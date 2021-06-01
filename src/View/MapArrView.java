@@ -7,19 +7,31 @@ import java.util.Random;
 
 public class MapArrView {
     private static MapArrView mapArrView;
-    private final int NUM_OF_ROWS = 50;
-    private final int NUM_OF_COLUMNS = 50;
-    private final Cell[][] map = new Cell[NUM_OF_ROWS][NUM_OF_COLUMNS];
+    private int rowsNumber;
+    private int columnsNumber;
+    private Cell[][] map;
     private final int CELL_WIDTH;
+    private int levelNumber;
 
-    private MapArrView(int CELL_WIDTH){
+    private MapArrView(int CELL_WIDTH, int rowsNumber, int columnsNumber, int levelNumber){
         this.CELL_WIDTH = CELL_WIDTH;
-        initMap();
+        this.rowsNumber = rowsNumber;
+        this.columnsNumber = columnsNumber;
+        map = new Cell[columnsNumber][rowsNumber];
+        this.levelNumber = levelNumber;
+        switch (levelNumber){
+            case 1:
+                initFirstLevelMap();
+                break;
+            default:
+                initMap();
+                break;
+        }
     }
 
-    public static MapArrView getMapArr(int CELL_WIDTH){
+    public static MapArrView getMapArr(int CELL_WIDTH, int rowsNumber, int columnsNumber, int levelNumber){
         if(mapArrView == null)
-            mapArrView = new MapArrView(CELL_WIDTH);
+            mapArrView = new MapArrView(CELL_WIDTH,rowsNumber,columnsNumber,levelNumber);
         return mapArrView;
     }
 
@@ -28,13 +40,67 @@ public class MapArrView {
     }
 
     private void initMap() {
-        for(int i = 0; i < NUM_OF_ROWS; i++){
-            for(int j = 0; j < NUM_OF_COLUMNS; j++){
+        for(int i = 0; i < rowsNumber; i++){
+            for(int j = 0; j < columnsNumber; j++){
                 if(map[i][j]==null) {
                     map[i][j] = generateCellFill(i, j);
                 }
             }
         }
+    }
+
+    public void initFirstLevelMap(){
+        Random rand = new Random();
+        for(int i = 0; i<columnsNumber; i++){
+            for(int j = 0; j<5 ; j++){
+                switch (rand.nextInt(3)) {
+                    case 0 -> map[i][j] = new MountainCell(CELL_WIDTH, i, j);
+                    case 1 -> map[i][j] = new ForestCell(CELL_WIDTH, i, j);
+                    case 2 -> map[i][j] = new GrassCell(CELL_WIDTH, i, j);
+                }
+            }
+        }
+        for(int i = 0; i<4; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][5] = new MountainCell(CELL_WIDTH, i, 5);
+                case 1 -> map[i][5] = new ForestCell(CELL_WIDTH, i, 5);
+                case 2 -> map[i][5] = new GrassCell(CELL_WIDTH, i, 5);
+            }
+        }
+        CityCell cityCell = new CityCell(CELL_WIDTH,4,5);
+        map[4][5] = cityCell;
+        PlayersHandler.getPlayersHandler().getPlayer(0).addCityCell(cityCell);
+        cityCell.setDefaultFill();
+        for(int i = 5; i<16; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][5] = new MountainCell(CELL_WIDTH, i, 5);
+                case 1 -> map[i][5] = new ForestCell(CELL_WIDTH, i, 5);
+                case 2 -> map[i][5] = new GrassCell(CELL_WIDTH, i, 5);
+            }
+        }
+        CityCell enemyCityCell = new CityCell(CELL_WIDTH,16,5);
+        map[16][5] = enemyCityCell;
+        City enemyCity = new City("Enemy");
+        enemyCityCell.setCity(enemyCity);
+        enemyCity.setCityCell(enemyCityCell);
+        CityHandler.getCityHandler().addCity(enemyCity);
+        for(int i = 17; i<columnsNumber; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][5] = new MountainCell(CELL_WIDTH, i, 5);
+                case 1 -> map[i][5] = new ForestCell(CELL_WIDTH, i, 5);
+                case 2 -> map[i][5] = new GrassCell(CELL_WIDTH, i, 5);
+            }
+        }
+        for(int i = 0 ; i<columnsNumber; i++){
+            for(int j=6; j<rowsNumber; j++){
+                switch (rand.nextInt(3)) {
+                    case 0 -> map[i][j] = new MountainCell(CELL_WIDTH, i, j);
+                    case 1 -> map[i][j] = new ForestCell(CELL_WIDTH, i, j);
+                    case 2 -> map[i][j] = new GrassCell(CELL_WIDTH, i, j);
+                }
+            }
+        }
+        generateBuildings(16,5,enemyCity);
     }
 
     private Cell generateCellFill(int i, int j) {
@@ -64,12 +130,13 @@ public class MapArrView {
     }
 
     private void generateBuildings(int x, int y, City city) {
-        for (int i = Math.max(x - 2, 0); i <= Math.min(x + 2, 49); i++) {
-            for (int j = Math.max(y - 2, 0); j <= Math.min(y + 2, 49); j++) {
-                if (map[i][j] == null||map[i][j].isEmpty() && i!=x&&j!=y) {
+        for (int i = Math.max(x - 2, 0); i <= Math.min(x + 2, columnsNumber-1); i++) {
+            for (int j = Math.max(y - 2, 0); j <= Math.min(y + 2, rowsNumber-1); j++) {
+                if ((map[i][j] == null||map[i][j].isEmpty()) && i!=x&&j!=y) {
                     Random random = new Random();
-                    if(random.nextInt(2) == 1 && city.getBuildings().size() < 8)
+                    if(random.nextInt(3) >=1 && city.getBuildings().size() < 8){
                         changeCell(i,j,city, new GrassCell(CELL_WIDTH, i, j));
+                    }
                 }
             }
         }
@@ -149,5 +216,13 @@ public class MapArrView {
 
     public Cell[][] getMap() {
         return map;
+    }
+
+    public int getRowsNumber() {
+        return rowsNumber;
+    }
+
+    public int getColumnsNumber() {
+        return columnsNumber;
     }
 }
