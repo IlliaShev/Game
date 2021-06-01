@@ -40,8 +40,8 @@ public class MapArrView {
     }
 
     private void initMap() {
-        for(int i = 0; i < rowsNumber; i++){
-            for(int j = 0; j < columnsNumber; j++){
+        for(int i = 0; i < columnsNumber; i++){
+            for(int j = 0; j < rowsNumber; j++){
                 if(map[i][j]==null) {
                     map[i][j] = generateCellFill(i, j);
                 }

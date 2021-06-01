@@ -112,7 +112,8 @@ public final class ToolPanel extends Group {
         miniMapBackground.setFill(Paint.valueOf("GRAY"));
         miniMapBackground.setWidth(PANEL_WIDTH / 4 - 18);
         miniMapBackground.setHeight(PANEL_HEIGHT);
-        miniMap.add(miniMapBackground, 0, 0);
+        MiniMap.getMiniMap(miniMap, PANEL_WIDTH / 4 - 18, PANEL_HEIGHT);
+        //miniMap.setBackground(miniMapBackground, 0, 0);
     }
 
     private void initMainPanel() {

@@ -22,7 +22,7 @@ public class MapView {
         this.width = width;
         this.height = height;
         this.gridPane = gridPane;
-        mapRB = new Point(x,y);
+        mapRB = new Point(21,12);
         this.levelNumber = levelNumber;
         CELL_WIDTH = Math.min(width / (mapRB.x - mapLU.x), height / (mapRB.y - mapLU.y));
         initGridPane();
@@ -83,21 +83,25 @@ public class MapView {
     public void changeCell(int i, int j, City cityWhereBuild, Cell prevCell) {
         mapArrView.changeCell(i, j, cityWhereBuild, prevCell);
         drawMap();
+        MiniMap.getMiniMap().drawMiniMap();
     }
 
     public void buildResources(int i, int j, City cityWhereBuild, Class<BuildingCell> type){
         mapArrView.buildResources(i,j,cityWhereBuild,type);
         drawMap();
+        MiniMap.getMiniMap().drawMiniMap();
     }
 
     public void changeOnGrass(int i, int j) {
         mapArrView.changeCellOnGrass(i, j);
         drawMap();
+        MiniMap.getMiniMap().drawMiniMap();
     }
 
     public void moveArmy(int i, int j, ArmyCell armyCellView) {
         mapArrView.moveArmy(i, j, armyCellView);
         drawMap();
+        MiniMap.getMiniMap().drawMiniMap();
     }
 
 }

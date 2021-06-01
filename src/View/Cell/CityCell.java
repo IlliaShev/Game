@@ -44,6 +44,7 @@ public class CityCell extends Cell implements Attackable{
                     ((Cell)buildingCell).setDefaultFill();
                 }
                 setDefaultFill();
+                MiniMap.getMiniMap().drawMiniMap();
             } else {
                 System.out.println("We lose");
                 MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());

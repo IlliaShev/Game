@@ -19,10 +19,11 @@ public class FirstLevelScene extends Scene {
         BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
         borderPane.setCenter(gridPane);
+        firstLevel = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 4 * 3, gridPane,21,12, 1);
         borderPane.setBottom(ToolPanel.getInstance());
         group = new Group();
         group.getChildren().add(borderPane);
-        firstLevel = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 4 * 3, gridPane,21,12, 1);
+
 
         this.setRoot(group);
 
