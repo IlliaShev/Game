@@ -12,7 +12,7 @@ import javafx.scene.paint.*;
  * @version 1.0.0
  * @see Cell
  */
-public class CityCell extends Cell implements Attackable{
+public class CityCell extends Cell implements Attackable {
 
     private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
     private static final String imageEnemyURL = "file:resources\\images\\city\\EnemyCity.png";//path to image of city
@@ -27,10 +27,10 @@ public class CityCell extends Cell implements Attackable{
     @Override
     protected void clickResponse() {
         super.clickResponse();
-        if((!cellIsChosen() || isChosen()) &&PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(city)) {
+        if ((!cellIsChosen() || isChosen()) && PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(city)) {
             buildBuildings();
         }
-        if(isReadyToGotAttack()){
+        if (isReadyToGotAttack()) {
             ArmyCell army = getArmyCell();
             getArmyCell().fillFields();
             Player player = PlayersHandler.getPlayersHandler().getPlayer(0);
@@ -38,12 +38,12 @@ public class CityCell extends Cell implements Attackable{
             System.out.println(army.getArmy().getHealth() + " " + city.getHealth());
             player.attackCity(army.getArmy(), city);
             System.out.println(army.getArmy().getHealth() + " " + city.getHealth());
-            if(army.getArmy().getHealth() > 0) {
+            if (army.getArmy().getHealth() > 0) {
                 System.out.println("We won");
                 player.addCity(city);
                 bot.deleteCity(city);
-                for(BuildingCell buildingCell: city.getBuildings()){
-                    ((Cell)buildingCell).setDefaultFill();
+                for (BuildingCell buildingCell : city.getBuildings()) {
+                    ((Cell) buildingCell).setDefaultFill();
                 }
                 setDefaultFill();
                 getCity().setHealth(100);
@@ -57,24 +57,25 @@ public class CityCell extends Cell implements Attackable{
     }
 
     /**
-    private boolean cellIsChosen() {
-        Cell[][] cell = MapArrView.getMapArrView().getMap();
-        for(int i=0; i<50; i++){
-            for(int j=0; j<50; j++){
-                if(cell[i][j].isChosen()){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }**/
+     * private boolean cellIsChosen() {
+     * Cell[][] cell = MapArrView.getMapArrView().getMap();
+     * for(int i=0; i<50; i++){
+     * for(int j=0; j<50; j++){
+     * if(cell[i][j].isChosen()){
+     * return true;
+     * }
+     * }
+     * }
+     * return false;
+     * }
+     **/
 
-    public void buildBuildings(){
+    public void buildBuildings() {
         this.setChosen(!this.isChosen());
         Cell[][] cell = MapArrView.getMapArrView().getMap();
         int indX = this.takeX();
         int indY = this.takeY();
-        if(isChosen()) {
+        if (isChosen()) {
             System.out.println(city);
         }
         if (this.isChosen()) {
@@ -88,8 +89,8 @@ public class CityCell extends Cell implements Attackable{
                 }
             }
         } else {
-            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, 49); i++) {
-                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, 49); j++) {
+            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, MapArrView.getMapArrView().getColumnsNumber()); i++) {
+                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, MapArrView.getMapArrView().getRowsNumber()); j++) {
                     if (cell[i][j].isEmpty()) {
                         cell[i][j].setDefaultFill();
                         cell[i][j].setReadyToBuild(false);
@@ -102,9 +103,9 @@ public class CityCell extends Cell implements Attackable{
 
     @Override
     protected void setCellImage() {
-        if(PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(getCity())) {
+        if (PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(getCity())) {
             fillCell(imageURL);
-        } else{
+        } else {
             fillCell(imageEnemyURL);
         }
     }

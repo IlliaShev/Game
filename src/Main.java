@@ -22,7 +22,7 @@ public class Main extends Application {
         });
         stage.setTitle("TCU");
         stage.setScene(startScene);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
         stage.setMinWidth(FRAME_WIDTH);
         stage.setMinHeight(FRAME_HEIGHT);

@@ -30,7 +30,7 @@ public class FieldCell extends Cell implements BuildingCell {
     @Override
     protected void clickResponse() {
         super.clickResponse();
-        if(isReadyToMove()){
+        if (isReadyToMove()) {
             getCityWhereBuild().deleteBuilding(this);
             ArmyCell army = getArmyCell();
             getArmyCell().fillFields();
