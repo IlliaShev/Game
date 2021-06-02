@@ -30,8 +30,7 @@ public class MapArrView {
     }
 
     public static MapArrView getMapArr(int CELL_WIDTH, int rowsNumber, int columnsNumber, int levelNumber){
-        if(mapArrView == null)
-            mapArrView = new MapArrView(CELL_WIDTH,rowsNumber,columnsNumber,levelNumber);
+        mapArrView = new MapArrView(CELL_WIDTH,rowsNumber,columnsNumber,levelNumber);
         return mapArrView;
     }
 
@@ -80,10 +79,8 @@ public class MapArrView {
         }
         CityCell enemyCityCell = new CityCell(CELL_WIDTH,16,5);
         map[16][5] = enemyCityCell;
-        City enemyCity = new City("Enemy");
-        enemyCityCell.setCity(enemyCity);
-        enemyCity.setCityCell(enemyCityCell);
-        CityHandler.getCityHandler().addCity(enemyCity);
+        PlayersHandler.getPlayersHandler().getPlayer(1).addCityCell(enemyCityCell);
+        cityCell.setDefaultFill();
         for(int i = 17; i<columnsNumber; i++){
             switch (rand.nextInt(3)) {
                 case 0 -> map[i][5] = new MountainCell(CELL_WIDTH, i, 5);
@@ -100,7 +97,7 @@ public class MapArrView {
                 }
             }
         }
-        generateBuildings(16,5,enemyCity);
+        generateBuildings(16,5,enemyCityCell.getCity());
     }
 
     private Cell generateCellFill(int i, int j) {
@@ -113,11 +110,9 @@ public class MapArrView {
                 cityCell.setDefaultFill();
 
             } else{
-                City city = new City("Enemy");
-                cityCell.setCity(city);
-                city.setCityCell(cityCell);
-                CityHandler.getCityHandler().addCity(city);
-                generateBuildings(i,j,city);
+                PlayersHandler.getPlayersHandler().getPlayer(1).addCityCell(cityCell);
+                cityCell.setDefaultFill();
+                generateBuildings(i,j,cityCell.getCity());
             }
             return cityCell;
         }
@@ -147,13 +142,25 @@ public class MapArrView {
         Random random = new Random();
         int type = random.nextInt(4);
         switch (type) {
-            case 0 -> map[i][j] = new MineralCell(CELL_WIDTH, i,j);
-            case 1 -> map[i][j] = new FieldCell(CELL_WIDTH, i ,j);
-            case 2 -> map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
+            case 0 -> {
+                map[i][j] = new MineralCell(CELL_WIDTH, i,j);
+                cityWhereBuild.decrementResMineral();
+            }
+            case 1 -> {
+                map[i][j] = new FieldCell(CELL_WIDTH, i ,j);
+                cityWhereBuild.decrementResField();
+            }
+            case 2 -> {
+                map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
+                cityWhereBuild.decrementResGold();
+            }
             case 3 -> {
                 if(cityWhereBuild.getNumberOfArmy() < 3) {
                     map[i][j] = new ArmyCell(CELL_WIDTH, i, j);
                     ((ArmyCell)map[i][j]).setPrevCell(prevCell);
+                    cityWhereBuild.decrementResGold();
+                    cityWhereBuild.decrementResField();
+                    cityWhereBuild.decrementResMineral();
                 }
                 else
                     return;

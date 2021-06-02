@@ -27,30 +27,35 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
             fillFields();
         }
         if(isReadyToGotAttack()){
-            ArmyCell army = getArmyCell();
-            getArmyCell().fillFields();
-            System.out.println(army.getArmy().getHealth() + " " + getArmy().getHealth());
-            PlayersHandler.getPlayersHandler().getPlayer(0).attack(army.getArmy(), this.getArmy());
-            System.out.println(army.getArmy().getHealth() + " " + getArmy().getHealth());
-            if(army.getArmy().getHealth() > 0) {
-                System.out.println("We won");
-                this.setArmyCellView(army);
-                getArmy().getCity().deleteBuilding(this);
-                MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
-                getArmyCell().setPrevCell(null);
-            } else if(getArmy().getHealth() > 0){
-                System.out.println("We lose");
-                MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
-                army.getCityWhereBuild().deleteBuilding(army);
-            } else{
-                System.out.println("All lose");
-                getArmy().getCity().deleteBuilding(this);
-                army.getArmy().getCity().deleteBuilding(army);
-                MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
-                MapView.getMapView().changeOnGrass(takeX(), takeY());
-            }
+            gotAttack();
         }
         playSound();
+    }
+
+
+    public void gotAttack(){
+        ArmyCell army = getArmyCell();
+        getArmyCell().fillFields();
+        System.out.println(army.getArmy().getHealth() + " " + getArmy().getHealth());
+        PlayersHandler.getPlayersHandler().getPlayer(0).attack(army.getArmy(),this.getArmy());
+        System.out.println(army.getArmy().getHealth() + " " + getArmy().getHealth());
+        if(army.getArmy().getHealth() > 0) {
+            System.out.println("We won");
+            this.setArmyCellView(army);
+            getArmy().getCity().deleteArmy(this);
+            MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
+            getArmyCell().setPrevCell(null);
+        } else if(getArmy().getHealth() > 0){
+            System.out.println("We lose");
+            MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
+            army.getCityWhereBuild().deleteBuilding(army);
+        } else{
+            System.out.println("All lose");
+            getArmy().getCity().deleteBuilding(this);
+            army.getArmy().getCity().deleteBuilding(army);
+            MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
+            MapView.getMapView().changeOnGrass(takeX(), takeY());
+        }
     }
 
     public void fillFields() {
@@ -59,8 +64,8 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
         int indX = this.takeX();
         int indY = this.takeY();
         if (isChosen()) {
-            for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, 49); i++) {
-                for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, 49); j++) {
+            for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, MapArrView.getMapArrView().getColumnsNumber()); i++) {
+                for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, MapArrView.getMapArrView().getRowsNumber()); j++) {
                     if(!isProperCell(cell[i][j]))
                         continue;
                     if (cell[i][j].isArmyCanMove()) {

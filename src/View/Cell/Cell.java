@@ -180,6 +180,21 @@ public abstract class Cell extends Rectangle {
         return false;
     }
 
+    protected void checkIfCanGotAttack() {
+        Cell[][] cell = MapArrView.getMapArrView().getMap();
+        for (int i = Math.max(getArmyCell().takeX() - 1, 0); i <= Math.min(getArmyCell().takeX() + 1, MapArrView.getMapArrView().getColumnsNumber()); i++) {
+            for (int j = Math.max(getArmyCell().takeY() - 1, 0); j <= Math.min(getArmyCell().takeY() + 1, MapArrView.getMapArrView().getRowsNumber()); j++) {
+               if(cell[i][j] instanceof ArmyCell){
+                   if(PlayersHandler.getPlayersHandler().getPlayer(1).hasArmy(((ArmyCell) cell[i][j]).getArmy())){
+                       cell[i][j].setArmyCellView(getArmyCell());
+                       getArmyCell().setChosen(true);
+                       ((ArmyCell) cell[i][j]).gotAttack();
+                   }
+               }
+            }
+        }
+    }
+
     protected void fillCell(String url){
         Image city = new Image(url);
         this.setFill(new ImagePattern(city, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));

@@ -21,6 +21,10 @@ public class PlayersHandler {
         players.add(player);
     }
 
+    public void clearPlayers(){
+        players.clear();
+    }
+
     public Player getPlayer(int i){
         return players.get(i);
     }

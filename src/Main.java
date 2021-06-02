@@ -8,7 +8,7 @@ import javafx.stage.*;
 
 public class Main extends Application {
 
-    private final int FRAME_HEIGHT = 630;
+    private final int FRAME_HEIGHT = 660;
     private final int FRAME_WIDTH = 840;
 
     @Override
@@ -37,7 +37,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        PlayersHandler.getPlayersHandler().addPlayer(new Player());
         launch(args);
     }
 

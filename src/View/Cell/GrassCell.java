@@ -28,6 +28,8 @@ public class GrassCell extends Cell {
             this.setArmyCellView(army);
             MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
             getArmyCell().setPrevCell(this);
+            checkIfCanGotAttack();
+            PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
         }
     }
 

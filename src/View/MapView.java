@@ -25,6 +25,7 @@ public class MapView {
         mapRB = new Point(21,12);
         this.levelNumber = levelNumber;
         CELL_WIDTH = Math.min(width / (mapRB.x - mapLU.x), height / (mapRB.y - mapLU.y));
+        System.out.println(CELL_WIDTH);
         initGridPane();
         mapArrView = MapArrView.getMapArr(CELL_WIDTH,y,x,levelNumber);
         map = mapArrView.getMap();
@@ -32,8 +33,7 @@ public class MapView {
     }
 
     public static MapView getMapView(int length, GridPane gridPane, int x, int y, int levelNumber) {
-        if (mapView == null)
-            mapView = new MapView(length, length, gridPane, x, y, levelNumber);
+        mapView = new MapView(length, length, gridPane, x, y, levelNumber);
         return mapView;
     }
 

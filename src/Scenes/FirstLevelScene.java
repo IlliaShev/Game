@@ -19,7 +19,10 @@ public class FirstLevelScene extends Scene {
         BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
         borderPane.setCenter(gridPane);
-        firstLevel = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 4 * 3, gridPane,21,12, 1);
+        PlayersHandler.getPlayersHandler().clearPlayers();
+        PlayersHandler.getPlayersHandler().addPlayer(new Player());
+        PlayersHandler.getPlayersHandler().addPlayer(new Player());
+        firstLevel = MapView.getMapView(FRAME_WIDTH, 472, gridPane,30,30, 0);
         borderPane.setBottom(ToolPanel.getInstance());
         group = new Group();
         group.getChildren().add(borderPane);
@@ -54,6 +57,7 @@ public class FirstLevelScene extends Scene {
                     }
                 }
             }
+            MiniMap.getMiniMap().drawMiniMap();
             firstLevel.drawMap();
         });
 
@@ -74,11 +78,7 @@ public class FirstLevelScene extends Scene {
 
             clip.loop(Clip.LOOP_CONTINUOUSLY);
 
-        } catch (IOException exc) {
-            exc.printStackTrace();
-        } catch (UnsupportedAudioFileException exc) {
-            exc.printStackTrace();
-        } catch (LineUnavailableException exc) {
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException exc) {
             exc.printStackTrace();
         }
     }

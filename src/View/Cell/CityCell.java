@@ -34,16 +34,19 @@ public class CityCell extends Cell implements Attackable{
             ArmyCell army = getArmyCell();
             getArmyCell().fillFields();
             Player player = PlayersHandler.getPlayersHandler().getPlayer(0);
+            Player bot = PlayersHandler.getPlayersHandler().getPlayer(1);
             System.out.println(army.getArmy().getHealth() + " " + city.getHealth());
             player.attackCity(army.getArmy(), city);
             System.out.println(army.getArmy().getHealth() + " " + city.getHealth());
             if(army.getArmy().getHealth() > 0) {
                 System.out.println("We won");
                 player.addCity(city);
+                bot.deleteCity(city);
                 for(BuildingCell buildingCell: city.getBuildings()){
                     ((Cell)buildingCell).setDefaultFill();
                 }
                 setDefaultFill();
+                getCity().setHealth(100);
                 MiniMap.getMiniMap().drawMiniMap();
             } else {
                 System.out.println("We lose");
@@ -75,8 +78,8 @@ public class CityCell extends Cell implements Attackable{
             System.out.println(city);
         }
         if (this.isChosen()) {
-            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, 49); i++) {
-                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, 49); j++) {
+            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, MapArrView.getMapArrView().getColumnsNumber()); i++) {
+                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, MapArrView.getMapArrView().getRowsNumber()); j++) {
                     if (cell[i][j].isEmpty()) {
                         cell[i][j].setFill(Paint.valueOf("ORANGE"));
                         cell[i][j].setReadyToBuild(true);

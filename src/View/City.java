@@ -21,9 +21,9 @@ public class City {
 
     public City(String name) {
         this.name = name;
-        resMineral = 5;
-        resGold = 5;
-        resField = 5;
+        resMineral = 6;
+        resGold = 6;
+        resField = 6;
         health = 100;
         defenceDamage = 20;
         buildings = new ArrayList<>();
@@ -110,8 +110,21 @@ public class City {
         return defenceDamage;
     }
 
-    public void setDefenceDamage(int defenceDamage) {
+    public void setDefenceDamage() {
         this.defenceDamage = defenceDamage;
+    }
+
+
+    public void decrementResMineral() {
+        resMineral--;
+    }
+
+    public void decrementResGold() {
+        resGold--;
+    }
+
+    public void decrementResField() {
+        resField--;
     }
 
     public void collectResources(){
@@ -150,5 +163,10 @@ public class City {
                 ", resGold=" + resGold +
                 ", resField=" + resField +
                 '}';
+    }
+
+    public void deleteArmy(ArmyCell armyCell) {
+        armies.remove(armyCell.getArmy());
+        buildings.remove(armyCell);
     }
 }

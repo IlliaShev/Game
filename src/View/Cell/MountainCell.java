@@ -1,6 +1,7 @@
 package View.Cell;
 
 import View.MapView;
+import View.PlayersHandler;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
@@ -40,6 +41,8 @@ public class MountainCell extends Cell {
             this.setArmyCellView(army);
             MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
             getArmyCell().setPrevCell(this);
+            checkIfCanGotAttack();
+            PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
         }
     }
 
