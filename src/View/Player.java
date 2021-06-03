@@ -96,15 +96,13 @@ public class Player {
         Cell[][] map = MapArrView.getMapArrView().getMap();
         CityCell cityCell = canAttack(army);
         if(cityCell != null){
-            System.out.println(cityCell);
-            attackCity(army, cityCell.getCity());
-            System.out.println(army.getHealth() + " " + cityCell.getCity().getHealth());
+            System.out.println(cityCell.takeX() + " " + cityCell.takeY());
             attackCity(army, cityCell.getCity());
             System.out.println(army.getHealth() + " " + cityCell.getCity().getHealth());
             if(army.getHealth() > 0) {
                 System.out.println("Bot won");
-                player.addCity(city);
-                deleteCity(city);
+                addCity(city);
+                player.deleteCity(city);
                 for(BuildingCell buildingCell: city.getBuildings()){
                     ((Cell)buildingCell).setDefaultFill();
                 }
@@ -114,7 +112,8 @@ public class Player {
             } else {
                 System.out.println("Bot lose");
                 MapView.getMapView().changeOnGrass(army.getArmyCell().takeX(), army.getArmyCell().takeY());
-                army.getArmyCell().getCityWhereBuild().deleteBuilding(army.getArmyCell());
+                army.getCity().deleteBuilding(army.getArmyCell());
+                army.getCity().getArmies().remove(army);
             }
         }
         if(army.getArmyCell().takeX() > city.getCityCell().takeX()){
@@ -136,15 +135,14 @@ public class Player {
     }
 
     private void moveArmyToCell(Cell cellToMove, Army army) {
-        if(cellToMove instanceof BuildingCell && hasBuilding((BuildingCell) cellToMove)){
-            return;
-        }
         if(!(cellToMove instanceof CityCell)) {
-            if (cellToMove instanceof BuildingCell)
-                cellToMove.getCityWhereBuild().deleteBuilding((BuildingCell) cellToMove);
             cellToMove.setArmyCellView(army.getArmyCell());
             MapView.getMapView().moveArmy(cellToMove.takeX(), cellToMove.takeY(), cellToMove.getArmyCell());
-            cellToMove.getArmyCell().setPrevCell(cellToMove);
+            if (cellToMove instanceof BuildingCell && !(hasBuilding((BuildingCell) cellToMove))) {
+                cellToMove.getCityWhereBuild().deleteBuilding((BuildingCell) cellToMove);
+                cellToMove.getArmyCell().setPrevCell(null);
+            } else
+                cellToMove.getArmyCell().setPrevCell(cellToMove);
         }
     }
 

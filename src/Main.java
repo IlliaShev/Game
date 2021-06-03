@@ -60,6 +60,8 @@ public class Main extends Application {
         startMenuScene.getExitButton().setOnMouseClicked(mouseEvent -> {
             stage.close();
             startMenuScene.getClip().stop();
+            Platform.exit();
+            System.exit(0);
         });
     }
 

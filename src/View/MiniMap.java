@@ -29,19 +29,15 @@ public class MiniMap {
         gridHeight = height;
         canvas = new Canvas(width, height);
         miniMapCellWidth = Math.min(gridWidth, gridHeight) / Math.max(mapArrView.getColumnsNumber(), mapArrView.getRowsNumber());
-        //miniMapCellHeight = gridHeight/mapArrView.getRowsNumber();
         miniMapCellHeight = miniMapCellWidth;
         gapX = (width - miniMapCellWidth * mapArrView.getColumnsNumber()) / 2;
         gapY = (height - miniMapCellHeight * mapArrView.getRowsNumber()) / 2;
-        //System.out.println(miniMapCellLength);
         drawMiniMap();
         gridPane.add(canvas, 0, 0);
     }
 
     public static MiniMap getMiniMap(GridPane gridPane, int width, int height) {
-        if (miniMap == null)
-            miniMap = new MiniMap(gridPane, width, height);
-
+        miniMap = new MiniMap(gridPane, width, height);
         return miniMap;
     }
 

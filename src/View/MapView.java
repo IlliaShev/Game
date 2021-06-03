@@ -33,19 +33,17 @@ public class MapView {
         drawMap();
     }
 
-    public static MapView getMapView(int length, GridPane gridPane, int x, int y, LevelScene levelScene) {
-        if (mapView == null)
-            mapView = new MapView(length, length, gridPane, x, y, levelScene);
-        return mapView;
-    }
+//    public static MapView getMapView(int length, GridPane gridPane, int x, int y, LevelScene levelScene) {
+//        mapView = new MapView(length, length, gridPane, x, y, levelScene);
+//        return mapView;
+//    }
 
     public static MapView getMapView() {
         return mapView;
     }
 
     public static MapView getMapView(int frame_width, int frame_height, GridPane gridPane, int x, int y, LevelScene levelScene) {
-        if (mapView == null)
-            mapView = new MapView(frame_width, frame_height, gridPane, x, y, levelScene);
+        mapView = new MapView(frame_width, frame_height, gridPane, x, y, levelScene);
         return mapView;
     }
 

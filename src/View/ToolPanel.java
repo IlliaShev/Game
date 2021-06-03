@@ -103,25 +103,26 @@ public final class ToolPanel extends Group {
         //other shit
         tools.setHgap(10);
         tools.setVgap(10);
-        miniMap = new GridPane();
+//        miniMap = new GridPane();
         mainPanel = new MainPanel();
         actionsPanel = new ActionsPanel();
         if (kostyl) {
-            tools.add(miniMap, 0, 0);
+            initMapPanel();
         }
         tools.add(mainPanel, 1, 0);
         tools.add(actionsPanel, 2, 0);
-        initMapPanel();
         this.getChildren().add(tools);
     }
 
-    private void initMapPanel() {
+    public void initMapPanel() {
+        miniMap = new GridPane();
         Rectangle miniMapBackground = new Rectangle();
         miniMapBackground.setFill(Paint.valueOf("GRAY"));
         miniMapBackground.setWidth(PANEL_WIDTH / 4);
         miniMapBackground.setHeight(PANEL_HEIGHT);
         miniMap.setStyle("-fx-background-color: #808080;");
         MiniMap.getMiniMap(miniMap, PANEL_WIDTH / 4 - 15, PANEL_HEIGHT);
+        tools.add(miniMap, 0, 0);
     }
 
     private void initActionsPanel() {

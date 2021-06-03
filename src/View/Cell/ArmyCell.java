@@ -48,11 +48,11 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
         } else if(getArmy().getHealth() > 0){
             System.out.println("We lose");
             MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
-            army.getCityWhereBuild().deleteBuilding(army);
+            army.getCityWhereBuild().deleteArmy(army);
         } else{
             System.out.println("All lose");
-            getArmy().getCity().deleteBuilding(this);
-            army.getArmy().getCity().deleteBuilding(army);
+            getArmy().getCity().deleteArmy(this);
+            army.getArmy().getCity().deleteArmy(army);
             MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
             MapView.getMapView().changeOnGrass(takeX(), takeY());
         }
@@ -64,8 +64,8 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
         int indX = this.takeX();
         int indY = this.takeY();
         if (isChosen()) {
-            for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, MapArrView.getMapArrView().getColumnsNumber()); i++) {
-                for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, MapArrView.getMapArrView().getRowsNumber()); j++) {
+            for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, MapArrView.getMapArrView().getColumnsNumber()-1); i++) {
+                for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, MapArrView.getMapArrView().getRowsNumber()-1); j++) {
                     if(!isProperCell(cell[i][j]))
                         continue;
                     if (cell[i][j].isArmyCanMove()) {
@@ -84,8 +84,8 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
                 }
             }
         } else {
-            for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, 49); i++) {
-                for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, 49); j++) {
+            for (int i = Math.max(indX - 1, 0); i <= Math.min(indX + 1, MapArrView.getMapArrView().getColumnsNumber()-1); i++) {
+                for (int j = Math.max(indY - 1, 0); j <= Math.min(indY + 1, MapArrView.getMapArrView().getRowsNumber()-1); j++) {
                     if (cell[i][j].isArmyCanMove() || cell[i][j].isReadyToGotAttack()) {
                         cell[i][j].setDefaultFill();
                         cell[i][j].setReadyToBuild(false);

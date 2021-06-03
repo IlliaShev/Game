@@ -27,6 +27,7 @@ public class FirstLevelScene extends Scene implements LevelScene{
         PlayersHandler.getPlayersHandler().addPlayer(new Player());
         firstLevel = MapView.getMapView(FRAME_WIDTH, 472, gridPane,21,12, this);
         borderPane.setBottom(ToolPanel.getInstance());
+        ToolPanel.getInstance().initMapPanel();
         group = new Group();
         group.getChildren().add(borderPane);
 
