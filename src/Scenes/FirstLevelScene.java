@@ -12,7 +12,6 @@ public class FirstLevelScene extends Scene implements LevelScene{
     private LevelButton levelButton;
     private Clip clip;
     private MapView firstLevel;
-    private int level;
 
     public FirstLevelScene(Group group, int FRAME_WIDTH, int FRAME_HEIGHT, LevelButton levelButton) {
 
@@ -62,14 +61,12 @@ public class FirstLevelScene extends Scene implements LevelScene{
                 }
                 case SPACE -> {
                     this.getLevelButton().setPassed(true);
-                    for(LevelButton button : ChooseLevelScene.getLevelButtons()){
-                        if(button.isPassed()){
-                            button.changeBackground();
-                            this.getMapView().getLevelScene().getClip().stop();
-                            this.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
-                            StartMenuScene.getStage().setScene(StartMenuScene.getStartMenuScene());
-                            StartMenuScene.getStartMenuScene().playBackMusic();
-                        }
+                    if(this.getLevelButton().isPassed()){
+                        this.getLevelButton().changeBackground();
+                        this.getMapView().getLevelScene().getClip().stop();
+                        this.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
+                        StartMenuScene.getStage().setScene(StartMenuScene.getStartMenuScene());
+                        StartMenuScene.getStartMenuScene().playBackMusic();
                     }
                 }
             }

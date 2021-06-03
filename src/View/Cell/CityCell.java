@@ -52,14 +52,12 @@ public class CityCell extends Cell implements Attackable{
                 MiniMap.getMiniMap().drawMiniMap();
                 if(player.getCities().size()==player.getLevel()+1){
                     mapArrView.getMapView().getLevelScene().getLevelButton().setPassed(true);
-                    for(LevelButton button : ChooseLevelScene.getLevelButtons()){
-                        if(button.isPassed()){
-                            button.changeBackground();
-                            mapArrView.getMapView().getLevelScene().getClip().stop();
-                            mapArrView.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
-                            StartMenuScene.getStage().setScene(StartMenuScene.getStartMenuScene());
-                            StartMenuScene.getStartMenuScene().playBackMusic();
-                        }
+                    if(mapArrView.getMapView().getLevelScene().getLevelButton().isPassed()){
+                        mapArrView.getMapView().getLevelScene().getLevelButton().changeBackground();
+                        mapArrView.getMapView().getLevelScene().getClip().stop();
+                        mapArrView.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
+                        StartMenuScene.getStage().setScene(StartMenuScene.getStartMenuScene());
+                        StartMenuScene.getStartMenuScene().playBackMusic();
                     }
                 }
             } else {
