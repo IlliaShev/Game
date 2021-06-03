@@ -10,6 +10,7 @@ import java.util.*;
 public class Player {
 
     private ArrayList<City> cities;
+    private int level;
 
     public Player(){
         cities = new ArrayList<>();
@@ -167,5 +168,13 @@ public class Player {
                 return city.getArmies().get(0);
         }
         return null;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level){
+        this.level = level;
     }
 }

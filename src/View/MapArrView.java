@@ -11,26 +11,27 @@ public class MapArrView {
     private int columnsNumber;
     private Cell[][] map;
     private final int CELL_WIDTH;
-    private int levelNumber;
+    private MapView mapView;
 
-    private MapArrView(int CELL_WIDTH, int rowsNumber, int columnsNumber, int levelNumber){
+    private MapArrView(int CELL_WIDTH, int rowsNumber, int columnsNumber, MapView mapView){
         this.CELL_WIDTH = CELL_WIDTH;
         this.rowsNumber = rowsNumber;
         this.columnsNumber = columnsNumber;
         map = new Cell[columnsNumber][rowsNumber];
-        this.levelNumber = levelNumber;
-        switch (levelNumber){
-            case 1:
-                initFirstLevelMap();
-                break;
-            default:
-                initMap();
-                break;
+        this.mapView = mapView;
+        switch (mapView.getLevelScene().getLevelButton().getLevel()) {
+            case 1 -> initFirstLevelMap();
+            case 2 -> initSecondLevelMap();
+            case 3 -> initThirdLevelMap();
+            case 4 -> initFourthLevelMap();
+            case 5 -> initFifthLevelMap();
+            case 0 -> initMap();
         }
     }
 
-    public static MapArrView getMapArr(int CELL_WIDTH, int rowsNumber, int columnsNumber, int levelNumber){
-        mapArrView = new MapArrView(CELL_WIDTH,rowsNumber,columnsNumber,levelNumber);
+    public static MapArrView getMapArr(int CELL_WIDTH, int rowsNumber, int columnsNumber, MapView mapView){
+        if(mapArrView == null)
+            mapArrView = new MapArrView(CELL_WIDTH,rowsNumber,columnsNumber,mapView);
         return mapArrView;
     }
 
@@ -66,9 +67,10 @@ public class MapArrView {
                 case 2 -> map[i][5] = new GrassCell(CELL_WIDTH, i, 5);
             }
         }
-        CityCell cityCell = new CityCell(CELL_WIDTH,4,5);
+        CityCell cityCell = new CityCell(CELL_WIDTH,4,5,this);
         map[4][5] = cityCell;
         PlayersHandler.getPlayersHandler().getPlayer(0).addCityCell(cityCell);
+        PlayersHandler.getPlayersHandler().getPlayer(0).setLevel(1);
         cityCell.setDefaultFill();
         for(int i = 5; i<16; i++){
             switch (rand.nextInt(3)) {
@@ -77,10 +79,12 @@ public class MapArrView {
                 case 2 -> map[i][5] = new GrassCell(CELL_WIDTH, i, 5);
             }
         }
-        CityCell enemyCityCell = new CityCell(CELL_WIDTH,16,5);
+        CityCell enemyCityCell = new CityCell(CELL_WIDTH,16,5,this);
         map[16][5] = enemyCityCell;
-        PlayersHandler.getPlayersHandler().getPlayer(1).addCityCell(enemyCityCell);
-        cityCell.setDefaultFill();
+        City enemyCity = new City("Enemy");
+        enemyCityCell.setCity(enemyCity);
+        enemyCity.setCityCell(enemyCityCell);
+        CityHandler.getCityHandler().addCity(enemyCity);
         for(int i = 17; i<columnsNumber; i++){
             switch (rand.nextInt(3)) {
                 case 0 -> map[i][5] = new MountainCell(CELL_WIDTH, i, 5);
@@ -97,22 +101,137 @@ public class MapArrView {
                 }
             }
         }
-        generateBuildings(16,5,enemyCityCell.getCity());
+        generateBuildings(16,5,enemyCity);
+    }
+
+    public void initSecondLevelMap(){
+        Random rand = new Random();
+        for(int i = 0; i<columnsNumber; i++){
+            for(int j = 0; j<3 ; j++){
+                switch (rand.nextInt(3)) {
+                    case 0 -> map[i][j] = new MountainCell(CELL_WIDTH, i, j);
+                    case 1 -> map[i][j] = new ForestCell(CELL_WIDTH, i, j);
+                    case 2 -> map[i][j] = new GrassCell(CELL_WIDTH, i, j);
+                }
+            }
+        }
+        for(int i = 0; i<18; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][3] = new MountainCell(CELL_WIDTH, i, 3);
+                case 1 -> map[i][3] = new ForestCell(CELL_WIDTH, i, 3);
+                case 2 -> map[i][3] = new GrassCell(CELL_WIDTH, i, 3);
+            }
+        }
+        CityCell firstEnemyCityCell = new CityCell(CELL_WIDTH,18,3,this);
+        map[18][3] = firstEnemyCityCell;
+        City firstEnemyCity = new City("Enemy 1");
+        firstEnemyCityCell.setCity(firstEnemyCity);
+        firstEnemyCity.setCityCell(firstEnemyCityCell);
+        CityHandler.getCityHandler().addCity(firstEnemyCity);
+        for(int i = 19; i<columnsNumber; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][3] = new MountainCell(CELL_WIDTH, i, 3);
+                case 1 -> map[i][3] = new ForestCell(CELL_WIDTH, i, 3);
+                case 2 -> map[i][3] = new GrassCell(CELL_WIDTH, i, 3);
+            }
+        }
+        for(int i = 0; i<columnsNumber; i++){
+            for(int j = 4; j<6 ; j++){
+                switch (rand.nextInt(3)) {
+                    case 0 -> map[i][j] = new MountainCell(CELL_WIDTH, i, j);
+                    case 1 -> map[i][j] = new ForestCell(CELL_WIDTH, i, j);
+                    case 2 -> map[i][j] = new GrassCell(CELL_WIDTH, i, j);
+                }
+            }
+        }
+        for(int i = 0; i<5; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][6] = new MountainCell(CELL_WIDTH, i, 6);
+                case 1 -> map[i][6] = new ForestCell(CELL_WIDTH, i, 6);
+                case 2 -> map[i][6] = new GrassCell(CELL_WIDTH, i, 6);
+            }
+        }
+        CityCell cityCell = new CityCell(CELL_WIDTH,5,6,this);
+        map[5][6] = cityCell;
+        PlayersHandler.getPlayersHandler().getPlayer(0).addCityCell(cityCell);
+        PlayersHandler.getPlayersHandler().getPlayer(0).setLevel(2);
+        cityCell.setDefaultFill();
+        for(int i=6; i<columnsNumber; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][6] = new MountainCell(CELL_WIDTH, i, 6);
+                case 1 -> map[i][6] = new ForestCell(CELL_WIDTH, i, 6);
+                case 2 -> map[i][6] = new GrassCell(CELL_WIDTH, i, 6);
+            }
+        }
+        for(int i=0; i<columnsNumber; i++){
+            for(int j=7; j<13; j++){
+                switch (rand.nextInt(3)) {
+                    case 0 -> map[i][j] = new MountainCell(CELL_WIDTH, i, j);
+                    case 1 -> map[i][j] = new ForestCell(CELL_WIDTH, i, j);
+                    case 2 -> map[i][j] = new GrassCell(CELL_WIDTH, i, j);
+                }
+            }
+        }
+        for(int i=0; i<15; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][13] = new MountainCell(CELL_WIDTH, i, 13);
+                case 1 -> map[i][13] = new ForestCell(CELL_WIDTH, i, 13);
+                case 2 -> map[i][13] = new GrassCell(CELL_WIDTH, i, 13);
+            }
+        }
+        CityCell secondEnemyCityCell = new CityCell(CELL_WIDTH,15,13,this);
+        map[15][13] = secondEnemyCityCell;
+        City secondEnemyCity = new City("Enemy 1");
+        secondEnemyCityCell.setCity(secondEnemyCity);
+        secondEnemyCity.setCityCell(secondEnemyCityCell);
+        CityHandler.getCityHandler().addCity(secondEnemyCity);
+        for(int i=16; i<columnsNumber; i++){
+            switch (rand.nextInt(3)) {
+                case 0 -> map[i][13] = new MountainCell(CELL_WIDTH, i, 13);
+                case 1 -> map[i][13] = new ForestCell(CELL_WIDTH, i, 13);
+                case 2 -> map[i][13] = new GrassCell(CELL_WIDTH, i, 13);
+            }
+        }
+        for(int i=0; i<columnsNumber; i++){
+            for(int j=14; j<rowsNumber; j++){
+                switch (rand.nextInt(3)) {
+                    case 0 -> map[i][j] = new MountainCell(CELL_WIDTH, i, j);
+                    case 1 -> map[i][j] = new ForestCell(CELL_WIDTH, i, j);
+                    case 2 -> map[i][j] = new GrassCell(CELL_WIDTH, i, j);
+                }
+            }
+        }
+        generateBuildings(18,3,firstEnemyCity);
+        generateBuildings(15,13,secondEnemyCity);
+    }
+
+    public void initThirdLevelMap(){
+
+    }
+
+    public void initFourthLevelMap(){
+
+    }
+
+    public void initFifthLevelMap(){
+
     }
 
     private Cell generateCellFill(int i, int j) {
         Random random = new Random();
         if(random.nextInt(100)>98){
-            CityCell cityCell = new CityCell(CELL_WIDTH, i, j);
+            CityCell cityCell = new CityCell(CELL_WIDTH, i, j,this);
             if(PlayersHandler.getPlayersHandler().getPlayer(0).getCities().size() < 2) {
                 System.out.println(i + " " + j);
                 PlayersHandler.getPlayersHandler().getPlayer(0).addCityCell(cityCell);
                 cityCell.setDefaultFill();
 
             } else{
-                PlayersHandler.getPlayersHandler().getPlayer(1).addCityCell(cityCell);
-                cityCell.setDefaultFill();
-                generateBuildings(i,j,cityCell.getCity());
+                City city = new City("Enemy");
+                cityCell.setCity(city);
+                city.setCityCell(cityCell);
+                CityHandler.getCityHandler().addCity(city);
+                generateBuildings(i,j,city);
             }
             return cityCell;
         }
@@ -142,25 +261,13 @@ public class MapArrView {
         Random random = new Random();
         int type = random.nextInt(4);
         switch (type) {
-            case 0 -> {
-                map[i][j] = new MineralCell(CELL_WIDTH, i,j);
-                cityWhereBuild.decrementResMineral();
-            }
-            case 1 -> {
-                map[i][j] = new FieldCell(CELL_WIDTH, i ,j);
-                cityWhereBuild.decrementResField();
-            }
-            case 2 -> {
-                map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
-                cityWhereBuild.decrementResGold();
-            }
+            case 0 -> map[i][j] = new MineralCell(CELL_WIDTH, i,j);
+            case 1 -> map[i][j] = new FieldCell(CELL_WIDTH, i ,j);
+            case 2 -> map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
             case 3 -> {
                 if(cityWhereBuild.getNumberOfArmy() < 3) {
                     map[i][j] = new ArmyCell(CELL_WIDTH, i, j);
                     ((ArmyCell)map[i][j]).setPrevCell(prevCell);
-                    cityWhereBuild.decrementResGold();
-                    cityWhereBuild.decrementResField();
-                    cityWhereBuild.decrementResMineral();
                 }
                 else
                     return;
@@ -231,5 +338,9 @@ public class MapArrView {
 
     public int getColumnsNumber() {
         return columnsNumber;
+    }
+
+    public MapView getMapView() {
+        return mapView;
     }
 }

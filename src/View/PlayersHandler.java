@@ -6,7 +6,6 @@ public class PlayersHandler {
     private ArrayList<Player> players;
     private static PlayersHandler playersHandler;
 
-
     private PlayersHandler() {
         this.players = new ArrayList<>();
     }

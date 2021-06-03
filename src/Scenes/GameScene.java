@@ -7,10 +7,11 @@ import javafx.scene.layout.*;
 import javax.sound.sampled.*;
 import java.io.*;
 
-public class GameScene extends Scene {
+public class GameScene extends Scene implements LevelScene{
 
     private MapView mapView;
     private Clip clip;
+    private LevelButton levelButton;
 
     public GameScene(Group group, int FRAME_WIDTH, int FRAME_HEIGHT) {
         super(group, FRAME_WIDTH, FRAME_HEIGHT);
@@ -20,7 +21,7 @@ public class GameScene extends Scene {
         borderPane.setBottom(ToolPanel.getInstance());
         group = new Group();
         group.getChildren().add(borderPane);
-        mapView = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 3 * 2, gridPane,29,15,0);
+        mapView = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 3 * 2, gridPane,29,15,this);
 
         this.setRoot(group);
 
@@ -80,4 +81,13 @@ public class GameScene extends Scene {
         }
     }
 
+    @Override
+    public LevelButton getLevelButton() {
+        return levelButton;
+    }
+
+    @Override
+    public Clip getClip() {
+        return clip;
+    }
 }

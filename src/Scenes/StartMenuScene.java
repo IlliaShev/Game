@@ -7,19 +7,26 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.text.*;
+import javafx.stage.*;
 
 import javax.sound.sampled.*;
 import java.io.*;
 
 public class StartMenuScene extends Scene {
 
+    private VBox startMenu;
     private Clip clip;
     private Button startButton;
+    private LevelButton randomButton;
     private Button exitButton;
+    private static Stage stage;
+    private static StartMenuScene startMenuScene;
 
-    public StartMenuScene(Pane startMenuPane, int FRAME_WIDTH, int FRAME_HEIGHT) throws IOException {
+    public StartMenuScene(Pane startMenuPane, int FRAME_WIDTH, int FRAME_HEIGHT, Stage stage) throws IOException {
 
         super(startMenuPane, FRAME_WIDTH, FRAME_HEIGHT);
+        StartMenuScene.stage = stage;
+        startMenuScene = this;
 
         Label firstLabel = new Label("Такого ви ще не бачили!");
         firstLabel.setFont(Font.font("Candara", FontWeight.BOLD, 40));
@@ -32,24 +39,32 @@ public class StartMenuScene extends Scene {
         imageView.setFitWidth(FRAME_WIDTH - 8);
         imageView.setFitHeight(FRAME_HEIGHT / 3);
 
-
         startButton = new Button("Почати легенду");
-        startButton.setPrefWidth(200);
-        startButton.setPrefHeight(80);
+        startButton.setPrefWidth(250);
+        startButton.setPrefHeight(90);
         startButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-text-alignment: center");
-        startButton.setFont(Font.font("Candara", FontWeight.BOLD, 20));
+        startButton.setFont(Font.font("Candara", FontWeight.BOLD, 25));
         startButton.setOnMouseEntered(mouseEvent -> startButton.setStyle("-fx-background-color: brown; -fx-text-fill: white; -fx-text-alignment: center"));
         startButton.setOnMouseExited(mouseEvent -> startButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-text-alignment: center"));
 
+        randomButton = new LevelButton(ChooseLevelScene.getChooseLevelScene(),0,"RED",FRAME_WIDTH,FRAME_HEIGHT);
+        randomButton.setPrefWidth(250);
+        randomButton.setPrefHeight(90);
+        randomButton.setText("Нищівний рівень");
+        randomButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-text-alignment: center");
+        randomButton.setFont(Font.font("Candara", FontWeight.BOLD, 25));
+        randomButton.setOnMouseEntered(mouseEvent -> randomButton.setStyle("-fx-background-color: brown; -fx-text-fill: white; -fx-text-alignment: center"));
+        randomButton.setOnMouseExited(mouseEvent -> randomButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-text-alignment: center"));
+
         exitButton = new Button("Вийти");
-        exitButton.setPrefWidth(200);
-        exitButton.setPrefHeight(80);
+        exitButton.setPrefWidth(250);
+        exitButton.setPrefHeight(90);
         exitButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-text-alignment: center");
-        exitButton.setFont(Font.font("Candara", FontWeight.BOLD, 20));
+        exitButton.setFont(Font.font("Candara", FontWeight.BOLD, 25));
         exitButton.setOnMouseEntered(mouseEvent -> exitButton.setStyle("-fx-background-color: brown; -fx-text-fill: white; -fx-text-alignment: center"));
         exitButton.setOnMouseExited(mouseEvent -> exitButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-text-alignment: center"));
 
-        VBox startMenu = new VBox(20, firstLabel, imageView, startButton, exitButton);
+        startMenu = new VBox(20, firstLabel, imageView, startButton, randomButton,exitButton);
         startMenu.setAlignment(Pos.CENTER);
         startMenu.setPadding(new Insets(4));
 
@@ -67,10 +82,10 @@ public class StartMenuScene extends Scene {
         startMenuPane.getChildren().add(background);
         startMenuPane.getChildren().add(startGroup);
 
-        playBackMusic();
+        //playBackMusic();
     }
 
-    private void playBackMusic() {
+    public void playBackMusic() {
         try {
             File soundFile = new File("resources/music/StartMenu.wav");
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFile);
@@ -93,11 +108,23 @@ public class StartMenuScene extends Scene {
         return startButton;
     }
 
+    public Button getRandomButton() {
+        return randomButton;
+    }
+
     public Button getExitButton() {
         return exitButton;
     }
 
     public Clip getClip() {
         return clip;
+    }
+
+    public static Stage getStage(){
+        return stage;
+    }
+
+    public static StartMenuScene getStartMenuScene() {
+        return startMenuScene;
     }
 }

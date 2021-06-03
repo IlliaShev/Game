@@ -1,7 +1,7 @@
 package View.Cell;
 
+import Scenes.*;
 import View.*;
-import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
 /**
@@ -17,9 +17,11 @@ public class CityCell extends Cell implements Attackable{
     private static final String imageURL = "file:resources\\images\\city\\City.png";//path to image of city
     private static final String imageEnemyURL = "file:resources\\images\\city\\EnemyCity.png";//path to image of city
     private City city;
+    private MapArrView mapArrView;
 
-    public CityCell(int length, int x, int y) {
+    public CityCell(int length, int x, int y, MapArrView mapArrView) {
         super(length, x, y, false, false, true);
+        this.mapArrView = mapArrView;
     }
 
     // private methods
@@ -48,6 +50,18 @@ public class CityCell extends Cell implements Attackable{
                 setDefaultFill();
                 getCity().setHealth(100);
                 MiniMap.getMiniMap().drawMiniMap();
+                if(player.getCities().size()==player.getLevel()+1){
+                    mapArrView.getMapView().getLevelScene().getLevelButton().setPassed(true);
+                    for(LevelButton button : ChooseLevelScene.getLevelButtons()){
+                        if(button.isPassed()){
+                            button.changeBackground();
+                            mapArrView.getMapView().getLevelScene().getClip().stop();
+                            mapArrView.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
+                            StartMenuScene.getStage().setScene(StartMenuScene.getStartMenuScene());
+                            StartMenuScene.getStartMenuScene().playBackMusic();
+                        }
+                    }
+                }
             } else {
                 System.out.println("We lose");
                 MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
@@ -55,19 +69,6 @@ public class CityCell extends Cell implements Attackable{
             }
         }
     }
-
-    /**
-    private boolean cellIsChosen() {
-        Cell[][] cell = MapArrView.getMapArrView().getMap();
-        for(int i=0; i<50; i++){
-            for(int j=0; j<50; j++){
-                if(cell[i][j].isChosen()){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }**/
 
     public void buildBuildings(){
         this.setChosen(!this.isChosen());

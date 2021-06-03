@@ -1,7 +1,9 @@
 package View;
 
+import Scenes.*;
 import View.Cell.*;
 import javafx.geometry.Insets;
+import javafx.scene.*;
 import javafx.scene.layout.GridPane;
 
 import java.awt.*;
@@ -16,24 +18,24 @@ public class MapView {
     private int height;
     private GridPane gridPane;
     private static MapView mapView;
-    private int levelNumber;
+    private LevelScene levelScene;
 
-    private MapView(int width, int height, GridPane gridPane, int x, int y, int levelNumber) {
+    private MapView(int width, int height, GridPane gridPane, int x, int y, LevelScene levelScene) {
         this.width = width;
         this.height = height;
         this.gridPane = gridPane;
         mapRB = new Point(21,12);
-        this.levelNumber = levelNumber;
+        this.levelScene = levelScene;
         CELL_WIDTH = Math.min(width / (mapRB.x - mapLU.x), height / (mapRB.y - mapLU.y));
-        System.out.println(CELL_WIDTH);
         initGridPane();
-        mapArrView = MapArrView.getMapArr(CELL_WIDTH,y,x,levelNumber);
+        mapArrView = MapArrView.getMapArr(CELL_WIDTH,y,x,this);
         map = mapArrView.getMap();
         drawMap();
     }
 
-    public static MapView getMapView(int length, GridPane gridPane, int x, int y, int levelNumber) {
-        mapView = new MapView(length, length, gridPane, x, y, levelNumber);
+    public static MapView getMapView(int length, GridPane gridPane, int x, int y, LevelScene levelScene) {
+        if (mapView == null)
+            mapView = new MapView(length, length, gridPane, x, y, levelScene);
         return mapView;
     }
 
@@ -41,9 +43,9 @@ public class MapView {
         return mapView;
     }
 
-    public static MapView getMapView(int frame_width, int frame_height, GridPane gridPane, int x, int y, int levelNumber) {
+    public static MapView getMapView(int frame_width, int frame_height, GridPane gridPane, int x, int y, LevelScene levelScene) {
         if (mapView == null)
-            mapView = new MapView(frame_width, frame_height, gridPane, x, y, levelNumber);
+            mapView = new MapView(frame_width, frame_height, gridPane, x, y, levelScene);
         return mapView;
     }
 
@@ -104,4 +106,7 @@ public class MapView {
         MiniMap.getMiniMap().drawMiniMap();
     }
 
+    public LevelScene getLevelScene() {
+        return levelScene;
+    }
 }
