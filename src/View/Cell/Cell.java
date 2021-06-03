@@ -206,7 +206,7 @@ public abstract class Cell extends Rectangle {
      * @since 1.1.1
      */
     public void setDefaultFill() {
-            setCellImage();
+        setCellImage();
     }
 
     protected void mouseEnteredResponse() {
@@ -219,7 +219,6 @@ public abstract class Cell extends Rectangle {
         toBack();
     }
 
-    //TODO write jabadoc
     /***/
     protected void clickResponse() {
         ToolPanel.getInstance().refresh(this);

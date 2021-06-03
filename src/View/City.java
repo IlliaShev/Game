@@ -114,6 +114,29 @@ public class City {
         this.defenceDamage = defenceDamage;
     }
 
+    public int getResMineral() {
+        return resMineral;
+    }
+
+    public void setResMineral(int resMineral) {
+        this.resMineral = resMineral;
+    }
+
+    public int getResGold() {
+        return resGold;
+    }
+
+    public void setResGold(int resGold) {
+        this.resGold = resGold;
+    }
+
+    public int getResFood() {
+        return resField;
+    }
+
+    public void setResFood(int resField) {
+        this.resField = resField;
+    }
 
     public void decrementResMineral() {
         resMineral--;
