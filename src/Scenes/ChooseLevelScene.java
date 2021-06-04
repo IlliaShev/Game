@@ -1,5 +1,6 @@
 package Scenes;
 
+import javafx.animation.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -8,6 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
+import javafx.util.*;
 
 import javax.sound.sampled.*;
 import java.io.*;
@@ -26,6 +28,8 @@ public class ChooseLevelScene extends Scene {
     private LevelButton thirdLevelButton;
     private LevelButton fourthLevelButton;
     private LevelButton fifthLevelButton;
+
+    private Timeline timeline;
 
     public ChooseLevelScene(Pane choosePane, int FRAME_WIDTH, int FRAME_HEIGHT, Stage stage) throws IOException {
 
@@ -101,8 +105,12 @@ public class ChooseLevelScene extends Scene {
     protected void openLevel(Scene levelScene){
         for(LevelButton button : levelButtons){
             if(button.isClicked()){
-                stage.setScene(levelScene);
-                button.setClicked(false);
+                stage.setScene(StartMenuScene.getLoadingScene());
+                timeline = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {
+                    stage.setScene(levelScene);
+                    button.setClicked(false);
+                }));
+                timeline.play();
                 break;
             }
         }

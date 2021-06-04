@@ -5,6 +5,8 @@ import View.PlayersHandler;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
+import java.io.*;
+
 /**
  * This is one of three types of cells on the board
  * Mountain cell with it's own image ready to be painted
@@ -26,7 +28,7 @@ public class MountainCell extends Cell {
     }
 
     @Override
-    protected void clickResponse() {
+    protected void clickResponse() throws IOException, InterruptedException {
         super.clickResponse();
         if (isReadyToBuild()) {
             if (getCityWhereBuild().getBuildings().size() < 8) {

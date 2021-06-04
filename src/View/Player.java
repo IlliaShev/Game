@@ -1,10 +1,13 @@
 package View;
 
+import Scenes.*;
 import View.Cell.ArmyCell;
 import View.Cell.BuildingCell;
 import View.Cell.Cell;
 import View.Cell.CityCell;
+import javafx.scene.layout.*;
 
+import java.io.*;
 import java.util.*;
 
 public class Player {
@@ -87,7 +90,7 @@ public class Player {
         return false;
     }
 
-    public void moveArmy(){
+    public void moveArmy() throws IOException {
         Army army = getFirstArmy();
         if(army == null)
             return;
@@ -109,6 +112,13 @@ public class Player {
                 cityCell.setDefaultFill();
                 cityCell.getCity().setHealth(100);
                 MiniMap.getMiniMap().drawMiniMap();
+                if(player.getCities().size()==0){
+                    MapArrView.getMapArrView().getMapView().getLevelScene().getClip().stop();
+                    MapArrView.getMapArrView().getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
+                    LoseScene loseScene = new LoseScene(new GridPane(),
+                            StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),MapArrView.getMapArrView().getMapView().getLevelScene());;
+                    StartMenuScene.getStage().setScene(loseScene);
+                }
             } else {
                 System.out.println("Bot lose");
                 MapView.getMapView().changeOnGrass(army.getArmyCell().takeX(), army.getArmyCell().takeY());

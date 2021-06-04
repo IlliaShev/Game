@@ -1,5 +1,6 @@
 package Scenes;
 
+import javafx.animation.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -21,12 +22,18 @@ public class StartMenuScene extends Scene {
     private Button exitButton;
     private static Stage stage;
     private static StartMenuScene startMenuScene;
+    private static LoadingScene loadingScene;
+    private static int width;
+    private static int height;
 
     public StartMenuScene(Pane startMenuPane, int FRAME_WIDTH, int FRAME_HEIGHT, Stage stage) throws IOException {
 
         super(startMenuPane, FRAME_WIDTH, FRAME_HEIGHT);
         StartMenuScene.stage = stage;
         startMenuScene = this;
+        width = FRAME_WIDTH;
+        height = FRAME_HEIGHT;
+        loadingScene = new LoadingScene(new GridPane(),FRAME_WIDTH,FRAME_HEIGHT);
 
         Label firstLabel = new Label("Такого ви ще не бачили!");
         firstLabel.setFont(Font.font("Candara", FontWeight.BOLD, 40));
@@ -126,5 +133,17 @@ public class StartMenuScene extends Scene {
 
     public static StartMenuScene getStartMenuScene() {
         return startMenuScene;
+    }
+
+    public static int takeWidth() {
+        return width;
+    }
+
+    public static int takeHeight(){
+        return height;
+    }
+
+    public static LoadingScene getLoadingScene() {
+        return loadingScene;
     }
 }

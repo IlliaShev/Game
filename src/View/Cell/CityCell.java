@@ -2,7 +2,10 @@ package View.Cell;
 
 import Scenes.*;
 import View.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.*;
+import java.io.*;
+import java.util.concurrent.*;
 
 /**
  * This is one of three types of cells on the board
@@ -27,7 +30,7 @@ public class CityCell extends Cell implements Attackable{
     // private methods
 
     @Override
-    protected void clickResponse() {
+    protected void clickResponse() throws IOException, InterruptedException {
         super.clickResponse();
         if((!cellIsChosen() || isChosen()) &&PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(city)) {
             buildBuildings();
@@ -56,14 +59,23 @@ public class CityCell extends Cell implements Attackable{
                         mapArrView.getMapView().getLevelScene().getLevelButton().changeBackground();
                         mapArrView.getMapView().getLevelScene().getClip().stop();
                         mapArrView.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
-                        StartMenuScene.getStage().setScene(StartMenuScene.getStartMenuScene());
-                        StartMenuScene.getStartMenuScene().playBackMusic();
+                        WinScene winScene = new WinScene(new GridPane(), StartMenuScene.takeWidth(),
+                                StartMenuScene.takeHeight(),mapArrView.getMapView().getLevelScene());
+                        StartMenuScene.getStage().setScene(winScene);
                     }
                 }
             } else {
                 System.out.println("We lose");
                 MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
                 army.getCityWhereBuild().deleteBuilding(army);
+                player.deleteCity(city);
+                if(player.getCities().size()==0){
+                    mapArrView.getMapView().getLevelScene().getClip().stop();
+                    mapArrView.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
+                    LoseScene loseScene = new LoseScene(new GridPane(),
+                            StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),mapArrView.getMapView().getLevelScene());;
+                    StartMenuScene.getStage().setScene(loseScene);
+                }
             }
         }
     }

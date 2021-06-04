@@ -59,15 +59,38 @@ public class ThirdLevelScene extends Scene implements LevelScene{
                         thirdLevel.getMapRB().x++;
                     }
                 }
+                case ESCAPE -> {
+                    try {
+                        StartMenuScene.getStage().setScene(new PauseScene(new GridPane(),FRAME_WIDTH,FRAME_HEIGHT,this));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
                 case SPACE -> {
                     this.getLevelButton().setPassed(true);
                     if(this.getLevelButton().isPassed()){
                         this.getLevelButton().changeBackground();
                         this.getMapView().getLevelScene().getClip().stop();
                         this.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
-                        StartMenuScene.getStage().setScene(StartMenuScene.getStartMenuScene());
-                        StartMenuScene.getStartMenuScene().playBackMusic();
+                        WinScene winScene = null;
+                        try {
+                            winScene = new WinScene(new GridPane(), StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),this);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        StartMenuScene.getStage().setScene(winScene);
                     }
+                }
+                case SHIFT -> {
+                    this.getMapView().getLevelScene().getClip().stop();
+                    this.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
+                    LoseScene loseScene = null;
+                    try {
+                        loseScene = new LoseScene(new GridPane(), StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    StartMenuScene.getStage().setScene(loseScene);
                 }
             }
             MiniMap.getMiniMap().drawMiniMap();

@@ -4,6 +4,8 @@ import View.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 
+import java.io.*;
+
 /**
  * This is one of three types of cells on the board
  * Forest cell with it's own image ready to be painted
@@ -22,7 +24,7 @@ public class ForestCell extends Cell implements EmptyCell {
 
 
     @Override
-    protected void clickResponse() {
+    protected void clickResponse() throws IOException, InterruptedException {
         super.clickResponse();
         if(isReadyToBuild()) {
             if(getCityWhereBuild().getBuildings().size() < 8) {

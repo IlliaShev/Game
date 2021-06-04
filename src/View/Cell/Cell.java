@@ -6,6 +6,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
+import java.io.*;
+
 /**
  * A single cell on world map
  * Used to draw a single sell in {@link MapView}
@@ -73,7 +75,13 @@ public abstract class Cell extends Rectangle {
     }
 
     private void setClick() {
-        this.setOnMouseClicked(mouseEvent -> clickResponse());
+        this.setOnMouseClicked(mouseEvent -> {
+            try {
+                clickResponse();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     // getters & setters
@@ -220,7 +228,7 @@ public abstract class Cell extends Rectangle {
     }
 
     /***/
-    protected void clickResponse() {
+    protected void clickResponse() throws IOException, InterruptedException {
         ToolPanel.getInstance().refresh(this);
     }
 

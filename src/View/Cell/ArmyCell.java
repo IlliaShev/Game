@@ -15,13 +15,14 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
     private Cell prevCell;
     private Clip clip;
     private String sound = "resources\\music\\Army.wav";
+    private boolean isOurs;
 
     public ArmyCell(int length, int x, int y) {
         super(length, x, y, false, false,true);
     }
 
     @Override
-    protected void clickResponse() {
+    protected void clickResponse() throws IOException, InterruptedException {
         super.clickResponse();
         if((!cellIsChosen() || isChosen()) && PlayersHandler.getPlayersHandler().getPlayer(0).hasArmy(army)){
             fillFields();

@@ -22,13 +22,14 @@ public class FieldCell extends Cell implements BuildingCell {
     private static final String imageEnemyURL = "file:resources\\images\\city\\buildings\\EnemyField.png";
     private Clip clip;
     private String sound = "resources\\music\\Field.wav";
+    private boolean isOurs;
 
     public FieldCell(int length, int x, int y) {
         super(length,x,y,false, true, false);
     }
 
     @Override
-    protected void clickResponse() {
+    protected void clickResponse() throws IOException, InterruptedException {
         super.clickResponse();
         if (isReadyToMove()) {
             getCityWhereBuild().deleteBuilding(this);

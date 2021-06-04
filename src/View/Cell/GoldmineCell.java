@@ -22,13 +22,14 @@ public class GoldmineCell extends Cell implements BuildingCell {
     private static final String imageEnemyURL = "file:resources\\images\\city\\buildings\\EnemyGoldmine.png";
     private Clip clip;
     private String sound = "resources\\music\\Goldmine.wav";
+    private boolean isOurs;
 
     public GoldmineCell(int length, int x, int y) {
         super(length,x,y,false, true, false);
     }
 
     @Override
-    protected void clickResponse() {
+    protected void clickResponse() throws IOException, InterruptedException {
         super.clickResponse();
         if(isReadyToMove()){
             getCityWhereBuild().deleteBuilding(this);

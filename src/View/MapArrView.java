@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class MapArrView {
+
     private static MapArrView mapArrView;
     private int rowsNumber;
     private int columnsNumber;
