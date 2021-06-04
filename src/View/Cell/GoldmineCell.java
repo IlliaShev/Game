@@ -37,7 +37,7 @@ public class GoldmineCell extends Cell implements BuildingCell {
             getArmyCell().fillFields();
             this.setArmyCellView(army);
             MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
-            getArmyCell().setPrevCell(this);
+            getArmyCell().setPrevCell(null);
             checkIfCanGotAttack();
             PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
         }

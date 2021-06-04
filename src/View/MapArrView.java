@@ -649,6 +649,8 @@ public class MapArrView {
                     return;
             }
         }
+        System.out.println(cityWhereBuild);
+        System.out.println(i + " " + j + " " + map[i][j].getClass());
         map[i][j].setCityWhereBuild(cityWhereBuild);
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
         map[i][j].setDefaultFill();

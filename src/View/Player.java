@@ -148,7 +148,7 @@ public class Player {
         if(!(cellToMove instanceof CityCell)) {
             cellToMove.setArmyCellView(army.getArmyCell());
             MapView.getMapView().moveArmy(cellToMove.takeX(), cellToMove.takeY(), cellToMove.getArmyCell());
-            if (cellToMove instanceof BuildingCell && !(hasBuilding((BuildingCell) cellToMove))) {
+            if ((cellToMove instanceof BuildingCell) && !(hasBuilding((BuildingCell) cellToMove))) {
                 cellToMove.getCityWhereBuild().deleteBuilding((BuildingCell) cellToMove);
                 cellToMove.getArmyCell().setPrevCell(null);
             } else

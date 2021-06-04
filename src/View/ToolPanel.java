@@ -247,7 +247,7 @@ public final class ToolPanel extends Group {
 
         private void armyCellStats(Cell cell) {
             try {
-                if (!((ArmyCell) cell).getArmy().getCity().getPlayer().equals(PlayersHandler.getPlayersHandler().getPlayer(0))) {
+                if (!PlayersHandler.getPlayersHandler().getPlayer(0).hasArmy(((ArmyCell)cell).getArmy())) {
                     return;
                 }
             } catch (Exception exception) {
@@ -283,7 +283,7 @@ public final class ToolPanel extends Group {
 
         private void cityCellStats(Cell cell) {
             try {
-                if (!((CityCell) cell).getCity().getPlayer().equals(PlayersHandler.getPlayersHandler().getPlayer(0))) {
+                if (!PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(((CityCell)cell).getCity())) {
                     return;
                 }
             } catch (Exception exception) {
