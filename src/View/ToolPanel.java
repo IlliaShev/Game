@@ -1,8 +1,6 @@
 package View;
 
-import View.Cell.ArmyCell;
-import View.Cell.Cell;
-import View.Cell.CityCell;
+import View.Cell.*;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -13,8 +11,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>Tool panel below map</p>
@@ -64,6 +60,10 @@ public final class ToolPanel extends Group {
         PANEL_HEIGHT = panelHeight;
     }
 
+    public ActionsPanel getActionsPanel() {
+        return actionsPanel;
+    }
+
     //methods
 
     public void refresh(Cell cell) {
@@ -80,6 +80,7 @@ public final class ToolPanel extends Group {
         mainPanel = new MainPanel(cell);
         actionsPanel = new ActionsPanel(cell);
         tools.add(mainPanel, 1, 0);
+        tools.add(actionsPanel, 2, 0);
     }
 
     public void defaultPanelView() {
@@ -103,35 +104,27 @@ public final class ToolPanel extends Group {
         //other shit
         tools.setHgap(10);
         tools.setVgap(10);
-//        miniMap = new GridPane();
+        miniMap = new GridPane();
         mainPanel = new MainPanel();
         actionsPanel = new ActionsPanel();
         if (kostyl) {
-            initMapPanel();
+            tools.add(miniMap, 0, 0);
         }
         tools.add(mainPanel, 1, 0);
         tools.add(actionsPanel, 2, 0);
+        initMapPanel();
         this.getChildren().add(tools);
     }
 
-    public void initMapPanel() {
-        miniMap = new GridPane();
+    private void initMapPanel() {
         Rectangle miniMapBackground = new Rectangle();
         miniMapBackground.setFill(Paint.valueOf("GRAY"));
         miniMapBackground.setWidth(PANEL_WIDTH / 4);
         miniMapBackground.setHeight(PANEL_HEIGHT);
         miniMap.setStyle("-fx-background-color: #808080;");
         MiniMap.getMiniMap(miniMap, PANEL_WIDTH / 4 - 15, PANEL_HEIGHT);
-        tools.add(miniMap, 0, 0);
-    }
-
-    private void initActionsPanel() {
-        //TODO detalize this part of toolbar
-        Rectangle miniMapBackground = new Rectangle();
-        miniMapBackground.setFill(Paint.valueOf("GRAY"));
-        miniMapBackground.setWidth(PANEL_WIDTH / 4);
-        miniMapBackground.setHeight(PANEL_HEIGHT);
-        actionsPanel.add(miniMapBackground, 0, 0);
+        //TODO be careful with this shit, Artem
+        //tools.add(miniMap, 0, 0);
     }
 
     /**
@@ -198,6 +191,7 @@ public final class ToolPanel extends Group {
         // caption
 
         private void initCaption() {
+            caption.setText("");
             caption.setPrefWidth(MAIN_PANEL_WIDTH);
             caption.setPrefHeight(MAIN_PANEL_HEIGHT / 5);
         }
@@ -247,10 +241,12 @@ public final class ToolPanel extends Group {
 
         private void armyCellStats(Cell cell) {
             try {
-                if (!PlayersHandler.getPlayersHandler().getPlayer(0).hasArmy(((ArmyCell)cell).getArmy())) {
+                if (!PlayersHandler.getPlayersHandler().getPlayer(0).hasArmy(((ArmyCell) cell).getArmy())) {
+                    System.out.println("wrong army");
                     return;
                 }
             } catch (Exception exception) {
+                System.out.println("exception");
                 return;
             }
             Rectangle health = new Rectangle();
@@ -283,7 +279,8 @@ public final class ToolPanel extends Group {
 
         private void cityCellStats(Cell cell) {
             try {
-                if (!PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(((CityCell)cell).getCity())) {
+                if (!PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(((CityCell) cell).getCity())) {
+                    System.out.println("wrong city");
                     return;
                 }
             } catch (Exception exception) {
@@ -392,25 +389,43 @@ public final class ToolPanel extends Group {
         private final int ACTION_PANEL_WIDTH = PANEL_WIDTH / 4;
         private final int ACTION_PANEL_HEIGHT = PANEL_HEIGHT;
         // images of buttons
-        private Paint unenteredButton = Paint.valueOf("VIOLET");
-        private Paint enteredButton = Paint.valueOf("PINK");
-        private final String pathToBuilding = "file:resources//images//toolbar//resources//Bread.png";
-        private final String pathToRecruiting = "file:resources//images//toolbar//resources//Bread.png";
-        private final String pathToNewArmy = "file:resources//images//toolbar//resources//Bread.png";
-        private final String pathToUpgrade = "file:resources//images//toolbar//resources//Bread.png";
-        private final String pathToGold = "file:resources//images//toolbar//resources//Bread.png";
-        private final String pathToMineral = "file:resources//images//toolbar//resources//Bread.png";
+        private final Paint unenteredButton = Paint.valueOf("GREEN");
+        private final Paint enteredButton = Paint.valueOf("BLUE");
+        private final Paint chosenButton = Paint.valueOf("PINK");
+        private final Paint inactiveElement = Paint.valueOf("GRAY");
+        private final String pathToBuilding = "file:resources//images//toolbar//actions//Build.png";
+        private final String pathToRecruiting = "file:resources//images//toolbar//actions//Recruit.png";
+        private final String pathToNewArmy = "file:resources//images//toolbar//actions//NewArmy.png";
+        private final String pathToUpgrade = "file:resources//images//toolbar//actions//Upgrade.png";
+        private final String pathToGold = "file:resources//images//toolbar//resources//Gold.png";
+        private final String pathToMineral = "file:resources//images//toolbar//resources//Mineral.png";
         private final String pathToField = "file:resources//images//toolbar//resources//Bread.png";
+        private final String pathToDestruction = "file:resources//images//toolbar//actions//Destroy.png";
+        private final String pathToHealth = "file:resources//images//toolbar//stats//Heart.png";
+        private final String pathToAttack = "file:resources//images//toolbar//stats//Attack.png";
+        private final String pathToDefence = "file:resources//images//toolbar//stats//Defence.png";
+        private final String pathToExit = "file:resources//images//toolbar//actions//Exit.jpg";
         private final ImagePattern buildingImage = new ImagePattern(new Image(pathToBuilding));
         private final ImagePattern recruitingImage = new ImagePattern(new Image(pathToRecruiting));
+        private final ImagePattern destructionImage = new ImagePattern(new Image(pathToDestruction));
         private final ImagePattern newArmyImage = new ImagePattern(new Image(pathToNewArmy));
         private final ImagePattern upgradeImage = new ImagePattern(new Image(pathToUpgrade));
         private final ImagePattern fieldImage = new ImagePattern(new Image(pathToField));
         private final ImagePattern goldmineImage = new ImagePattern(new Image(pathToGold));
         private final ImagePattern mineralMineImage = new ImagePattern(new Image(pathToMineral));
+        private final ImagePattern healthImage = new ImagePattern(new Image(pathToHealth));
+        private final ImagePattern attackImage = new ImagePattern(new Image(pathToAttack));
+        private final ImagePattern defenceImage = new ImagePattern(new Image(pathToDefence));
+        private final ImagePattern exitImage = new ImagePattern(new Image(pathToExit));
 
         // buttons
         private Rectangle[] options = new Rectangle[9];
+
+        // other shit
+
+        private Class<? extends Cell> buildingType = null;
+        private boolean cityIsActivated = false;
+        private boolean readyToDelete = false;
 
         //constructors
 
@@ -443,11 +458,13 @@ public final class ToolPanel extends Group {
             int n = 0;
             for (Rectangle i : options) {
                 i = new Rectangle();
-                i.setFill(Paint.valueOf("PINK"));
+                i.setFill(inactiveElement);
+                i.setStroke(inactiveElement);
                 i.setWidth(ACTION_PANEL_WIDTH / 3 - 2);
                 i.setHeight(ACTION_PANEL_HEIGHT / 3 - 2);
                 this.add(i, n % 3, n / 3);
-                n++;
+                setDefaultButtonSettings(i);
+                options[n++] = i;
             }
         }
 
@@ -455,25 +472,37 @@ public final class ToolPanel extends Group {
          * Sets view and options, appropriate to given cell
          */
         public void setView(Cell cell) {
-            setOptionButtonsDefaultSettings();
-            if(cell.getClass().equals(CityCell.class)){
+            setView();
+            if (cell.getClass().equals(CityCell.class) && PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(((CityCell) cell).getCity())) {
                 initCityCase((CityCell) cell);
+            } else if (cell.getClass().equals(ArmyCell.class) && PlayersHandler.getPlayersHandler().getPlayer(0).hasArmy(((ArmyCell) cell).getArmy())) {
+                armyAction((ArmyCell) cell);
             }
         }
 
         // cases for each type of cell
 
         private void initCityCase(CityCell cell) {
-            Rectangle build = new Rectangle();
-            setDefaultButtonSettings(build);
-            build.setFill(buildingImage);
-            Rectangle recruit = new Rectangle();
-            setDefaultButtonSettings(recruit);
-            recruit.setFill(recruitingImage);
-            options[0] = build;
-            options[1] = recruit;
-            build.setOnMouseClicked(e -> buildAction(cell));
-            recruit.setOnMouseClicked(e -> recruitAction(cell));
+            setOptionButtonsDefaultSettings();
+            options[0].setFill(buildingImage);
+            options[1].setFill(recruitingImage);
+            options[6].setFill(destructionImage);
+            options[8].setFill(exitImage);
+            options[0].setOnMouseClicked(e -> {
+                buildAction(cell);
+            });
+            options[1].setOnMouseClicked(e -> recruitAction(cell));
+            options[6].setOnMouseClicked(e -> destructionAction(cell));
+            options[8].setOnMouseClicked(e -> {
+                cell.setChosen(false);
+                cityIsActivated = false;
+                buildingType = null;
+                cell.changeTerritoryHighlight();
+                mainPanel.defaultView();
+                setView();
+            });
+            setDefaultHighlight(options[0]);
+            setDefaultHighlight(options[1]);
         }
 
         private void initArmyCellCase(ArmyCell cell) {
@@ -486,81 +515,165 @@ public final class ToolPanel extends Group {
 
         //getters & setters
 
+        public Class<? extends Cell> getBuildingType() {
+            return buildingType;
+        }
+
+        public boolean cityIsActivated() {
+            return cityIsActivated;
+        }
+
+        public boolean isReadyToDelete() {
+            return readyToDelete;
+        }
+
         // methods
 
         // some idk, auxiliary shit
 
+        // city options
+
         private void buildAction(CityCell cell) {
+            setOptionButtonsDefaultSettings();
+            inactiveButton(options[1]);
+            inactiveButton(options[6]);
+            buildingType = null;
+            readyToDelete = false;
             cell.setChosen(true);
-            Cell[][] map = MapArrView.getMapArrView().getMap();
-            int indX = cell.takeX();
-            int indY = cell.takeY();
-            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, MapArrView.getMapArrView().getColumnsNumber()); i++) {
-                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, MapArrView.getMapArrView().getRowsNumber()); j++) {
-                    if (map[i][j].isEmpty()) {
-                        map[i][j].setStroke(Paint.valueOf("ORANGE"));
-                        map[i][j].setStrokeWidth(2.0);
-                        map[i][j].setReadyToBuild(true);
-                        map[i][j].setCityWhereBuild(cell.getCity());
-                    }
-                }
-            }
+            cityIsActivated = true;
 
-            Rectangle gold = new Rectangle();
-            Rectangle mineral = new Rectangle();
-            Rectangle field = new Rectangle();
-            setDefaultButtonSettings(gold);
-            setDefaultButtonSettings(mineral);
-            setDefaultButtonSettings(field);
-            gold.setFill(goldmineImage);
-            mineral.setFill(mineralMineImage);
-            field.setFill(fieldImage);
-            AtomicInteger chosenType = new AtomicInteger(0);//1 - build gold, 2 - minerals, 3 - field
-            gold.setOnMouseClicked(e ->  {
-                chosenType.set(1);
-                optionIsChosen(gold);
-                optionIsNotChosen(mineral);
-                optionIsNotChosen(field);
-            });
-            mineral.setOnMouseClicked(e -> {
-                chosenType.set(2);
-                optionIsNotChosen(gold);
-                optionIsChosen(mineral);
-                optionIsNotChosen(field);
-            });
-            field.setOnMouseClicked(e -> {
-                chosenType.set(3);
-                optionIsNotChosen(gold);
-                optionIsNotChosen(mineral);
-                optionIsChosen(field);
-            });
-            switch (chosenType.get()) {
-                case 1:
+            cell.changeTerritoryHighlight();
 
-            }
+            options[0].setFill(goldmineImage);
+            options[1].setFill(mineralMineImage);
+            options[2].setFill(fieldImage);
+            setDefaultHighlight(options[2]);
+            setDefaultHighlight(options[8]);
+            options[8].setFill(exitImage);
+            options[0].setOnMouseClicked(e -> {
+                buildingType = GoldmineCell.class;
+                optionIsChosen(options[0]);
+                optionIsNotChosen(options[1]);
+                optionIsNotChosen(options[2]);
+            });
+            options[1].setOnMouseClicked(e -> {
+                buildingType = MineralCell.class;
+                optionIsNotChosen(options[0]);
+                optionIsChosen(options[1]);
+                optionIsNotChosen(options[2]);
+            });
+            options[2].setOnMouseClicked(e -> {
+                buildingType = FieldCell.class;
+                optionIsNotChosen(options[0]);
+                optionIsNotChosen(options[1]);
+                optionIsChosen(options[2]);
+            });
+
+            options[8].setOnMouseClicked(e -> {
+                cell.setChosen(false);
+                cityIsActivated = false;
+                buildingType = null;
+                cell.changeTerritoryHighlight();
+                setView();
+                initCityCase(cell);
+            });
+        }
+
+        private void recruitAction(CityCell cell) {
+            cell.setChosen(true);
+            cityIsActivated = true;
+            readyToDelete = false;
+            cell.changeTerritoryHighlight();
+            optionIsChosen(options[1]);
+            options[1].setFill(newArmyImage);
+            options[1].setOnMouseClicked(e -> {
+                cell.setChosen(false);
+                cityIsActivated = false;
+                readyToDelete = false;
+                buildingType = null;
+                cell.changeTerritoryHighlight();
+                setView(cell);
+                cell.setChosen(true);
+                optionIsNotChosen(options[1]);
+            });
+            buildingType = ArmyCell.class;
+        }
+
+        private void destructionAction(CityCell cell) {
+            cell.setChosen(true);
+            cityIsActivated = true;
+            readyToDelete = true;
+            buildingType = MountainCell.class;
+            optionIsChosen(options[6]);
+            options[6].setOnMouseClicked(e -> {
+                cell.setChosen(false);
+                cityIsActivated = false;
+                readyToDelete = false;
+                buildingType = null;
+                cell.changeTerritoryHighlight();
+                cell.setChosen(true);
+                setView(cell);
+            });
+            cell.changeTerritoryHighlight();
+        }
+
+        // army options
+
+        private void armyAction(ArmyCell cell) {
+            setOptionButtonsDefaultSettings();
+            options[0].setFill(upgradeImage);
+            options[0].setOnMouseClicked(e -> {
+                upgradeOptions(cell);
+            });
+        }
+
+        private void upgradeOptions(ArmyCell cell) {
+            setOptionButtonsDefaultSettings();
+            options[0].setFill(healthImage);
+            options[1].setFill(attackImage);
+            options[2].setFill(defenceImage);
+            options[8].setFill(exitImage);
+            options[8].setOnMouseClicked(e -> {
+                setView(cell);
+            });
+        }
+
+        private void setDefaultButtonSettings(Rectangle rectangle) {
+            rectangle.setFill(inactiveElement);
+            rectangle.setWidth(ACTION_PANEL_WIDTH / 3 - 5);
+            rectangle.setHeight(ACTION_PANEL_HEIGHT / 3 - 6);
+            rectangle.setStrokeWidth(1.0);
+            rectangle.setStroke(inactiveElement);
+            rectangle.setOnMouseEntered(e -> {
+            });
+            rectangle.setOnMouseExited(e -> {
+                rectangle.setStroke(inactiveElement);
+            });
+        }
+
+        private void setDefaultHighlight(Rectangle rectangle) {
+            rectangle.setStroke(unenteredButton);
+            rectangle.setOnMouseEntered(e -> rectangle.setStroke(enteredButton));
+            rectangle.setOnMouseExited(e -> rectangle.setStroke(unenteredButton));
+            rectangle.setStrokeWidth(3.0);
         }
 
         private void optionIsChosen(Rectangle rectangle) {
-            rectangle.setStroke(Paint.valueOf("GREEN"));
+            rectangle.setStroke(chosenButton);
+            rectangle.setOnMouseExited(e -> rectangle.setStroke(chosenButton));
             rectangle.setStrokeWidth(3.0);
         }
 
         private void optionIsNotChosen(Rectangle rectangle) {
-            rectangle.setStroke(Paint.valueOf("BLACK"));
+            rectangle.setStroke(unenteredButton);
+            rectangle.setOnMouseExited(e -> rectangle.setStroke(unenteredButton));
             rectangle.setStrokeWidth(1.0);
         }
 
-        private void recruitAction(CityCell cell) {
-
-        }
-
-        private void setDefaultButtonSettings(Rectangle rectangle) {
-            rectangle.setFill(Paint.valueOf("GRAY"));
-            rectangle.setWidth(ACTION_PANEL_WIDTH / 3 - 2);
-            rectangle.setHeight(ACTION_PANEL_HEIGHT / 3 - 2);
-            rectangle.setStroke(unenteredButton);
-            rectangle.setOnMouseEntered(e -> rectangle.setStroke(enteredButton));
-            rectangle.setOnMouseExited(e -> rectangle.setStroke(unenteredButton));
+        private void inactiveButton(Rectangle rectangle) {
+            rectangle.setStrokeWidth(1.0);
+            rectangle.setStroke(inactiveElement);
+            rectangle.setOnMouseExited(e -> rectangle.setStroke(inactiveElement));
         }
 
     }

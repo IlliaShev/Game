@@ -19,20 +19,19 @@ public class ForestCell extends Cell implements EmptyCell {
     private static final String imageURL = "file:resources\\images\\cells\\Forest.png";//path to image of forest
 
     public ForestCell(int length, int x, int y) {
-        super(length,x,y,true, true, false);
+        super(length, x, y, true, true, false);
     }
 
 
     @Override
     protected void clickResponse() throws IOException, InterruptedException {
         super.clickResponse();
-        if(isReadyToBuild()) {
-            if(getCityWhereBuild().getBuildings().size() < 8) {
-                MapView.getMapView().changeCell(takeX(), takeY(), getCityWhereBuild(), this);
+        if (isReadyToBuild()) {
+            if (getCityWhereBuild().getBuildings().size() < 8) {
+                MapView.getMapView().buildResources(takeX(), takeY(), getCityWhereBuild(), ToolPanel.getInstance().getActionsPanel().getBuildingType());
                 setReadyToBuild(false);
             }
-        }
-        else if(isReadyToMove()){
+        } else if (isReadyToMove()) {
             ArmyCell army = getArmyCell();
             getArmyCell().fillFields();
             this.setArmyCellView(army);

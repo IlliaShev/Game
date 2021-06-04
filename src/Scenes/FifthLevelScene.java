@@ -26,7 +26,7 @@ public class FifthLevelScene extends Scene implements LevelScene{
         PlayersHandler.getPlayersHandler().addPlayer(new Player());
         fifthLevel = MapView.getMapView(FRAME_WIDTH, 472, gridPane,25,25, this);
         borderPane.setBottom(ToolPanel.getInstance());
-        ToolPanel.getInstance().initMapPanel();
+        //ToolPanel.getInstance().initMapPanel();
         group = new Group();
         group.getChildren().add(borderPane);
 

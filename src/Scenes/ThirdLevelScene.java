@@ -26,7 +26,7 @@ public class ThirdLevelScene extends Scene implements LevelScene{
         PlayersHandler.getPlayersHandler().addPlayer(new Player());
         thirdLevel = MapView.getMapView(FRAME_WIDTH, 472, gridPane,21,21, this);
         borderPane.setBottom(ToolPanel.getInstance());
-        ToolPanel.getInstance().initMapPanel();
+        //ToolPanel.getInstance().initMapPanel();
         group = new Group();
         group.getChildren().add(borderPane);
 

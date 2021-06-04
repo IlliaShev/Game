@@ -16,7 +16,7 @@ public class Army {
         defenceDamage = 15;
     }
 
-    public ArmyCell getArmyCell(){
+    public ArmyCell getArmyCell() {
         return armyCell;
     }
 
@@ -31,7 +31,7 @@ public class Army {
     }
 
     public void setHealth(int health) {
-        if(health<=0){
+        if (health <= 0) {
             throw new IllegalArgumentException("Health of the army cannot be less or equal 0!");
         }
         this.health = health;
@@ -42,7 +42,7 @@ public class Army {
     }
 
     public void setAttackDamage(int attackDamage) {
-        if(attackDamage <=0){
+        if (attackDamage <= 0) {
             throw new IllegalArgumentException("Damage of the army cannot be less or equal 0!");
         }
         this.attackDamage = attackDamage;
@@ -66,9 +66,9 @@ public class Army {
 
     // Other voids
 
-    public void receiveDamage(int damage){
+    public void receiveDamage(int damage) {
         this.health -= damage;
-        if(this.health<=0){
+        if (this.health <= 0) {
             this.health = 0;
         }
     }

@@ -24,6 +24,7 @@ public class MiniMap {
     private static Canvas canvas;
 
     private MiniMap(GridPane gridPane, int width, int height) {
+        mapArrView = MapArrView.getMapArrView();
         MiniMap.gridPane = gridPane;
         gridWidth = width;
         gridHeight = height;

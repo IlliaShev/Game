@@ -2,6 +2,7 @@ package View.Cell;
 
 import View.MapView;
 import View.PlayersHandler;
+import View.ToolPanel;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
@@ -40,6 +41,8 @@ public class GoldmineCell extends Cell implements BuildingCell {
             getArmyCell().setPrevCell(null);
             checkIfCanGotAttack();
             PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
+        }  else if (ToolPanel.getInstance().getActionsPanel().isReadyToDelete()) {
+            getCityWhereBuild().deleteBuilding(this);
         }
         playSound();
     }

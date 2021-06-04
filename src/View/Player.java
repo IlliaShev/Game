@@ -158,8 +158,8 @@ public class Player {
 
     private CityCell canAttack(Army army) {
         Cell[][] map = MapArrView.getMapArrView().getMap();
-        for (int i = Math.max(army.getArmyCell().takeX() - 1, 0); i <= Math.min(army.getArmyCell().takeX() + 1, MapArrView.getMapArrView().getColumnsNumber()); i++) {
-            for (int j = Math.max(army.getArmyCell().takeY() - 1, 0); j <= Math.min(army.getArmyCell().takeY() + 1, MapArrView.getMapArrView().getRowsNumber()); j++) {
+        for (int i = Math.max(army.getArmyCell().takeX() - 1, 0); i < Math.min(army.getArmyCell().takeX() + 1, MapArrView.getMapArrView().getColumnsNumber()); i++) {
+            for (int j = Math.max(army.getArmyCell().takeY() - 1, 0); j < Math.min(army.getArmyCell().takeY() + 1, MapArrView.getMapArrView().getRowsNumber()); j++) {
                 if(map[i][j] instanceof CityCell){
                     if(PlayersHandler.getPlayersHandler().getPlayer(0).hasCity(((CityCell) map[i][j]).getCity())){
                         return (CityCell) map[i][j];

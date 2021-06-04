@@ -2,6 +2,7 @@ package View.Cell;
 
 import View.MapView;
 import View.PlayersHandler;
+import View.ToolPanel;
 import javafx.scene.image.*;
 import javafx.scene.paint.*;
 
@@ -16,7 +17,7 @@ import java.io.*;
  * @version 1.0.0
  * @see Cell
  */
-public class MineralCell extends Cell implements BuildingCell{
+public class MineralCell extends Cell implements BuildingCell {
 
     private static final String imageURL = "file:resources\\images\\city\\buildings\\Mineral.png";//path to image of mineral
     private static final String imageEnemyURL = "file:resources\\images\\city\\buildings\\EnemyMineral.png";
@@ -40,6 +41,8 @@ public class MineralCell extends Cell implements BuildingCell{
             getArmyCell().setPrevCell(null);
             checkIfCanGotAttack();
             PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
+        }  else if (ToolPanel.getInstance().getActionsPanel().isReadyToDelete()) {
+            getCityWhereBuild().deleteBuilding(this);
         }
         playSound();
     }

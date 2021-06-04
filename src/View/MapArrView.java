@@ -632,7 +632,6 @@ public class MapArrView {
         }
     }
 
-
     public void changeCell(int i, int j, City cityWhereBuild, Cell prevCell){
         Random random = new Random();
         int type = random.nextInt(4);
@@ -656,15 +655,20 @@ public class MapArrView {
         map[i][j].setDefaultFill();
     }
 
-    public void buildResources(int i, int j, City cityWhereBuild, Class<BuildingCell> type){
-        if(type.equals(MineralCell.class)){
+    public void buildResources(int i, int j, City cityWhereBuild, Class<? extends Cell> type) {
+        if (type == null) {
+            return;
+        }
+        if (type.equals(MineralCell.class)) {
             map[i][j] = new MineralCell(CELL_WIDTH, i, j);
         } else if(type.equals(FieldCell.class)){
             map[i][j] = new FieldCell(CELL_WIDTH, i, j);
         } else if(type.equals(GoldmineCell.class)){
             map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
-        } else{
+        } else if (cityWhereBuild.getNumberOfArmy() < 3 && type.equals(ArmyCell.class)){
             map[i][j] = new ArmyCell(CELL_WIDTH, i, j);
+        } else {
+            return;
         }
         map[i][j].setCityWhereBuild(cityWhereBuild);
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);

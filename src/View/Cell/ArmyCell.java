@@ -136,7 +136,6 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable{
        }
     }
 
-
     private void playSound(){
         try {
             File soundFile = new File(sound);

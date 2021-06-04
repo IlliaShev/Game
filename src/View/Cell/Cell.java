@@ -203,7 +203,7 @@ public abstract class Cell extends Rectangle {
         }
     }
 
-    protected void fillCell(String url){
+    protected void fillCell(String url) {
         Image city = new Image(url);
         this.setFill(new ImagePattern(city, super.getX(), super.getY(), super.getWidth(), super.getHeight(), false));
     }
@@ -229,6 +229,9 @@ public abstract class Cell extends Rectangle {
 
     /***/
     protected void clickResponse() throws IOException, InterruptedException {
+        if (ToolPanel.getInstance().getActionsPanel().cityIsActivated()) {
+            return;
+        }
         ToolPanel.getInstance().refresh(this);
     }
 

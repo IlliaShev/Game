@@ -16,7 +16,6 @@ public class City {
     private int health;
     private int defenceDamage;
     private ArrayList<Army> armies;
-
     private ArrayList<BuildingCell> buildings;
 
     public City(String name) {

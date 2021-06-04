@@ -20,7 +20,7 @@ public class GrassCell extends Cell {
         super.clickResponse();
         if(isReadyToBuild()) {
             if(getCityWhereBuild().getBuildings().size() < 8) {
-                MapView.getMapView().changeCell(takeX(), takeY(), getCityWhereBuild(), this);
+                MapView.getMapView().buildResources(takeX(), takeY(), getCityWhereBuild(), ToolPanel.getInstance().getActionsPanel().getBuildingType());
                 setReadyToBuild(false);
             }
         }

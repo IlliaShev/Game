@@ -26,7 +26,7 @@ public class FourthLevelScene extends Scene implements LevelScene{
         PlayersHandler.getPlayersHandler().addPlayer(new Player());
         fourthLevel = MapView.getMapView(FRAME_WIDTH, 472, gridPane,23,23, this);
         borderPane.setBottom(ToolPanel.getInstance());
-        ToolPanel.getInstance().initMapPanel();
+        //ToolPanel.getInstance().initMapPanel();
         group = new Group();
         group.getChildren().add(borderPane);
 

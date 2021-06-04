@@ -86,7 +86,7 @@ public class MapView {
         MiniMap.getMiniMap().drawMiniMap();
     }
 
-    public void buildResources(int i, int j, City cityWhereBuild, Class<BuildingCell> type){
+    public void buildResources(int i, int j, City cityWhereBuild, Class<? extends Cell> type){
         mapArrView.buildResources(i,j,cityWhereBuild,type);
         drawMap();
         MiniMap.getMiniMap().drawMiniMap();
