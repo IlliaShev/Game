@@ -50,9 +50,6 @@ public class City {
             ((ArmyCell) buildingCell).setArmy(army);
             army.setArmyCell((ArmyCell) buildingCell);
             army.setCity(this);
-            if(armies.size()<3){
-                numberOfArmy++;
-            }
             armies.add(army);
         }
     }
@@ -67,10 +64,6 @@ public class City {
 
     public ArrayList<Army> getArmies() {
         return armies;
-    }
-
-    public int getNumberOfArmy() {
-        return numberOfArmy;
     }
 
     public String getName() {

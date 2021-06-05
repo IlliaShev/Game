@@ -14,14 +14,21 @@ public class GameScene extends Scene implements LevelScene{
     private LevelButton levelButton;
 
     public GameScene(Group group, int FRAME_WIDTH, int FRAME_HEIGHT) {
+
+
         super(group, FRAME_WIDTH, FRAME_HEIGHT);
+        levelButton = new LevelButton(ChooseLevelScene.getChooseLevelScene(),0, "RED", FRAME_WIDTH, FRAME_HEIGHT);
         BorderPane borderPane = new BorderPane();
         GridPane gridPane = new GridPane();
         borderPane.setCenter(gridPane);
+        PlayersHandler.getPlayersHandler().clearPlayers();
+        PlayersHandler.getPlayersHandler().addPlayer(new Player());
+        PlayersHandler.getPlayersHandler().addPlayer(new Player());
+        mapView = MapView.getMapView(FRAME_WIDTH, 472, gridPane,40,40, this);
         borderPane.setBottom(ToolPanel.getInstance());
+        ToolPanel.getInstance().initMapPanel();
         group = new Group();
         group.getChildren().add(borderPane);
-        mapView = MapView.getMapView(FRAME_WIDTH, FRAME_HEIGHT / 3 * 2, gridPane,29,15,this);
 
         this.setRoot(group);
 
@@ -34,7 +41,7 @@ public class GameScene extends Scene implements LevelScene{
                     }
                 }
                 case DOWN -> {
-                    if (mapView.getMapRB().y < 50) {
+                    if (mapView.getMapRB().y < MapArrView.getMapArrView().getRowsNumber()) {
                         mapView.getMapLU().y++;
                         mapView.getMapRB().y++;
                     }
@@ -46,12 +53,46 @@ public class GameScene extends Scene implements LevelScene{
                     }
                 }
                 case RIGHT -> {
-                    if (mapView.getMapRB().x < 50) {
+                    if (mapView.getMapRB().x < MapArrView.getMapArrView().getColumnsNumber()) {
                         mapView.getMapLU().x++;
                         mapView.getMapRB().x++;
                     }
                 }
+                case ESCAPE -> {
+                    try {
+                        StartMenuScene.getStage().setScene(new PauseScene(new GridPane(),FRAME_WIDTH,FRAME_HEIGHT,this));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                case SPACE -> {
+                    this.getLevelButton().setPassed(true);
+                    if(this.getLevelButton().isPassed()){
+                        this.getLevelButton().changeBackground();
+                        mapView.getLevelScene().getClip().stop();
+                        mapView.getLevelScene().getClip().setMicrosecondPosition(0);
+                        WinScene winScene = null;
+                        try {
+                            winScene = new WinScene(new GridPane(), StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),this);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        StartMenuScene.getStage().setScene(winScene);
+                    }
+                }
+                case SHIFT -> {
+                    mapView.getLevelScene().getClip().stop();
+                    mapView.getLevelScene().getClip().setMicrosecondPosition(0);
+                    LoseScene loseScene = null;
+                    try {
+                        loseScene = new LoseScene(new GridPane(), StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),this);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    StartMenuScene.getStage().setScene(loseScene);
+                }
             }
+            MiniMap.getMiniMap().drawMiniMap();
             mapView.drawMap();
         });
 

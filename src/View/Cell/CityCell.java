@@ -64,8 +64,7 @@ public class CityCell extends Cell implements Attackable {
             } else {
                 System.out.println("We lose");
                 MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
-                army.getCityWhereBuild().deleteBuilding(army);
-                player.deleteCity(city);
+                army.getCityWhereBuild().deleteArmy(army);
                 if(player.getCities().size()==0){
                     mapArrView.getMapView().getLevelScene().getClip().stop();
                     mapArrView.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);

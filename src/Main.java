@@ -68,12 +68,16 @@ public class Main extends Application {
             chooseLevelScene.getFourthLevelButton().setOnMouseClicked(newMouseEvent -> chooseLevelScene.getFourthLevelButton().runLevel());
             chooseLevelScene.getFifthLevelButton().setOnMouseClicked(newMouseEvent -> chooseLevelScene.getFifthLevelButton().runLevel());
         });
-//        startMenuScene.getRandomButton().setOnMouseClicked(mouseEvent -> {
-//            startMenuScene.getClip().stop();
-//            startMenuScene.getClip().setMicrosecondPosition(0);
-//            gameScene = new GameScene(new Group(),FRAME_WIDTH,FRAME_HEIGHT);
-//            stage.setScene(gameScene);
-//        });
+        startMenuScene.getRandomButton().setOnMouseClicked(mouseEvent -> {
+            startMenuScene.getClip().stop();
+            startMenuScene.getClip().setMicrosecondPosition(0);
+            stage.setScene(loadingScene);
+            timeline = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {
+                gameScene = new GameScene(new Group(),FRAME_WIDTH,FRAME_HEIGHT);
+                stage.setScene(gameScene);
+            }));
+            timeline.play();
+        });
         startMenuScene.getExitButton().setOnMouseClicked(mouseEvent -> {
             stage.setScene(loadingScene);
             timeline = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {

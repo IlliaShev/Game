@@ -603,11 +603,9 @@ public class MapArrView {
                 cityCell.setDefaultFill();
 
             } else{
-                City city = new City("Enemy");
-                cityCell.setCity(city);
-                city.setCityCell(cityCell);
-                CityHandler.getCityHandler().addCity(city);
-                generateBuildings(i,j,city);
+                PlayersHandler.getPlayersHandler().getPlayer(1).addCityCell(cityCell);
+                cityCell.setDefaultFill();
+                generateBuildings(i,j,cityCell.getCity());
             }
             return cityCell;
         }
@@ -640,7 +638,7 @@ public class MapArrView {
             case 1 -> map[i][j] = new FieldCell(CELL_WIDTH, i ,j);
             case 2 -> map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
             case 3 -> {
-                if(cityWhereBuild.getNumberOfArmy() < 3) {
+                if(cityWhereBuild.getArmies().size() < 3) {
                     map[i][j] = new ArmyCell(CELL_WIDTH, i, j);
                     ((ArmyCell)map[i][j]).setPrevCell(prevCell);
                 }
@@ -648,8 +646,8 @@ public class MapArrView {
                     return;
             }
         }
-        System.out.println(cityWhereBuild);
-        System.out.println(i + " " + j + " " + map[i][j].getClass());
+//        System.out.println(cityWhereBuild);
+//        System.out.println(i + " " + j + " " + map[i][j].getClass());
         map[i][j].setCityWhereBuild(cityWhereBuild);
         cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
         map[i][j].setDefaultFill();
@@ -665,7 +663,7 @@ public class MapArrView {
             map[i][j] = new FieldCell(CELL_WIDTH, i, j);
         } else if(type.equals(GoldmineCell.class)){
             map[i][j] = new GoldmineCell(CELL_WIDTH, i, j);
-        } else if (cityWhereBuild.getNumberOfArmy() < 3 && type.equals(ArmyCell.class)){
+        } else if (cityWhereBuild.getArmies().size() < 3 && type.equals(ArmyCell.class)){
             map[i][j] = new ArmyCell(CELL_WIDTH, i, j);
         } else {
             return;
@@ -699,11 +697,6 @@ public class MapArrView {
         map[i][j] = new FieldCell(CELL_WIDTH,i,j);
     }
 
-//    public void changeCell(int i, int j, int type, City cityWhereBuild){
-//        map[i][j] = new ArmyCell(CELL_WIDTH, i,j);
-//        cityWhereBuild.addBuilding((BuildingCell) map[i][j]);
-//    }
-
     public void moveArmy(int i, int j, ArmyCell armyCell){
         Point armyCellP = new Point(armyCell.takeX(), armyCell.takeY());
         map[i][j] = armyCell;
@@ -713,19 +706,7 @@ public class MapArrView {
             changeCellOnGrass(armyCellP.x, armyCellP.y);
             return;
         }
-        if(armyCell.getPrevCell().getClass().equals(ForestCell.class)) {
-            changeCellOnForest(armyCellP.x, armyCellP.y);
-        } else if(armyCell.getPrevCell().getClass().equals(MountainCell.class)){
-            changeCellOnMountain(armyCellP.x, armyCellP.y);
-        } else if(armyCell.getPrevCell().getClass().equals(GrassCell.class)){
-            changeCellOnGrass(armyCellP.x, armyCellP.y);
-        } else if(armyCell.getPrevCell().getClass().equals(FieldCell.class)){
-            changeCellOnField(armyCellP.x, armyCellP.y);
-        } else if(armyCell.getPrevCell().getClass().equals(GoldmineCell.class)){
-            changeCellOnGoldmine(armyCellP.x, armyCellP.y);
-        } else if(armyCell.getPrevCell().getClass().equals(MineralCell.class)){
-            changeCellOnMineral(armyCellP.x, armyCellP.y);
-        }
+        map[armyCellP.x][armyCellP.y] = armyCell.getPrevCell();
     }
 
 
