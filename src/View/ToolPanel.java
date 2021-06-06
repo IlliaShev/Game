@@ -402,6 +402,19 @@ public final class ToolPanel extends Group {
                     i.collectResources();
                     i.spendResources();
                 }
+                for (City i : PlayersHandler.getPlayersHandler().getPlayer(0).getCities()) {
+                    if (i.getCityCell().isChosen()) {
+                        i.getCityCell().setChosen(false);
+                        i.getCityCell().changeTerritoryHighlight();
+                        i.getCityCell().setChosen(true);
+                    }
+                    for (Army j : i.getArmies()) {
+                        if (j.getArmyCell().isChosen()) {
+                            j.getArmyCell().fillFields();
+                            j.getArmyCell().setChosen(true);
+                        }
+                    }
+                }
             });
             endMoveButton.setPrefWidth(80);
             endMoveButton.setPrefHeight(30);
