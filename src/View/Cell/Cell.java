@@ -190,15 +190,15 @@ public abstract class Cell extends Rectangle {
 
     protected void checkIfCanGotAttack() {
         Cell[][] cell = MapArrView.getMapArrView().getMap();
-        for (int i = Math.max(getArmyCell().takeX() - 1, 0); i <= Math.min(getArmyCell().takeX() + 1, MapArrView.getMapArrView().getColumnsNumber()-1); i++) {
-            for (int j = Math.max(getArmyCell().takeY() - 1, 0); j <= Math.min(getArmyCell().takeY() + 1, MapArrView.getMapArrView().getRowsNumber()-1); j++) {
-               if(cell[i][j] instanceof ArmyCell){
-                   if(PlayersHandler.getPlayersHandler().getPlayer(1).hasArmy(((ArmyCell) cell[i][j]).getArmy())){
-                       cell[i][j].setArmyCellView(getArmyCell());
-                       getArmyCell().setChosen(true);
-                       ((ArmyCell) cell[i][j]).gotAttack();
-                   }
-               }
+        for (int i = Math.max(getArmyCell().takeX() - 1, 0); i <= Math.min(getArmyCell().takeX() + 1, MapArrView.getMapArrView().getColumnsNumber() - 1); i++) {
+            for (int j = Math.max(getArmyCell().takeY() - 1, 0); j <= Math.min(getArmyCell().takeY() + 1, MapArrView.getMapArrView().getRowsNumber() - 1); j++) {
+                if (cell[i][j] instanceof ArmyCell) {
+                    if (PlayersHandler.getPlayersHandler().getPlayer(1).hasArmy(((ArmyCell) cell[i][j]).getArmy())) {
+                        cell[i][j].setArmyCellView(getArmyCell());
+                        getArmyCell().setChosen(true);
+                        ((ArmyCell) cell[i][j]).gotAttack();
+                    }
+                }
             }
         }
     }
@@ -229,9 +229,25 @@ public abstract class Cell extends Rectangle {
 
     /***/
     protected void clickResponse() throws IOException, InterruptedException {
+
+
+        if (ToolPanel.getInstance().getActionsPanel().isReadyToDelete()) {
+            if (this.getClass().equals(GoldmineCell.class)) {
+                MapView.getMapView().changeOnGrass(x, y);
+                getCityWhereBuild().getCityCell().changeTerritoryHighlight();
+            } else if (this.getClass().equals(MineralCell.class)) {
+                MapView.getMapView().changeOnMountain(x, y);
+                getCityWhereBuild().getCityCell().changeTerritoryHighlight();
+            } else if (this.getClass().equals(FieldCell.class)) {
+                MapView.getMapView().changeOnForest(x, y);
+                getCityWhereBuild().getCityCell().changeTerritoryHighlight();
+            }
+        }
+
         if (ToolPanel.getInstance().getActionsPanel().cityIsActivated()) {
             return;
         }
+
         ToolPanel.getInstance().refresh(this);
     }
 

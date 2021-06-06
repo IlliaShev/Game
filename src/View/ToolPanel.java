@@ -12,6 +12,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.io.IOException;
+
 /**
  * <p>Tool panel below map</p>
  *
@@ -104,12 +106,12 @@ public final class ToolPanel extends Group {
         //other shit
         tools.setHgap(10);
         tools.setVgap(10);
-    //    miniMap = new GridPane();
+        //    miniMap = new GridPane();
         mainPanel = new MainPanel();
         actionsPanel = new ActionsPanel();
         if (kostyl) {
             initMapPanel();
-  //          tools.add(miniMap, 0, 0);
+            //          tools.add(miniMap, 0, 0);
         }
         tools.add(mainPanel, 1, 0);
         tools.add(actionsPanel, 2, 0);
@@ -321,9 +323,23 @@ public final class ToolPanel extends Group {
             gold.setFill(goldImage);
             mineral.setFill(mineralImage);
             food.setFill(breadImage);
-            Label goldInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResGold()));
-            Label mineralInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResMineral()));
-            Label foodInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResFood()));
+            //income
+            int goldIncome = -1;
+            int mineralIncome = -1;
+            int foodIncome = -1;
+            for (BuildingCell i : ((CityCell) cell).getCity().getBuildings()) {
+                if (i.getClass().equals(GoldmineCell.class)) {
+                    goldIncome += 2;
+                } else if (i.getClass().equals(MineralCell.class)) {
+                    mineralIncome += 2;
+                } else if (i.getClass().equals(FieldCell.class)) {
+                    foodIncome += 2;
+                }
+            }
+            //labels
+            Label goldInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResGold()) + "/" + goldIncome);
+            Label mineralInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResMineral()) + "/" + mineralIncome);
+            Label foodInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResFood()) + "/" + foodIncome);
             initLabel(goldInfo);
             initLabel(mineralInfo);
             initLabel(foodInfo);
@@ -342,8 +358,8 @@ public final class ToolPanel extends Group {
             y.setFont(Font.font("Candara", FontWeight.BOLD, 20));
             x.setStyle("-fx-background-color: gray; -fx-text-fill: green; -fx-text-alignment: center");
             y.setStyle("-fx-background-color: gray; -fx-text-fill: green; -fx-text-alignment: center");
-            x.setText("x:0");
-            y.setText("y:0");
+            x.setText("x: ");
+            y.setText("y: ");
             x.setPrefWidth(40);
             y.setPrefWidth(40);
             //rowindex 1 because I left place for background
@@ -368,6 +384,22 @@ public final class ToolPanel extends Group {
             });
             endMoveButton.setOnMouseExited(e -> {
                 endMoveButton.setStyle("-fx-background-color: orange; -fx-text-fill: black; -fx-text-alignment: center");
+            });
+            endMoveButton.setOnMouseClicked(e -> {
+                try {
+                    PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                //right mechanics of collecting and spending resources
+                for (City i : PlayersHandler.getPlayersHandler().getPlayer(0).getCities()) {
+                    i.collectResources();
+                    i.spendResources();
+                }
+                for (City i : PlayersHandler.getPlayersHandler().getPlayer(1).getCities()) {
+                    i.collectResources();
+                    i.spendResources();
+                }
             });
             endMoveButton.setPrefWidth(80);
             endMoveButton.setPrefHeight(30);
@@ -589,7 +621,6 @@ public final class ToolPanel extends Group {
             options[1].setFill(newArmyImage);
             options[1].setOnMouseClicked(e -> {
                 cell.setChosen(false);
-                cityIsActivated = false;
                 readyToDelete = false;
                 buildingType = null;
                 cell.changeTerritoryHighlight();
@@ -634,6 +665,42 @@ public final class ToolPanel extends Group {
             options[1].setFill(attackImage);
             options[2].setFill(defenceImage);
             options[8].setFill(exitImage);
+            options[0].setOnMouseClicked(e -> {
+                City city = cell.getArmy().getCity();
+                Army army = cell.getArmy();
+                if (!(city.getResGold() < 10 || city.getResMineral() < 10 || city.getResFood() < 15)) {
+                    army.setHealth(cell.getArmy().getHealth() + 20);
+                    city.setResGold(city.getResGold() - 10);
+                    city.setResMineral(city.getResMineral() - 10);
+                    city.setResFood(city.getResFood() - 15);
+                }
+                refresh(cell);
+                //this.setView(cell);
+            });
+            options[1].setOnMouseClicked(e -> {
+                City city = cell.getArmy().getCity();
+                Army army = cell.getArmy();
+                if (!(city.getResGold() < 10 || city.getResMineral() < 15 || city.getResFood() < 10)) {
+                    army.setAttackDamage(cell.getArmy().getAttackDamage() + 7);
+                    city.setResGold(city.getResGold() - 10);
+                    city.setResMineral(city.getResMineral() - 15);
+                    city.setResFood(city.getResFood() - 15);
+                }
+                refresh(cell);
+                //this.setView(cell);
+            });
+            options[2].setOnMouseClicked(e -> {
+                City city = cell.getArmy().getCity();
+                Army army = cell.getArmy();
+                if (!(city.getResGold() < 15 || city.getResMineral() < 10 || city.getResFood() < 10)) {
+                    army.setDefenceDamage(cell.getArmy().getDefenceDamage() + 7);
+                    city.setResGold(city.getResGold() - 15);
+                    city.setResMineral(city.getResMineral() - 10);
+                    city.setResFood(city.getResFood() - 15);
+                }
+                refresh(cell);
+                //this.setView(cell);
+            });
             options[8].setOnMouseClicked(e -> {
                 setView(cell);
             });

@@ -20,14 +20,14 @@ public class City {
 
     public City(String name) {
         this.name = name;
-        resMineral = 6;
-        resGold = 6;
-        resField = 6;
+        resMineral = 50;
+        resGold = 50;
+        resField = 50;
         health = 100;
         defenceDamage = 20;
         buildings = new ArrayList<>();
         armies = new ArrayList<>();
-        Thread collectorRes = new Thread(() -> {
+        /*Thread collectorRes = new Thread(() -> {
             Thread currentThread = Thread.currentThread();
             while (!currentThread.isInterrupted()) {
                 try {
@@ -38,10 +38,9 @@ public class City {
                 collectResources();
                 spendResources();
             }
-        });
-        collectorRes.start();
+        });*/
+        //collectorRes.start();
     }
-
 
     public void addBuilding(BuildingCell buildingCell){
         buildings.add(buildingCell);
@@ -145,11 +144,11 @@ public class City {
     public void collectResources(){
         for(BuildingCell buildingCell: buildings){
             if(buildingCell.getClass().equals(FieldCell.class))
-                resField++;
+                resField += 2;
             else if(buildingCell.getClass().equals(MineralCell.class))
-                resMineral++;
+                resMineral += 2;
             else if(buildingCell.getClass().equals(GoldmineCell.class))
-                resGold++;
+                resGold += 2;
         }
     }
 
@@ -161,7 +160,6 @@ public class City {
         if(resMineral > 0)
             resMineral--;
     }
-
 
     public void receiveDamage(int damage){
         this.health -= damage;

@@ -39,6 +39,15 @@ public class ForestCell extends Cell implements EmptyCell {
             getArmyCell().setPrevCell(this);
             checkIfCanGotAttack();
             PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
+            //right mechanics of collecting and spending resources
+            for (City i: PlayersHandler.getPlayersHandler().getPlayer(0).getCities()){
+                i.collectResources();
+                i.spendResources();
+            }
+            for (City i: PlayersHandler.getPlayersHandler().getPlayer(1).getCities()){
+                i.collectResources();
+                i.spendResources();
+            }
         }
     }
 

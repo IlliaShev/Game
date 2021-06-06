@@ -98,6 +98,18 @@ public class MapView {
         MiniMap.getMiniMap().drawMiniMap();
     }
 
+    public void changeOnForest(int i, int j) {
+        mapArrView.changeCellOnForest(i, j);
+        drawMap();
+        MiniMap.getMiniMap().drawMiniMap();
+    }
+
+    public void changeOnMountain(int i, int j) {
+        mapArrView.changeCellOnMountain(i, j);
+        drawMap();
+        MiniMap.getMiniMap().drawMiniMap();
+    }
+
     public void moveArmy(int i, int j, ArmyCell armyCellView) {
         mapArrView.moveArmy(i, j, armyCellView);
         drawMap();

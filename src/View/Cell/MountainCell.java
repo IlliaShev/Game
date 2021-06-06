@@ -1,5 +1,6 @@
 package View.Cell;
 
+import View.City;
 import View.MapView;
 import View.PlayersHandler;
 import View.ToolPanel;
@@ -44,6 +45,15 @@ public class MountainCell extends Cell {
             getArmyCell().setPrevCell(this);
             checkIfCanGotAttack();
             PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
+            //right mechanics of collecting and spending resources
+            for (City i: PlayersHandler.getPlayersHandler().getPlayer(0).getCities()){
+                i.collectResources();
+                i.spendResources();
+            }
+            for (City i: PlayersHandler.getPlayersHandler().getPlayer(1).getCities()){
+                i.collectResources();
+                i.spendResources();
+            }
         }
     }
 
