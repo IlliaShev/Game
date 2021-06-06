@@ -38,6 +38,8 @@ public class ForestCell extends Cell implements EmptyCell {
             MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
             getArmyCell().setPrevCell(this);
             checkIfCanGotAttack();
+            //TODO decide whether bot move 1 army, or all armies
+            //PlayersHandler.getPlayersHandler().getPlayer(1).moveAllBotArmies();
             PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
             //right mechanics of collecting and spending resources
             for (City i: PlayersHandler.getPlayersHandler().getPlayer(0).getCities()){

@@ -337,9 +337,9 @@ public final class ToolPanel extends Group {
                 }
             }
             //labels
-            Label goldInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResGold()) + "/" + goldIncome);
-            Label mineralInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResMineral()) + "/" + mineralIncome);
-            Label foodInfo = new Label(String.valueOf(((CityCell) cell).getCity().getResFood()) + "/" + foodIncome);
+            Label goldInfo = new Label(((CityCell) cell).getCity().getResGold() + "/" + goldIncome);
+            Label mineralInfo = new Label(((CityCell) cell).getCity().getResMineral() + "/" + mineralIncome);
+            Label foodInfo = new Label(((CityCell) cell).getCity().getResFood() + "/" + foodIncome);
             initLabel(goldInfo);
             initLabel(mineralInfo);
             initLabel(foodInfo);
@@ -387,6 +387,8 @@ public final class ToolPanel extends Group {
             });
             endMoveButton.setOnMouseClicked(e -> {
                 try {
+                    //TODO decide whether bot move 1 army, or all armies
+                    //PlayersHandler.getPlayersHandler().getPlayer(1).moveAllBotArmies();
                     PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();

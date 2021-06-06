@@ -144,6 +144,71 @@ public class Player {
         }
     }
 
+    private void moveSingleArmy(Army army) throws IOException {
+        if(army == null)
+            return;
+        Player player = PlayersHandler.getPlayersHandler().getPlayer(0);
+        City city = player.getCities().get(0);
+        Cell[][] map = MapArrView.getMapArrView().getMap();
+        CityCell cityCell = canAttack(army);
+        if(cityCell != null){
+            System.out.println(cityCell.takeX() + " " + cityCell.takeY());
+            attackCity(army, cityCell.getCity());
+            System.out.println(army.getHealth() + " " + cityCell.getCity().getHealth());
+            if(army.getHealth() > 0) {
+                System.out.println("Bot won");
+                addCity(city);
+                player.deleteCity(city);
+                for(BuildingCell buildingCell: city.getBuildings()){
+                    ((Cell)buildingCell).setDefaultFill();
+                }
+                cityCell.setDefaultFill();
+                cityCell.getCity().setHealth(100);
+                MiniMap.getMiniMap().drawMiniMap();
+                if(player.getCities().size()==0){
+                    MapArrView.getMapArrView().getMapView().getLevelScene().getClip().stop();
+                    MapArrView.getMapArrView().getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
+                    LoseScene loseScene = new LoseScene(new GridPane(),
+                            StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),MapArrView.getMapArrView().getMapView().getLevelScene());;
+                    StartMenuScene.getStage().setScene(loseScene);
+                }
+            } else {
+                System.out.println("Bot lose");
+                MapView.getMapView().changeOnGrass(army.getArmyCell().takeX(), army.getArmyCell().takeY());
+                army.getCity().deleteBuilding(army.getArmyCell());
+                army.getCity().getArmies().remove(army);
+            }
+        }
+        if(army.getArmyCell().takeX() > city.getCityCell().takeX()){
+            Cell cellToMove = map[army.getArmyCell().takeX()-1][army.getArmyCell().takeY()];
+            moveArmyToCell(cellToMove, army);
+        }
+        if(army.getArmyCell().takeY() < city.getCityCell().takeY()){
+            Cell cellToMove = map[army.getArmyCell().takeX()][army.getArmyCell().takeY()+1];
+            moveArmyToCell(cellToMove, army);
+        }
+        if(army.getArmyCell().takeX() < city.getCityCell().takeX()){
+            Cell cellToMove = map[army.getArmyCell().takeX()+1][army.getArmyCell().takeY()];
+            moveArmyToCell(cellToMove, army);
+        }
+        if(army.getArmyCell().takeY() > city.getCityCell().takeY()){
+            Cell cellToMove = map[army.getArmyCell().takeX()][army.getArmyCell().takeY()-1];
+            moveArmyToCell(cellToMove, army);
+        }
+    }
+
+    public void moveAllBotArmies() throws IOException {
+        ArrayList<Army> botArmies = new ArrayList<>();
+        for (City i: PlayersHandler.getPlayersHandler().getPlayer(1).getCities()){
+            for (Army j: i.getArmies()){
+                botArmies.add(j);
+            }
+        }
+        for (Army i: botArmies) {
+            moveSingleArmy(i);
+        }
+    }
+
     private void moveArmyToCell(Cell cellToMove, Army army) {
         if(!(cellToMove instanceof CityCell)) {
             cellToMove.setArmyCellView(army.getArmyCell());

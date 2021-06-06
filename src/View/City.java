@@ -11,7 +11,6 @@ public class City {
     private int resField;
     public static final int maxNumberOfBuildings = 8;
     private CityCell cityCell;
-    private int numberOfArmy;
     private Player player;
     private int health;
     private int defenceDamage;
