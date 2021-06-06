@@ -59,21 +59,18 @@ public class CityCell extends Cell implements Attackable {
                         WinScene winScene = new WinScene(new GridPane(), StartMenuScene.takeWidth(),
                                 StartMenuScene.takeHeight(),mapArrView.getMapView().getLevelScene());
                         StartMenuScene.getStage().setScene(winScene);
+                        MapView.getMapView().clearMap();
+                        System.gc();
                     }
                 }
             } else {
                 System.out.println("We lose");
                 MapView.getMapView().changeOnGrass(army.takeX(), army.takeY());
                 army.getCityWhereBuild().deleteArmy(army);
-                if(player.getCities().size()==0){
-                    mapArrView.getMapView().getLevelScene().getClip().stop();
-                    mapArrView.getMapView().getLevelScene().getClip().setMicrosecondPosition(0);
-                    LoseScene loseScene = new LoseScene(new GridPane(),
-                            StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),mapArrView.getMapView().getLevelScene());;
-                    StartMenuScene.getStage().setScene(loseScene);
-                }
             }
         }
+        System.gc();
+        System.gc();
     }
 
     public void changeTerritoryHighlight() {

@@ -127,4 +127,8 @@ public class MapView {
     public int getHeight() {
         return height;
     }
+
+    public void clearMap(){
+        mapView = null;
+    }
 }

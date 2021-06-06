@@ -56,6 +56,8 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable {
             getArmy().getCity().deleteArmy(this);
             army.getArmy().getCity().deleteArmy(army);
         }
+        System.gc();
+        System.gc();
     }
 
     public void fillFields() {
@@ -96,6 +98,8 @@ public class ArmyCell extends Cell implements BuildingCell, Attackable {
                 }
             }
         }
+        System.gc();
+        System.gc();
     }
 
     private boolean isProperCell(Cell cell) {

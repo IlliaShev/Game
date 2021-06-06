@@ -171,6 +171,8 @@ public class Player {
                     LoseScene loseScene = new LoseScene(new GridPane(),
                             StartMenuScene.takeWidth(), StartMenuScene.takeHeight(),MapArrView.getMapArrView().getMapView().getLevelScene());;
                     StartMenuScene.getStage().setScene(loseScene);
+                    MapView.getMapView().clearMap();
+                    System.gc();
                 }
             } else {
                 System.out.println("Bot lose");
@@ -196,6 +198,7 @@ public class Player {
             Cell cellToMove = map[army.getArmyCell().takeX()][army.getArmyCell().takeY()-1];
             moveArmyToCell(cellToMove, army);
         }
+        System.gc();
     }
 
     public void moveAllBotArmies() throws IOException {
