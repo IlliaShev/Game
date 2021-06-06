@@ -85,8 +85,8 @@ public class CityCell extends Cell implements Attackable {
             System.out.println(city);
         }
         if (this.isChosen()) {
-            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, MapArrView.getMapArrView().getColumnsNumber()); i++) {
-                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, MapArrView.getMapArrView().getRowsNumber()); j++) {
+            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, MapArrView.getMapArrView().getColumnsNumber()-1); i++) {
+                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, MapArrView.getMapArrView().getRowsNumber()-1); j++) {
                     if (cell[i][j].isEmpty()) {
                         cell[i][j].setFill(Paint.valueOf("ORANGE"));
                         cell[i][j].setReadyToBuild(true);
@@ -95,8 +95,8 @@ public class CityCell extends Cell implements Attackable {
                 }
             }
         } else {
-            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, MapArrView.getMapArrView().getColumnsNumber()); i++) {
-                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, MapArrView.getMapArrView().getRowsNumber()); j++) {
+            for (int i = Math.max(indX - 2, 0); i <= Math.min(indX + 2, MapArrView.getMapArrView().getColumnsNumber()-1); i++) {
+                for (int j = Math.max(indY - 2, 0); j <= Math.min(indY + 2, MapArrView.getMapArrView().getRowsNumber()-1); j++) {
                     if (cell[i][j].isEmpty()) {
                         cell[i][j].setDefaultFill();
                         cell[i][j].setReadyToBuild(false);

@@ -175,8 +175,9 @@ public class Player {
             } else {
                 System.out.println("Bot lose");
                 MapView.getMapView().changeOnGrass(army.getArmyCell().takeX(), army.getArmyCell().takeY());
-                army.getCity().deleteBuilding(army.getArmyCell());
-                army.getCity().getArmies().remove(army);
+                army.getCity().deleteArmy(army.getArmyCell());
+                army.getCity().generateArmy();
+                return;
             }
         }
         if(army.getArmyCell().takeX() > city.getCityCell().takeX()){

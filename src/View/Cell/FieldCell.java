@@ -40,7 +40,9 @@ public class FieldCell extends Cell implements BuildingCell {
             this.setArmyCellView(army);
             MapView.getMapView().moveArmy(takeX(), takeY(), getArmyCell());
             getArmyCell().setPrevCell(null);
-            checkIfCanGotAttack();
+            if(army.getArmy().getHealth() > 0) {
+                checkIfCanGotAttack();
+            }
             PlayersHandler.getPlayersHandler().getPlayer(1).moveArmy();
         } else if (ToolPanel.getInstance().getActionsPanel().isReadyToDelete()) {
             getCityWhereBuild().deleteBuilding(this);

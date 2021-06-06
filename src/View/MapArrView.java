@@ -633,6 +633,8 @@ public class MapArrView {
     public void changeCell(int i, int j, City cityWhereBuild, Cell prevCell){
         Random random = new Random();
         int type = random.nextInt(4);
+        if(cityWhereBuild.getBuildings().size() == 7&&cityWhereBuild.getArmies().size()==0)
+            type=3;
         switch (type) {
             case 0 -> map[i][j] = new MineralCell(CELL_WIDTH, i,j);
             case 1 -> map[i][j] = new FieldCell(CELL_WIDTH, i ,j);

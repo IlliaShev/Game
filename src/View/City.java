@@ -2,7 +2,9 @@ package View;
 
 import View.Cell.*;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class City {
     private String name;
@@ -181,4 +183,21 @@ public class City {
         armies.remove(armyCell.getArmy());
         buildings.remove(armyCell);
     }
+
+    public void generateArmy() {
+        ArrayList<Point> emptyCells = new ArrayList<>();
+        Cell[][] map = MapArrView.getMapArrView().getMap();
+        for(int i = Math.max(0, cityCell.takeX()-2); i <= Math.min(MapArrView.getMapArrView().getColumnsNumber()-1, cityCell.takeX()+2);i++){
+            for(int j = Math.max(0, cityCell.takeY()-2); j <= Math.min(MapArrView.getMapArrView().getColumnsNumber()-1, cityCell.takeY()+2); j++){
+                if(map[i][j].isEmpty())
+                    emptyCells.add(new Point(i,j));
+            }
+        }
+        Random random = new Random();
+        int randCell = random.nextInt(emptyCells.size());
+        if(random.nextInt(5)<=2) {
+            MapView.getMapView().buildResources(emptyCells.get(randCell).x, emptyCells.get(randCell).y, this, ArmyCell.class);
+        }
+    }
+
 }
