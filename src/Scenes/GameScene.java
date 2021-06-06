@@ -24,7 +24,7 @@ public class GameScene extends Scene implements LevelScene{
         PlayersHandler.getPlayersHandler().clearPlayers();
         PlayersHandler.getPlayersHandler().addPlayer(new Player());
         PlayersHandler.getPlayersHandler().addPlayer(new Player());
-        mapView = MapView.getMapView(FRAME_WIDTH, 472, gridPane,40,40, this);
+        mapView = MapView.getMapView(FRAME_WIDTH, 472, gridPane,30,30, this);
         borderPane.setBottom(ToolPanel.getInstance());
         ToolPanel.getInstance().initMapPanel();
         group = new Group();
