@@ -50,7 +50,7 @@ public class CityCell extends Cell implements Attackable {
                 setDefaultFill();
                 getCity().setHealth(100);
                 MiniMap.getMiniMap().drawMiniMap();
-                if(player.getCities().size()==player.getLevel()+1){
+                if(bot.getCities().size() == 0){
                     mapArrView.getMapView().getLevelScene().getLevelButton().setPassed(true);
                     if(mapArrView.getMapView().getLevelScene().getLevelButton().isPassed()){
                         mapArrView.getMapView().getLevelScene().getLevelButton().changeBackground();
