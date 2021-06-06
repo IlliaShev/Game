@@ -680,6 +680,8 @@ public class MapArrView {
             cityWhereBuild.setResGold(gold - 10);
             cityWhereBuild.setResMineral(mineral - 10);
             cityWhereBuild.setResFood(food - 10);
+            cityWhereBuild.getCityCell().setChosen(false);
+            cityWhereBuild.getCityCell().changeTerritoryHighlight();
         } else {
             return;
         }

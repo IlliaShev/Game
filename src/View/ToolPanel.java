@@ -223,7 +223,7 @@ public final class ToolPanel extends Group {
         }
 
         private void emptyCellCase() {
-            this.caption.setText("Artem");
+            this.caption.setText("Empty cell");
         }
 
         // stats
@@ -641,7 +641,7 @@ public final class ToolPanel extends Group {
             optionIsChosen(options[6]);
             options[6].setOnMouseClicked(e -> {
                 cell.setChosen(false);
-                cityIsActivated = false;
+                //cityIsActivated = false;
                 readyToDelete = false;
                 buildingType = null;
                 cell.changeTerritoryHighlight();
